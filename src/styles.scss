@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+
+/*! Import Bootstrap 4 variables */
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins";
+
+$primary: #f89825;
+$secondary: #196775;
+$success: #546c55;
+$warning: #f1562a;
+$info: #707070;
+$light: #ffffff;
+$dark: #000000;
+
+$theme-colors: (
+  primary: #f89825,
+  secondary: #196775,
+  success: #546c55,
+  warning: #f1562a,
+  info: #707070,
+  light: #ffffff,
+  dark: #000000,
+);
+
+.headm {
+  font-family: "Montserrat", sans-serif;
+}
+
+.headr {
+  font-family: "Raleway", sans-serif;
+}
+
+.psource {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+@import "node_modules/bootstrap/scss/bootstrap";
