@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { DepartmentPageComponent } from './department-page/department-page.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { DepartmentPageComponent } from './department-page/department-page.compo
     NavbarComponent,
     FooterComponent,
     DepartmentPageComponent,
+    LandingPageComponent,
   ],
   imports: [BrowserModule, FontAwesomeModule],
   providers: [],
