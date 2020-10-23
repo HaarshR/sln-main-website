@@ -40,4 +40,8 @@ $theme-colors: (
   font-family: "Source Sans Pro", sans-serif;
 }
 
+.shadow {
+  text-shadow: 2px 2px 5px $black;
+}
+
 @import "node_modules/bootstrap/scss/bootstrap";
