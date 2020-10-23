@@ -1,34 +1,38 @@
 <app-navbar></app-navbar>
-
-
-<div class="container-fluid">
-    <!--Addition of a variable background image -->
-    <img class="img-fluid backgroundimage" [src]=backgroundImage alt="Responsive image"> 
+<div
+  class="img-container"
+  style="
+    background-image: url('https://images.unsplash.com/photo-1539946309076-4daf2ea73899?ixlib=rb-1.2.1&w=1000&q=80');
+  "
+>
+  <div class="container-fluid">
     <!--Container supposed to be responsive-->
-    <div class="container ">
-        <div class="row">
-            <div class="col-sm-6">
-                <p class="headm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt, aliquid.</p>
-            </div>
-            <div class="col-sm-6">
-                <div class="row-sm-6">
-                    <p class="headm">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae, nesciunt.</p>
-                </div>
-                <div class="row">
-                    <div class="col-m-6">
-                        <button class="btn btn-primary">Get Started</button>
-                    </div>
-                    <div class="col-m-6">
-                        <button class="btn btn-link"> Contact Us</button>
-                    </div>
-                </div>
-            </div>
+    <div class="row" style="padding: 20% 0">
+      <div class="offset-md-1 col-md-5 py-3">
+        <div class="headm text-white">
+          <h1 class="font-weight-bold main-text">Climate Justice</h1>
+          <h2>In Mauritius</h2>
         </div>
-
+      </div>
+      <div class="col-md-5">
+        <div class="row">
+          <div class="col-12">
+            <p class="headm text-white text-center">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Exercitationem blanditiis molestias, neque veritatis sit autem
+              repellendus officiis ab ullam cum corporis? Facere aliquam,
+              reprehenderit asperiores sapiente harum non optio odio!
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-center">
+            <button class="btn btn-primary">Get Started</button>
+            <a href="#" class="btn btn-link text-white">Contact Us</a>
+          </div>
+        </div>
+      </div>
     </div>
-
-
+  </div>
 </div>
-
-
 <app-footer></app-footer>
