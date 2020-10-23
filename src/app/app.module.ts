@@ -6,10 +6,17 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { FooterComponent } from './shared/footer/footer.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+<<<<<<< Updated upstream
 import { DepartmentPageComponent } from './department-page/department-page.component';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, FooterComponent, DepartmentPageComponent],
+=======
+import { LandingComponent } from './landing/landing.component';
+
+@NgModule({
+  declarations: [AppComponent, NavbarComponent, FooterComponent, LandingComponent],
+>>>>>>> Stashed changes
   imports: [
     BrowserModule,
     FontAwesomeModule,
