@@ -5,6 +5,8 @@
 @import "node_modules/bootstrap/scss/variables";
 @import "node_modules/bootstrap/scss/mixins";
 
+$enable-responsive-font-sizes: true;
+
 $primary: #f89825;
 $secondary: #196775;
 $success: #546c55;
