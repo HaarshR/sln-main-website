@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  faPhone,
+  faMapMarkerAlt,
+  faAt,
+} from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
@@ -7,6 +12,9 @@ import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
+  faAt = faAt;
+  faMapMarkerAlt = faMapMarkerAlt;
+  faPhone = faPhone;
   faInstagram = faInstagram;
   faFacebook = faFacebookF;
 
