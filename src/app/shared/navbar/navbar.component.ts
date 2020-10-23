@@ -9,6 +9,10 @@ import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  // Dynamic Content
+  facebookPage = 'https://www.fb.com/SovLanatir';
+  instagramPage = 'https://www.instagram.com/sovlanatir/';
+
   faBars = faBars;
   faInstagram = faInstagram;
   faFacebook = faFacebookF;
