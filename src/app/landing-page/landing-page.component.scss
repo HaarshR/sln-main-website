@@ -1,0 +1,32 @@
+@import "../../styles.scss";
+
+.container-fluid{
+    width: 100%;
+    height: auto;
+   
+}
+.img-fluid{
+    width: 100%;
+    height: auto;
+}
+
+
+.container{
+    margin-top: 25%;
+    position: absolute;
+    left: 10%;
+    top: -10%;
+    padding: 5px;
+    color: #FFFFFF;
+    font-weight: bold;
+   
+}
+
+
+.btn-link{
+    color: white;
+}
+
+.text{
+    font-size: 40px;
+}
