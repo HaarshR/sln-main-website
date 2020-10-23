@@ -84,29 +84,29 @@
             <h4 class="font-weight-bold headr">Address</h4>
             <p class="psource text-info">
               <fa-icon [icon]="faMapMarkerAlt" class="px-1" size="xs"></fa-icon
-              >Sheemadree Lane, Ecroignard
+              >{{ address }}
             </p>
             <h4 class="font-weight-bold headr">Phone</h4>
             <p class="psource text-info">
-              <fa-icon [icon]="faPhone" class="px-1" size="xs"></fa-icon> +230
-              12345678
+              <fa-icon [icon]="faPhone" class="px-1" size="xs"></fa-icon>
+              {{ phone }}
             </p>
             <h4 class="font-weight-bold headr">Email</h4>
             <p class="psource text-info">
-              <fa-icon [icon]="faAt" class="px-1" size="xs"></fa-icon
-              >sovlanatir@gmail.com
+              <fa-icon [icon]="faInbox" class="px-1" size="xs"></fa-icon
+              >{{ email }}
             </p>
           </div>
         </div>
         <div class="row">
           <div class="offset-4 col-4 offset-md-2 col-md-5 text-warning">
-            <a class="psource text-warning"
-              ><fa-icon [icon]="faFacebook" class="px-1" size="lg"></fa-icon>/
+            <a class="psource text-warning" [href]="facebookPage"
+              ><fa-icon [icon]="faFacebook" class="px-1" size="md"></fa-icon>/
               SovLanatir</a
             >
           </div>
           <div class="col-4 col-md-5 text-warning">
-            <a class="psource text-warning"
+            <a class="psource text-warning" [href]="instagramPage"
               ><fa-icon [icon]="faInstagram" class="px-1" size="lg"></fa-icon
               >@sovlanatir</a
             >

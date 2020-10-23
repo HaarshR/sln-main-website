@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   faPhone,
   faMapMarkerAlt,
-  faAt,
+  faInbox,
 } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 
@@ -12,7 +12,14 @@ import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
-  faAt = faAt;
+  // Dynamic Content
+  address = 'Sheemadree Lane, Ecroignard';
+  phone = '+230 12345678';
+  email = 'sovlanatir@gmail.com';
+  facebookPage = 'https://www.fb.com/SovLanatir';
+  instagramPage = 'https://www.instagram.com/sovlanatir/';
+
+  faInbox = faInbox;
   faMapMarkerAlt = faMapMarkerAlt;
   faPhone = faPhone;
   faInstagram = faInstagram;
