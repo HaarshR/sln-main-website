@@ -1,1 +1,23 @@
-<p>about-page works!</p>
+<app-navbar></app-navbar>
+<div
+  class="img-container"
+  [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
+  style="padding: 20% 0"
+>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 offset-md-2 col-md-8 text-center">
+        <h1 class="font-weight-bold text-white shadow" id="main-text">
+          About Us
+        </h1>
+        <p class="psource text-white shadow" id="paragraph">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde placeat
+          tempore praesentium libero, sunt, nesciunt, illo ipsum quos at commodi
+          sint. Consequuntur deserunt, quod maiores quibusdam dolorum expedita
+          tempore eos.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
