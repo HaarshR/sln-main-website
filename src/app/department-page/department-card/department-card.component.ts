@@ -6,8 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./department-card.component.scss'],
 })
 export class DepartmentCardComponent implements OnInit {
-
   constructor() {}
 
   ngOnInit(): void {}
+
+  onCardClick(): void {}
 }
