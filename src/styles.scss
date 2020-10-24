@@ -50,6 +50,7 @@ $theme-colors: (
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  background-attachment: fixed;
 }
 
 @import "node_modules/bootstrap/scss/bootstrap";
