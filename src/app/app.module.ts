@@ -8,6 +8,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DepartmentPageComponent } from './department-page/department-page.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { DepartmentCardComponent } from './department-page/department-card/department-card.component';
+import { AboutPageComponent } from './about-page/about-page.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { DepartmentCardComponent } from './department-page/department-card/depar
     DepartmentPageComponent,
     LandingPageComponent,
     DepartmentCardComponent,
+    AboutPageComponent,
   ],
   imports: [BrowserModule, FontAwesomeModule],
   providers: [],
