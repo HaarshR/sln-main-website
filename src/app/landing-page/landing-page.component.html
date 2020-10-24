@@ -1,9 +1,5 @@
 <app-navbar></app-navbar>
-<div
-  class="img-container"
-  [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
-  style="padding: 20% 0"
->
+<div class="img-container" [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }" style="padding: 20% 0">
   <div class="container-fluid">
     <!--Container supposed to be responsive-->
     <div class="row">
@@ -36,4 +32,59 @@
     </div>
   </div>
 </div>
+
+<div class="container-fluid bg-success">
+  <h1 class="headm text-white" style="padding: 2%; text-align: center;">How can we help you?</h1>
+</div>
+
+<div class="container">
+  <div class="row-12">
+    <p class="psource text-justify" style=" margin-top: 5%;" id="paragraph">Lorem ipsum, dolor sit amet consectetur
+      adipisicing
+      elit. Fugit odit voluptatibus laborum amet. Porro nam consequatur cum accusantium soluta necessitatibus nesciunt
+      doloremque numquam temporibus, quisquam aspernatur quia incidunt accusamus nisi voluptate beatae quas praesentium
+      tempore! Deserunt esse tempora inventore ipsa qui quasi saepe amet perferendis praesentium. Quia ut eum, sapiente
+      accusamus perferendis inventore labore! Aperiam fugiat commodi beatae minus ea iusto magnam. Fugiat consequuntur
+      laudantium nihil, nostrum asperiores itaque voluptas placeat pariatur id perferendis distinctio alias officiis
+      odio dolore! Nobis culpa inventore quis animi accusamus. Nostrum sequi necessitatibus nesciunt quas?</p>
+  </div>
+  <div class="row ">
+
+    <div class="col">
+
+      <!-- begin of card  -->
+      <div class="container">
+        <!-- first card -->
+        <div class="card rounded bg-primary">
+          <div class="row ">
+            <div class="col-3">
+              <img [src]="backgroundImage" alt="" class="img-fluid rounded-left">
+            </div>
+            <div class="col-7">
+              <div class="card-title mt-4 text-white">Lorem ipsum dolor sit amet.</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- second card -->
+        <div class="card mt-4 rounded bg-primary">
+          <div class="row ">
+            <div class="col-3">
+              <img [src]="backgroundImage" alt="" class="img-fluid rounded-left">
+            </div>
+            <div class="col-7">
+              <div class="card-title mt-4 text-white ">Lorem ipsum dolor sit amet.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+</div>
+
 <app-footer></app-footer>
