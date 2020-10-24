@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
+<!-- Title Container -->
 <div
   class="img-container"
   [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
@@ -6,7 +7,7 @@
 >
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 offset-md-2 col-md-8 text-center">
+      <div class="col-12 offset-md-2 col-md-8 text-center align-self-center">
         <h1 class="font-weight-bold text-white shadow" id="main-text">
           About Us
         </h1>
@@ -17,6 +18,77 @@
           tempore eos.
         </p>
       </div>
+    </div>
+  </div>
+</div>
+<!-- Our mission -->
+<div class="container py-5">
+  <div class="row py-5">
+    <div class="col-12">
+      <h1 class="headm text-success font-weight-bold">Our mission.</h1>
+    </div>
+  </div>
+</div>
+<!-- Meet the team page -->
+<div class="container py-5">
+  <div class="row py-5">
+    <div class="col-12">
+      <h1 class="headm text-success font-weight-bold">Meet the team.</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 pb-5" *ngFor="let member of members">
+      <div class="row">
+        <div class="col-4">
+          <img
+            src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
+            class="avatar"
+          />
+        </div>
+        <div class="col-8">
+          <div class="row py-2">
+            <div class="col-12">
+              <h5 class="m-0 headr">Mrs. Someone Someone</h5>
+            </div>
+          </div>
+          <div class="row py-2">
+            <div class="col-12">
+              <p class="m-0 psource">Some position</p>
+            </div>
+          </div>
+          <div class="row psource">
+            <div class="col-12 col-sm-6">
+              <a
+                [href]="facebookPage"
+                style="font-size: 13px"
+                class="text-primary"
+              >
+                <fa-icon [icon]="faFacebook" size="lg" class="pr-1"></fa-icon>
+                <span>/ Facebook</span>
+              </a>
+            </div>
+            <div class="col-12 col-sm-6">
+              <a
+                [href]="facebookPage"
+                style="font-size: 13px"
+                class="text-primary"
+              >
+                <fa-icon [icon]="faInstagram" size="lg" class="pr-1"></fa-icon>
+                <span>@Instagram</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Gallery -->
+<div class="container py-5">
+  <div class="row-py-5 text-center">
+    <div class="col-12">
+      <h1 class="headm text-warning font-weight-bold">Gallery.</h1>
+      <p class="psource py-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, officia!</p>
     </div>
   </div>
 </div>
