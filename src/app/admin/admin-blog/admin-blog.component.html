@@ -1,0 +1,280 @@
+<div class="card p-3 overflow-auto">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h2>BLOGS</h2>
+    </div>
+  </div>
+  <div class="row border-bottom border-top">
+    <div class="col-4 text-center pb-2 pt-2">
+      <span class="headers" (click)="sortProperty('date')">Date</span>
+      <fa-icon
+        class="hovering"
+        *ngIf="sortingWay == 'desc' && propertyName == 'date'"
+        [icon]="faAngleDown"
+        transform="grow-13"
+        (click)="sortWay('asc')"
+      ></fa-icon>
+      <fa-icon
+        class="hovering"
+        *ngIf="sortingWay == 'asc' && propertyName == 'date'"
+        [icon]="faAngleUp"
+        transform="grow-13"
+        (click)="sortWay('desc')"
+      ></fa-icon>
+    </div>
+    <div class="col-5 text-center pb-2 pt-2">
+      <span class="headers" (click)="sortProperty('_id')">ID</span>
+      <fa-icon
+        class="hovering"
+        *ngIf="sortingWay == 'desc' && propertyName == '_id'"
+        [icon]="faAngleDown"
+        transform="grow-13"
+        (click)="sortWay('asc')"
+      ></fa-icon>
+      <fa-icon
+        class="hovering"
+        *ngIf="sortingWay == 'asc' && propertyName == '_id'"
+        [icon]="faAngleUp"
+        transform="grow-13"
+        (click)="sortWay('desc')"
+      ></fa-icon>
+    </div>
+    <div class="col-3 text-center pb-2 pt-2">
+      <span class="headers" (click)="sortProperty('name')">Name</span>
+      <fa-icon
+        class="hovering"
+        *ngIf="sortingWay == 'desc' && propertyName == 'name'"
+        [icon]="faAngleDown"
+        transform="grow-13"
+        (click)="sortWay('asc')"
+      ></fa-icon>
+      <fa-icon
+        class="hovering"
+        *ngIf="sortingWay == 'asc' && propertyName == 'name'"
+        [icon]="faAngleUp"
+        transform="grow-13"
+        (click)="sortWay('desc')"
+      ></fa-icon>
+    </div>
+  </div>
+  <div *ngIf="isLoading" class="row">
+    <div class="myLoader">
+      <div
+        class="spinner-border text-success"
+        style="width: 8rem; height: 8rem"
+        role="status"
+      >
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="!isLoading">
+    <ng-container *ngFor="let blog of blogs | sortBy: sortingWay:propertyName">
+      <div
+        class="row mt-2 myRows"
+        data-toggle="modal"
+        [attr.data-target]="'#D' + blog._id"
+      >
+        <div class="col-4 text-center">
+          {{ blog.date | date: "MMM d, y, h:mm a" }}
+        </div>
+        <div class="col-5 text-center">
+          {{ blog._id }}
+        </div>
+        <div class="col-3 text-center">
+          {{ blog.name }}
+        </div>
+      </div>
+      <div
+        class="modal fade"
+        id="D{{ blog._id }}"
+        data-backdrop="static"
+        data-keyboard="true"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title mb-0 p-0" id="staticBackdropLabel">
+                <span *ngIf="editingBlog && !isSaving">Editing </span>
+                <span *ngIf="!editingBlog && isSaved">Saved </span>
+                {{ blog.name }}'s blog
+                <button
+                  class="btn"
+                  *ngIf="!editingBlog && !isSaved && !error"
+                  (click)="edit(blog)"
+                >
+                  EDIT
+                </button>
+                <button class="btn" *ngIf="!editingBlog && !isSaved && !error">
+                  DELETE
+                </button>
+                <button
+                  class="btn"
+                  *ngIf="editingBlog && !isSaving"
+                  (click)="save(blog)"
+                >
+                  SAVE
+                </button>
+                <button
+                  class="btn"
+                  *ngIf="editingBlog && !isSaving"
+                  (click)="cancel()"
+                >
+                  CANCEL
+                </button>
+              </h3>
+              <button
+                *ngIf="!editingBlog || isSaved || error"
+                type="button"
+                class="close"
+                (click)="closeModal()"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div *ngIf="!editingBlog && !isSaved && !error" class="modal-body">
+              <div class="row">
+                <div class="col mb-2">
+                  <b>Profile Picture</b>
+                  <br />
+                  <img
+                    src="{{ imgUrl }}{{ blog.image }}"
+                    alt=""
+                    class="img-fluid"
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mb-2">
+                  <b>Date Added:</b><br />{{
+                    blog.date | date: "MMM d, y, h:mm a"
+                  }}
+                </div>
+                <div class="col mb-2">
+                  <b>View count: </b>{{ blog.viewCount }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mb-2"><b>Title:</b><br />{{ blog.title }}</div>
+              </div>
+              <div class="row">
+                <div class="col mb-2">
+                  <b>Detail:</b><br />
+                  <span innerHtml="{{ blog.detail }}"></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col mb-2">
+                  <b>ALL COMMENTS</b><br />
+                  <ng-container *ngFor="let comment of blog.comments">
+                    <div class="row">
+                      <div class="col mb-2">
+                        <b>Date: </b>{{ comment.date | date: "MMM d, y, h:mm a"
+                        }}<br />
+                        <b>Name: </b>
+                        <ng-container *ngIf="comment.anonymous">
+                          ANONYMOUS
+                        </ng-container>
+                        <ng-container *ngIf="!comment.anonymous">
+                          {{ comment.name }}
+                        </ng-container>
+                        <br />
+                        <b>Comment: </b><br />
+                        {{ comment.comment }}<br />
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div
+              *ngIf="editingBlog && !isSaved && !error && !isSaving"
+              class="modal-body"
+            >
+              <form [formGroup]="blogForm">
+                <button
+                  class="btn btn-success"
+                  type="button"
+                  (click)="profilePicturePicker.click()"
+                >
+                  <img
+                    *ngIf="imagePreview"
+                    class="img-fluid"
+                    src="{{ imagePreview }}"
+                    [alt]="blog.name"
+                  />
+                  <img
+                    *ngIf="!imagePreview"
+                    class="img-fluid"
+                    src="{{ imgUrl }}{{ blog.image }}"
+                    [alt]="blog.name"
+                  />
+                  <br /><fa-icon [icon]="faEdit"></fa-icon>
+                </button>
+                <input
+                  type="file"
+                  #profilePicturePicker
+                  accept=".png, .jpg"
+                  (change)="onImagePicked($event)"
+                />
+
+                <div class="form-group">
+                  <label for="inputAddress">Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                    placeholder="Name"
+                    formControlName="name"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="inputAddress">Title</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                    placeholder="Title"
+                    formControlName="title"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="inputAddress">Detail</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputAddress"
+                    placeholder="Detail"
+                    formControlName="detail"
+                  />
+                </div>
+              </form>
+            </div>
+            <div *ngIf="editingBlog && isSaving">
+              <div class="myLoader2">
+                <div
+                  class="spinner-border text-success"
+                  style="width: 8rem; height: 8rem"
+                  role="status"
+                >
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="!editingBlog && isSaved" class="modal-body">
+              <p>Update successfull!</p>
+            </div>
+            <div *ngIf="!editingBlog && error" class="modal-body">
+              <p>An error occured!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

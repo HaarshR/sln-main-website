@@ -1,3 +1,11 @@
+## TO RUN BACKEND
+
+To run the backend AND access it, in terminal do `cd Backend`:
+- Run `npm install` 
+- After completely installed, run `npm run start:server`
+- Backend will run in the link [Angular CLI](http://localhost:3000/)
+- Keep the backend running and access the Admin page in the Angular App!
+
 # SlnWebsite
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.

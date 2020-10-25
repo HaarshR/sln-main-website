@@ -1,0 +1,6 @@
+nodemon.json
+package-lock.json
+node_modules
+angular
+access.log
+Backend.zip
