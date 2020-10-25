@@ -37,67 +37,76 @@
   <h1 class="headm text-white" style="padding: 2%; text-align: center;">How can we help you?</h1>
 </div>
 
-<div class="container">
-  <div class="row-12">
-    <p class="psource text-justify" style=" margin-top: 5%;" id="paragraph">Lorem ipsum, dolor sit amet consectetur
-      adipisicing
-      elit. Fugit odit voluptatibus laborum amet. Porro nam consequatur cum accusantium soluta necessitatibus nesciunt
-      doloremque numquam temporibus, quisquam aspernatur quia incidunt accusamus nisi voluptate beatae quas praesentium
-      tempore! Deserunt esse tempora inventore ipsa qui quasi saepe amet perferendis praesentium. Quia ut eum, sapiente
-      accusamus perferendis inventore labore! Aperiam fugiat commodi beatae minus ea iusto magnam. Fugiat consequuntur
-      laudantium nihil, nostrum asperiores itaque voluptas placeat pariatur id perferendis distinctio alias officiis
-      odio dolore! Nobis culpa inventore quis animi accusamus. Nostrum sequi necessitatibus nesciunt quas?</p>
+<div class="container ">
+  <div class="row">
+    <div class="col-12">
+      <p class="psource text-justify" style=" margin-top: 5%;" id="paragraph">Lorem ipsum, dolor sit amet consectetur
+        adipisicing
+        elit. Fugit odit voluptatibus laborum amet. Porro nam consequatur cum accusantium soluta necessitatibus nesciunt
+        doloremque numquam temporibus, quisquam aspernatur quia incidunt accusamus nisi voluptate beatae quas
+        praesentium
+        tempore! Deserunt esse tempora inventore ipsa qui quasi saepe amet perferendis praesentium. Quia ut eum,
+        sapiente
+        accusamus perferendis inventore labore! Aperiam fugiat commodi beatae minus ea iusto magnam. Fugiat consequuntur
+        laudantium nihil, nostrum asperiores itaque voluptas placeat pariatur id perferendis distinctio alias officiis
+        odio dolore! Nobis culpa inventore quis animi accusamus. Nostrum sequi necessitatibus nesciunt quas?</p>
+
+    </div>
   </div>
-  <div class="row ">
 
-    <div class="col">
-
-      <!-- begin of card  -->
-      <div class="container">
-        <!-- first card -->
-        <div class="card rounded bg-primary">
-          <div class="row ">
-            <div class="col-3">
-              <img [src]="backgroundImage" alt="" class="img-fluid rounded-left">
-            </div>
-            <div class="col-7">
-              <div class="card-title mt-4 text-white">Lorem ipsum dolor sit amet.</div>
-            </div>
+  <div class="row mt-5">
+    <div class="col-md-4">
+      <!-- card start here -->
+      <div class="card rounded bg-primary">
+        <div class="row">
+          <div class="col-md-7 ">
+            <img [src]="backgroundImage" alt="" class="img-fluid rounded-left">
           </div>
-        </div>
-
-        <!-- second card -->
-        <div class="card mt-4 rounded bg-primary">
-          <div class="row ">
-            <div class="col-3">
-              <img [src]="backgroundImage" alt="" class="img-fluid rounded-left">
-            </div>
-            <div class="col-7">
-              <div class="card-title mt-4 text-white ">Lorem ipsum dolor sit amet.</div>
-            </div>
+          <div class="col-5 col-sm-5">
+            <div class="card-title mt-4 text-white">Lorem ipsum dolor sit.</div>
           </div>
         </div>
       </div>
 
 
-
-
     </div>
+    <div class="col-md-4 mt-4"></div>
+    <div class="col-md-4 bg-primary">Lorem ipsum dolor sit.</div>
+
+
+
+
 
   </div>
 </div>
 
 
 
-<div class="container-fluid mt-5 bg-success">
+<div class="container-fluid mt-5  bg-success">
   <h1 class="headm text-white" style="padding: 2%; text-align: center;">Join Us!</h1>
 </div>
 
+<div class="row no-gutters">
+  <div class="col-md-6 no-gutters">
+    <div class="left-side">
+      <img
+        src="https://storage.googleapis.com/planet4-new-zealand-stateless/2020/04/2aa8ebf4-gp0stotnr_pressmedia-1024x576.jpg"
+        alt="" style="width: 100%; height: 100%;">
+    </div>
+  </div>
 
+  <div class="col-md-6 no-gutters">
+    <div class="right-side">
+      <div class="img-fluid" [ngStyle]="{ 'background-image': 'url(' + mergeImage2 + ')' }" style="height: 100%; width: 100%;">
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="row">
-  <div class="col-6"><div class="img-fluid" [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }" style="padding: 20% 0"></div>
-  <!-- <div class="col-6"><div class="img-fluid" [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }" style="padding: 20% 0"></div> -->
+  
 </div>
+
+
 
 <app-footer></app-footer>
