@@ -63,53 +63,8 @@
   </div>
 
   <div class="row mt-5">
-    <!-- card start here -->
-    <!-- <div class="card rounded bg-primary">
-        <div class="row">
-          <div class="col-md-7">
-            <img
-              [src]="backgroundImage"
-              alt=""
-              class="img-fluid rounded-left"
-            />
-          </div>
-          <div class="col-5 col-sm-5">
-            <div class="card-title mt-4 text-white">Lorem ipsum dolor sit.</div>
-          </div>
-        </div>
-      </div> -->
     <div class="col-12 col-md-6">
-      <div class="row p-3">
-        <div
-          class="col-6 rounded-left"
-          [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
-          style="
-            width: 100%;
-            height: auto;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-          "
-        ></div>
-        <div class="col-6 bg-primary rounded-right text-center">
-          <div class="row pt-5 pb-3">
-            <div class="col-12">
-              <h5 class="m-0 psource text-white">
-                Find a home for stray animals
-              </h5>
-            </div>
-          </div>
-          <div class="row pb-5 pt-3">
-            <div class="col-12">
-              <fa-icon
-                [icon]="faChevronCircleRight"
-                class="text-white"
-                size="2x"
-              ></fa-icon>
-            </div>
-          </div>
-        </div>
-      </div>
+      <app-service-card></app-service-card>
     </div>
   </div>
 </div>
