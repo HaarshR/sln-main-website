@@ -44,6 +44,14 @@ $theme-colors: (
   text-shadow: 0px 0px 10px rgba(150, 150, 150, 0.5);
 }
 
+.bshadow {
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.16);
+}
+
+.bg-darkt {
+  background-color: rgba($black, 0.7) !important;
+}
+
 .img-container {
   width: 100%;
   height: auto;
