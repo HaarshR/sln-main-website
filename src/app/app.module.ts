@@ -15,6 +15,7 @@ import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.co
 import { AdminBlogComponent } from './admin/admin-blog/admin-blog.component';
 
 import { SortByPipe } from './sorting.pipe';
+import { ServiceCardComponent } from './landing-page/service-card/service-card.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SortByPipe } from './sorting.pipe';
     AdminHomepageComponent,
     AdminBlogComponent,
     SortByPipe,
+    ServiceCardComponent,
   ],
   imports: [
     BrowserModule,

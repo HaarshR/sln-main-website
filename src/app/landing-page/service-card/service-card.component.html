@@ -1,0 +1,33 @@
+<div class="row p-3">
+  <div
+    class="col-6 rounded-left"
+    [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
+    style="
+      width: 100%;
+      height: auto;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.16);
+    "
+  ></div>
+  <div
+    class="col-6 bg-primary rounded-right text-center"
+    style="box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.16)"
+  >
+    <div class="row pt-5 pb-3">
+      <div class="col-12">
+        <h5 class="m-0 psource text-white">Find a home for stray animals</h5>
+      </div>
+    </div>
+    <div class="row pb-5 pt-3">
+      <div class="col-12">
+        <fa-icon
+          [icon]="faChevronCircleRight"
+          class="text-white"
+          size="2x"
+        ></fa-icon>
+      </div>
+    </div>
+  </div>
+</div>
