@@ -32,7 +32,7 @@
           </div>
         </li>
         <li class="navbar-item">
-          <a href="#" class="nav-link">Join Us</a>
+          <a href="#" class="nav-link">Join SLN</a>
         </li>
         <li class="navbar-item">
           <a href="#" class="nav-link">Contact</a>
@@ -42,16 +42,25 @@
         </li>
       </ul>
       <ul class="navbar-nav ml-auto">
-        <li class="navbar-item">
-          <a [href]="facebookPage" class="nav-link">
-            <fa-icon [icon]="faInstagram" size="lg"></fa-icon>
-          </a>
-        </li>
-        <li class="navbar-item">
-          <a [href]="instagramPage" class="nav-link">
-            <fa-icon [icon]="faFacebook" size="md"></fa-icon>
-          </a>
-        </li>
+        <div class="row d-md-none border border-light my-4"></div>
+        <div class="row text-center">
+          <div class="col-6 col-md-4">
+            <li class="navbar-item">
+              <a [href]="facebookPage" class="nav-link">
+                <fa-icon [icon]="faInstagram" size="lg"></fa-icon>
+                <span class="d-md-none pl-3 h5">Instagram</span>
+              </a>
+            </li>
+          </div>
+          <div class="col-6 col-md-4">
+            <li class="navbar-item">
+              <a [href]="instagramPage" class="nav-link">
+                <fa-icon [icon]="faFacebook" size="md"></fa-icon>
+                <span class="d-md-none pl-3 h5">Facebook</span>
+              </a>
+            </li>
+          </div>
+        </div>
       </ul>
     </div>
   </div>
