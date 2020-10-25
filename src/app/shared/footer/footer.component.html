@@ -5,7 +5,7 @@
         <h3 class="pt-5 pb-3 headm text-white font-weight-bold">
           Keep In Touch
         </h3>
-        <form>
+        <form [formGroup]="subscribeForm">
           <div class="form-group">
             <div class="row">
               <div class="col-8 offset-md-2 col-md-6 px-0">
@@ -40,7 +40,7 @@
           quod cumque ipsum. Delectus, hic. Eligendi repudiandae fugiat animi
           non commodi.
         </p>
-        <form>
+        <form [formGroup]="contactUsForm">
           <div class="form-group">
             <input
               type="tel"
@@ -81,7 +81,7 @@
       <div class="col-md-6 text-right py-5">
         <div class="row">
           <div class="col-12 d-md-none">
-            <hr>
+            <hr />
           </div>
         </div>
         <div class="row">

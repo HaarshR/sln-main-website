@@ -5,6 +5,7 @@ import {
   faInbox,
 } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-footer',
@@ -24,6 +25,9 @@ export class FooterComponent implements OnInit {
   faPhone = faPhone;
   faInstagram = faInstagram;
   faFacebook = faFacebookF;
+
+  subscribeForm = new FormGroup({});
+  contactUsForm = new FormGroup({});
 
   constructor() {}
 
