@@ -1,5 +1,9 @@
 <app-navbar></app-navbar>
-<div class="img-container" [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }" style="padding: 20% 0">
+<div
+  class="img-container"
+  [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
+  style="padding: 20% 0"
+>
   <div class="container-fluid">
     <!--Container supposed to be responsive-->
     <div class="row">
@@ -34,79 +38,110 @@
 </div>
 
 <div class="container-fluid bg-success">
-  <h1 class="headm text-white" style="padding: 2%; text-align: center;">How can we help you?</h1>
+  <div class="col-12 py-5">
+    <h1 class="headm text-white text-center">How can we help you?</h1>
+  </div>
 </div>
 
-<div class="container ">
+<div class="container">
   <div class="row">
     <div class="col-12">
-      <p class="psource text-justify" style=" margin-top: 5%;" id="paragraph">Lorem ipsum, dolor sit amet consectetur
-        adipisicing
-        elit. Fugit odit voluptatibus laborum amet. Porro nam consequatur cum accusantium soluta necessitatibus nesciunt
-        doloremque numquam temporibus, quisquam aspernatur quia incidunt accusamus nisi voluptate beatae quas
-        praesentium
-        tempore! Deserunt esse tempora inventore ipsa qui quasi saepe amet perferendis praesentium. Quia ut eum,
-        sapiente
-        accusamus perferendis inventore labore! Aperiam fugiat commodi beatae minus ea iusto magnam. Fugiat consequuntur
-        laudantium nihil, nostrum asperiores itaque voluptas placeat pariatur id perferendis distinctio alias officiis
-        odio dolore! Nobis culpa inventore quis animi accusamus. Nostrum sequi necessitatibus nesciunt quas?</p>
-
+      <p class="psource text-justify pt-5" id="paragraph">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugit odit
+        voluptatibus laborum amet. Porro nam consequatur cum accusantium soluta
+        necessitatibus nesciunt doloremque numquam temporibus, quisquam
+        aspernatur quia incidunt accusamus nisi voluptate beatae quas
+        praesentium tempore! Deserunt esse tempora inventore ipsa qui quasi
+        saepe amet perferendis praesentium. Quia ut eum, sapiente accusamus
+        perferendis inventore labore! Aperiam fugiat commodi beatae minus ea
+        iusto magnam. Fugiat consequuntur laudantium nihil, nostrum asperiores
+        itaque voluptas placeat pariatur id perferendis distinctio alias
+        officiis odio dolore! Nobis culpa inventore quis animi accusamus.
+        Nostrum sequi necessitatibus nesciunt quas?
+      </p>
     </div>
   </div>
 
   <div class="row mt-5">
-    <div class="col-md-4">
-      <!-- card start here -->
-      <div class="card rounded bg-primary">
+    <!-- card start here -->
+    <!-- <div class="card rounded bg-primary">
         <div class="row">
-          <div class="col-md-7 ">
-            <img [src]="backgroundImage" alt="" class="img-fluid rounded-left">
+          <div class="col-md-7">
+            <img
+              [src]="backgroundImage"
+              alt=""
+              class="img-fluid rounded-left"
+            />
           </div>
           <div class="col-5 col-sm-5">
             <div class="card-title mt-4 text-white">Lorem ipsum dolor sit.</div>
           </div>
         </div>
+      </div> -->
+    <div class="col-6">
+      <div class="row p-3">
+        <div
+          class="col-6 rounded-left"
+          [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
+          style="
+            width: 100%;
+            height: auto;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+          "
+        ></div>
+        <div class="col-6 bg-primary rounded-right text-center">
+          <div class="row pt-5 pb-3">
+            <div class="col-12">
+              <h5 class="m-0 psource text-white">
+                Find a home for stray animals
+              </h5>
+            </div>
+          </div>
+          <div class="row pb-5 pt-3">
+            <div class="col-12">
+              <fa-icon
+                [icon]="faChevronCircleRight"
+                class="text-white"
+                size="2x"
+              ></fa-icon>
+            </div>
+          </div>
+        </div>
       </div>
-
-
     </div>
-    <div class="col-md-4 mt-4"></div>
-    <div class="col-md-4 bg-primary">Lorem ipsum dolor sit.</div>
-
-
-
-
-
   </div>
 </div>
 
-
-
-<div class="container-fluid mt-5  bg-success">
-  <h1 class="headm text-white" style="padding: 2%; text-align: center;">Join Us!</h1>
-</div>
-
-<div class="row no-gutters">
-  <div class="col-md-6 no-gutters">
-    <div class="left-side">
-      <img
-        src="https://storage.googleapis.com/planet4-new-zealand-stateless/2020/04/2aa8ebf4-gp0stotnr_pressmedia-1024x576.jpg"
-        alt="" style="width: 100%; height: 100%;">
-    </div>
+<div class="container-fluid mt-5 bg-success">
+  <div class="col-12 py-5">
+    <h1 class="headm text-white text-center">Join Us!</h1>
   </div>
-
-  <div class="col-md-6 no-gutters">
-    <div class="right-side">
-      <div class="img-fluid" [ngStyle]="{ 'background-image': 'url(' + mergeImage2 + ')' }" style="height: 100%; width: 100%;">
+</div>
+<!-- TODO: Replace image container with slider (slideshow) -->
+<div
+  class="img-container"
+  [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
+  style="padding: 10% 0"
+>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="offset-0 col-12 offset-md-1 col-md-10">
+        <p class="psource text-white text-center shadow" id="paragraph">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+          Exercitationem blanditiis molestias, neque veritatis sit autem
+          repellendus officiis ab ullam cum corporis? Facere aliquam,
+          reprehenderit asperiores sapiente harum non optio odio!
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 text-center py-5">
+        <button class="btn btn-primary text-white">Apply Now</button>
       </div>
     </div>
   </div>
 </div>
-
-<div class="row">
-  
-</div>
-
-
 
 <app-footer></app-footer>
