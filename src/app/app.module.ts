@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 
 import { AppComponent } from './app.component';
 
@@ -21,6 +22,7 @@ import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.co
 import { AdminBlogComponent } from './admin/admin-blog/admin-blog.component';
 import { EventsPageComponent } from './events-page/events-page.component';
 import { BlogPageComponent } from './blog-page/blog-page.component';
+import { AdminDepartmentComponent } from './admin/admin-department/admin-department.component';
 
 @NgModule({
   declarations: [
@@ -38,12 +40,14 @@ import { BlogPageComponent } from './blog-page/blog-page.component';
     ServiceCardComponent,
     EventsPageComponent,
     BlogPageComponent,
+    AdminDepartmentComponent,
   ],
   imports: [
     BrowserModule,
     FontAwesomeModule,
     HttpClientModule,
     ReactiveFormsModule,
+    RichTextEditorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
