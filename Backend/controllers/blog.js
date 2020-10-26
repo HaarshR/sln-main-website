@@ -26,14 +26,13 @@ const uploadFile = (fileName) => {
     }
     let params = {
       Bucket: process.env.BUCKET_NAME,
-      Key: fileName, // File name you want to save as in S3
+      Key: "blog/" + fileName, // File name you want to save as in S3
       Body: data,
     };
     s3.upload(params, function (err, data) {
       if (err) {
         return "Error uploading image! Connection to DB failed.";
       }
-      return `Image uploaded successfully. ${data.Location}`;
       try {
         fs.unlinkSync("public/images/" + fileName);
         fs.unlinkSync("public/images/" + fileName);
@@ -41,6 +40,7 @@ const uploadFile = (fileName) => {
         fs.unlinkSync("public/images/" + fileName);
         fs.unlinkSync("public/images/" + fileName);
       } catch (err) {}
+      return `Image uploaded successfully. ${data.Location}`;
     });
   });
 };

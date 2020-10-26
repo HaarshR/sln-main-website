@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  imgUrl: 'https://sovlanatir.s3.eu-west-2.amazonaws.com/',
-  url: 'http://localhost:3000/',
+  fileUrl: 'https://sovlanatir.s3.eu-west-2.amazonaws.com/',
+  apiUrl: 'http://localhost:3000/',
 };
 
 /*
