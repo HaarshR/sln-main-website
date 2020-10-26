@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const fs = require("fs");
 
 const blogRoute = require("./routes/blogs");
+const departmentRoute = require("./routes/departments");
 
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@myprojectfreecluster.5aj2p.gcp.mongodb.net/${process.env.MONGO_DATABASE}`;
 
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
 
 //CONNECT THE API'S
 app.use("/api/blogs", blogRoute);
+app.use("/api/departments", departmentRoute);
 
 mongoose
   .connect(MONGODB_URI, {

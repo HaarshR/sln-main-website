@@ -51,7 +51,7 @@ router.get("/getAll", DepartmentController.getAll);
 // UPDATE REQUEST
 router.put(
   "/updateOne/:id",
-  multer({ storage: fileStorage, fileFilter: fileFilter }).array("image", 200),
+  multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 200),
   DepartmentController.edit
 );
 
