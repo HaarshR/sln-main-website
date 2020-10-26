@@ -1,5 +1,5 @@
 // IMPORTS THE MODELS
-const Blog = require("../models/blog");
+const Department = require("../models/department");
 
 const compress_images = require("compress-images");
 const fs = require("fs");
@@ -46,12 +46,11 @@ const uploadFile = (fileName) => {
 };
 
 exports.getAll = (req, res, next) => {
-  Blog.find()
+  Department.find()
     .then((documents) => {
       if (documents) {
-        console.log(documents);
         res.status(200).json({
-          blogs: documents,
+          departments: documents,
         });
       } else {
         res.status(404).json({
@@ -66,6 +65,10 @@ exports.getAll = (req, res, next) => {
       });
     });
 };
+
+exports.addOne = (req, res, next) => {
+
+}
 
 exports.edit = (req, res, next) => {
   const blog = {

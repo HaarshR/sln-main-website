@@ -15,11 +15,8 @@ import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.co
 import { AdminBlogComponent } from './admin/admin-blog/admin-blog.component';
 
 import { SortByPipe } from './sorting.pipe';
-<<<<<<< HEAD
 import { JoinusPageComponent } from './joinus-page/joinus-page.component';
-=======
 import { ServiceCardComponent } from './landing-page/service-card/service-card.component';
->>>>>>> 389c98988cbe3911b6074d910a569e44a76cc91c
 
 @NgModule({
   declarations: [
@@ -33,11 +30,8 @@ import { ServiceCardComponent } from './landing-page/service-card/service-card.c
     AdminHomepageComponent,
     AdminBlogComponent,
     SortByPipe,
-<<<<<<< HEAD
     JoinusPageComponent,
-=======
     ServiceCardComponent,
->>>>>>> 389c98988cbe3911b6074d910a569e44a76cc91c
   ],
   imports: [
     BrowserModule,

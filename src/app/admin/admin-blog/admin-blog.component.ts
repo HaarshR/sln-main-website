@@ -115,6 +115,15 @@ export class AdminBlogComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
+  imageType(type: string) {
+    const imgType = {
+      'image/png': 'png',
+      'image/jpeg': 'jpg',
+      'image/jpg': 'jpg',
+    };
+    return imgType[type];
+  }
+
   save(blog: Blog) {
     this.isSaving = true;
     if (this.blogForm.invalid) {
@@ -126,12 +135,26 @@ export class AdminBlogComponent implements OnInit {
     } else {
       newBlogForm.append('image', '');
     }
+
     newBlogForm.append('name', this.blogForm.value.name);
     newBlogForm.append('oldFileName', this.blogForm.value.image);
     newBlogForm.append('title', this.blogForm.value.title);
     newBlogForm.append('detail', this.blogForm.value.detail);
+    console.log(
+      (this.blogs[this.blogs.indexOf(blog)].image =
+        this.blogForm.value.name.toLowerCase() +
+        '.' +
+        this.imageType(this.image.type))
+    );
     this.blogService.updateBlog(newBlogForm, blog._id).subscribe(
       (next) => {
+        if (newBlogForm.get('image') != '') {
+          this.blogs[this.blogs.indexOf(blog)].image =
+            this.blogForm.value.name.toLowerCase() +
+            '.' +
+            this.imageType(this.image.type);
+        }
+
         this.blogs[this.blogs.indexOf(blog)].name = this.blogForm.value.name;
         this.blogs[this.blogs.indexOf(blog)].title = this.blogForm.value.title;
         this.blogs[
