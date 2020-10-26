@@ -68,6 +68,13 @@
       </div>
     </div>
   </div>
+  <ng-container *ngIf="!isLoading && errorMessage">
+    <div class="row">
+      <div class="myLoader">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </ng-container>
   <ng-container *ngIf="!isLoading">
     <ng-container *ngFor="let blog of blogs | sortBy: sortingWay:propertyName">
       <div

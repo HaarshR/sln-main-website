@@ -5,19 +5,19 @@ import {
   faAngleUp,
   faEdit,
 } from '@fortawesome/free-solid-svg-icons';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
 
 import { Blog } from '../../../models/Blogs/Blog';
 import { BlogService } from './blog.service';
 
-const IMAGE_URL = environment.imgUrl;
+const IMAGE_URL = environment.fileUrl;
 @Component({
   selector: 'app-admin-blog',
   templateUrl: './admin-blog.component.html',
   styleUrls: ['./admin-blog.component.scss'],
 })
 export class AdminBlogComponent implements OnInit {
-  imgUrl = IMAGE_URL;
+  imgUrl = IMAGE_URL + 'blog/';
 
   faAngleDown = faAngleDown;
   faAngleUp = faAngleUp;
@@ -30,9 +30,10 @@ export class AdminBlogComponent implements OnInit {
   isSaving = false;
   isSaved = false;
   error = false;
+  errorMessage = '';
 
   sortingWay = 'desc';
-  propertyName = 'dateAdded';
+  propertyName = 'date';
 
   editingBlog = false;
 
@@ -60,9 +61,17 @@ export class AdminBlogComponent implements OnInit {
       next: (result) => {
         result.blogs.forEach((blog) => {
           this.blogs.push(blog);
-          console.log(blog);
         });
         this.isLoading = false;
+      },
+      error: (error) => {
+        if (error.status == 404) {
+          this.errorMessage = 'No departments found!';
+          this.isLoading = false;
+        } else {
+          this.errorMessage = 'An unknown error occured!';
+          this.isLoading = false;
+        }
       },
     });
   }
@@ -125,13 +134,13 @@ export class AdminBlogComponent implements OnInit {
   }
 
   save(blog: Blog) {
-    this.isSaving = true;
     if (this.blogForm.invalid) {
       return;
     }
+    this.isSaving = true;
     const newBlogForm = new FormData();
     if (this.imagePreview) {
-      newBlogForm.append('image', this.image, this.blogForm.value.name);
+      newBlogForm.append('image', this.image, blog._id);
     } else {
       newBlogForm.append('image', '');
     }

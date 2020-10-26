@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Blog } from 'src/models/Blogs/Blog';
 
-const BACKEND_URL = environment.url + 'api/blogs/';
+const BACKEND_URL = environment.apiUrl + 'api/blogs/';
 
 @Injectable({ providedIn: 'root' })
 export class BlogService {
