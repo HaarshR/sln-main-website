@@ -19,6 +19,8 @@ import { ServiceCardComponent } from './landing-page/service-card/service-card.c
 import { SortByPipe } from './sorting.pipe';
 import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.component';
 import { AdminBlogComponent } from './admin/admin-blog/admin-blog.component';
+import { EventsPageComponent } from './events-page/events-page.component';
+import { BlogPageComponent } from './blog-page/blog-page.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,8 @@ import { AdminBlogComponent } from './admin/admin-blog/admin-blog.component';
     SortByPipe,
     JoinusPageComponent,
     ServiceCardComponent,
+    EventsPageComponent,
+    BlogPageComponent,
   ],
   imports: [
     BrowserModule,
