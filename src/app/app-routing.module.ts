@@ -9,6 +9,8 @@ import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.co
 import { BlogPageComponent } from './blog-page/blog-page.component';
 import { EventsPageComponent } from './events-page/events-page.component';
 import { JoinusPageComponent } from './joinus-page/joinus-page.component';
+import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
+import { AuthGuard } from './admin/admin-login/auth.guard';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -18,17 +20,18 @@ const routes: Routes = [
   { path: 'join-us', component: JoinusPageComponent },
   {
     path: 'admin',
-    component: AdminHomepageComponent,
-    // canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'editDepartment', // child route path
-        component: EditDepartmentComponent, // child route component that the router renders
-        // canActivate: [AuthGuard],
-      },
-    ],
+    component: AdminLoginComponent,
   },
-  { path: '*', redirectTo: '' },
+  {
+    path: 'admin/home',
+    component: AdminHomepageComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'admin/home/editDepartment',
+    component: EditDepartmentComponent,
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({
@@ -38,7 +41,7 @@ const routes: Routes = [
       onSameUrlNavigation: 'reload',
     }),
   ],
-  // providers: [AuthGuard],
+  providers: [AuthGuard],
 })
 export class AppRoutingModule {
   constructor(private router: Router) {

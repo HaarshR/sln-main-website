@@ -26,6 +26,7 @@ import { AdminDepartmentComponent } from './admin/admin-department/admin-departm
 import { AppRoutingModule } from './app-routing.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { EditDepartmentComponent } from './admin/admin-department/edit-department/edit-department.component';
+import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { EditDepartmentComponent } from './admin/admin-department/edit-departmen
     BlogPageComponent,
     AdminDepartmentComponent,
     EditDepartmentComponent,
+    AdminLoginComponent,
   ],
   imports: [
     BrowserModule,

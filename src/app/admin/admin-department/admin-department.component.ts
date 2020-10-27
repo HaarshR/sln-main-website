@@ -11,8 +11,8 @@ import {
   ImageService,
   HtmlEditorService,
 } from '@syncfusion/ej2-angular-richtexteditor';
-import { environment } from 'src/environments/environment';
-import { Department } from 'src/models/Department';
+import { environment } from '../../../environments/environment';
+import { Department } from '../../../models/Department';
 import { DepartmentService } from './department.service';
 
 const IMAGE_URL = environment.fileUrl;
@@ -226,6 +226,9 @@ export class AdminDepartmentComponent implements OnInit {
       );
       i++;
     });
+    if (this.images.length == 0) {
+      newDepartmentForm.append('images', '', '');
+    }
     console.log(this.images);
     this.departmentService.addDepartments(newDepartmentForm).subscribe(
       (next) => {
