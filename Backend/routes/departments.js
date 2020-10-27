@@ -2,7 +2,7 @@ const express = require("express");
 
 const DepartmentController = require("../controllers/department");
 
-// const checkAuth = require("../middleware/check-auth");
+const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
@@ -41,7 +41,7 @@ const fileFilter = (req, file, cb) => {
 // POST REQUEST
 router.post(
   "/addOne",
-  multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 200),
+  multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 200),checkAuth,
   DepartmentController.addOne
 );
 
@@ -51,11 +51,11 @@ router.get("/getAll", DepartmentController.getAll);
 // UPDATE REQUEST
 router.put(
   "/updateOne/:id",
-  multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 200),
+  multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 200),checkAuth,
   DepartmentController.edit
 );
 
 // DELETE REQUEST
-router.delete("/deleteOne/:id", DepartmentController.deleteOne);
+router.delete("/deleteOne/:id", checkAuth,DepartmentController.deleteOne);
 
 module.exports = router;

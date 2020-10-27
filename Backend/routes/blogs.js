@@ -2,7 +2,7 @@ const express = require("express");
 
 const BlogController = require("../controllers/blog");
 
-// const checkAuth = require("../middleware/check-auth");
+const checkAuth = require("../middleware/check-auth");
 
 const router = express.Router();
 
@@ -53,6 +53,7 @@ router.get("/getAll", BlogController.getAll);
 router.put(
   "/updateOne/:id",
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
+  checkAuth,
   BlogController.edit
 );
 
