@@ -18,6 +18,29 @@ const MIME_TYPE_MAP = {
   "image/jpg": "jpg",
 };
 
+const deleteFile = (fileNames) => {
+  let objects = [];
+  fileNames.forEach((fileName) => {
+    objects.push({
+      Key: "department/" + fileName,
+    });
+  });
+
+  let params = {
+    Bucket: process.env.BUCKET_NAME,
+    Delete: {
+      Objects: objects,
+    },
+  };
+
+  s3.deleteObjects(params, function (err, data) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(`Successfully deleted file from bucket`);
+  });
+};
+
 const uploadFile = (fileName) => {
   // Read content from the file
   fs.readFile("public/images/" + fileName, (err, data) => {
@@ -48,7 +71,7 @@ const uploadFile = (fileName) => {
 exports.getAll = (req, res, next) => {
   Department.find()
     .then((documents) => {
-      if (documents) {
+      if (documents.length != 0) {
         res.status(200).json({
           departments: documents,
         });
@@ -318,4 +341,24 @@ exports.edit = (req, res, next) => {
   //   });
 };
 
-exports.deleteOne = (req, res, next) => {};
+exports.deleteOne = (req, res, next) => {
+  Department.findOne({ _id: req.params.id }).then((document) => {
+    Department.deleteOne({ _id: req.params.id })
+      .then((result) => {
+        if (result.n > 0) {
+          deleteFile(document.images);
+          res.status(200).json({ message: "Successfully removed!" });
+        } else {
+          res.status(404).json({
+            error: "Nothing was deleted.",
+          });
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({
+          error: "An unknown error occured!.",
+          errorMessage: error,
+        });
+      });
+  });
+};

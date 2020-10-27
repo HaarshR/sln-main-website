@@ -86,6 +86,12 @@ export class AdminDepartmentComponent implements OnInit {
     }),
   });
 
+  deleteForm = new FormGroup({
+    password: new FormControl('', {
+      validators: [Validators.required],
+    }),
+  });
+
   departments: Department[] = [];
   department: Department;
 
@@ -98,8 +104,10 @@ export class AdminDepartmentComponent implements OnInit {
           this.departments.push(department);
         });
         this.isLoading = false;
+        console.log('NEXT');
       },
       error: (error) => {
+        console.log('ERROR');
         if (error.status == 404) {
           this.fetchErrorMessage = 'No departments found!';
           this.isLoading = false;
@@ -207,13 +215,17 @@ export class AdminDepartmentComponent implements OnInit {
           this.addEditMessage =
             'Department was successfully added BUT with some errors! Pictures might have not been uploaded...';
         }
-        this.departments.push({
+        let obj = {
           _id: next.id,
           date: new Date(),
-          images: next.images,
+          images: [],
           title: this.departmentForm.value.title,
           about: this.departmentForm.value.about,
+        };
+        next.images.forEach((image) => {
+          obj.images.push(image);
         });
+        this.departments.push(obj);
         this.isAdded = true;
       },
       (error) => {
@@ -265,5 +277,15 @@ export class AdminDepartmentComponent implements OnInit {
     // );
   }
 
-  deleteDepartment(department: Department) {}
+  deleteDepartment(department: Department) {
+    if (this.deleteForm.invalid) {
+      return;
+    } else if (this.deleteForm.value.password != 'YES! I am absolutely sure.') {
+      return;
+    }
+    this.departmentService.deleteDepartment(department._id).subscribe(
+      (next) => {},
+      (error) => {}
+    );
+  }
 }

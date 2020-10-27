@@ -28,4 +28,10 @@ export class DepartmentService {
       message: string;
     }>(BACKEND_URL + 'updateOne/' + id, department);
   }
+
+  deleteDepartment(id: string) {
+    return this.http.delete<{
+      message: string;
+    }>(BACKEND_URL + 'deleteOne/' + id);
+  }
 }

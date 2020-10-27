@@ -56,6 +56,6 @@ router.put(
 );
 
 // DELETE REQUEST
-router.delete("/:id", DepartmentController.deleteOne);
+router.delete("/deleteOne/:id", DepartmentController.deleteOne);
 
 module.exports = router;
