@@ -10,6 +10,10 @@ import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 export class AboutPageComponent implements OnInit {
   faInstagram = faInstagram;
   faFacebook = faFacebookF;
+
+  facebookPage = 'https://www.fb.com/SovLanatir';
+  instagramPage = 'https://www.instagram.com/sovlanatir/';
+
   // Dynamic Content
   backgroundImage: string =
     'https://images.unsplash.com/photo-1539946309076-4daf2ea73899?ixlib=rb-1.2.1&w=1000&q=80';
