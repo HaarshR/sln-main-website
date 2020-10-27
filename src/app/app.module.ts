@@ -24,6 +24,7 @@ import { EventsPageComponent } from './events-page/events-page.component';
 import { BlogPageComponent } from './blog-page/blog-page.component';
 import { AdminDepartmentComponent } from './admin/admin-department/admin-department.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { AppRoutingModule } from './app-routing.module';
     ReactiveFormsModule,
     RichTextEditorModule,
     AppRoutingModule,
+    ColorPickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

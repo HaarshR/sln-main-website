@@ -84,6 +84,15 @@ export class AdminDepartmentComponent implements OnInit {
     about: new FormControl('', {
       validators: [Validators.required],
     }),
+    primary: new FormControl('', {
+      validators: [Validators.required],
+    }),
+    secondary: new FormControl('', {
+      validators: [Validators.required],
+    }),
+    tertiary: new FormControl('', {
+      validators: [Validators.required],
+    }),
   });
 
   deleteForm = new FormGroup({
@@ -141,6 +150,9 @@ export class AdminDepartmentComponent implements OnInit {
     this.departmentForm.setValue({
       title: department.title,
       about: department.about,
+      primary: department.colors.primary,
+      secondary: department.colors.secondary,
+      tertiary: department.colors.tertiary,
     });
     this.department = department;
     this.isEditing = true;
@@ -150,12 +162,17 @@ export class AdminDepartmentComponent implements OnInit {
     this.images = [];
     this.imagesPreview = [];
     this.isAdding = false;
+    this.isAdded = false;
     this.fetchErrorMessage = '';
     this.addEditMessage = '';
     this.isEditing = false;
+    this.isEdited = false;
     this.departmentForm.setValue({
       title: '',
       about: '',
+      primary: '',
+      secondary: '',
+      tertiary: '',
     });
     this.department = null;
     this.isDeleting = false;
@@ -197,6 +214,9 @@ export class AdminDepartmentComponent implements OnInit {
     const newDepartmentForm = new FormData();
     newDepartmentForm.append('title', this.departmentForm.value.title);
     newDepartmentForm.append('about', this.departmentForm.value.about);
+    newDepartmentForm.append('primary', this.departmentForm.value.primary);
+    newDepartmentForm.append('secondary', this.departmentForm.value.secondary);
+    newDepartmentForm.append('tertiary', this.departmentForm.value.tertiary);
     let i = 1;
     this.images.forEach((data) => {
       newDepartmentForm.append(
@@ -221,6 +241,11 @@ export class AdminDepartmentComponent implements OnInit {
           images: [],
           title: this.departmentForm.value.title,
           about: this.departmentForm.value.about,
+          colors: {
+            primary: this.departmentForm.value.primary,
+            secondary: this.departmentForm.value.secondary,
+            tertiary: this.departmentForm.value.tertiary,
+          },
         };
         next.images.forEach((image) => {
           obj.images.push(image);

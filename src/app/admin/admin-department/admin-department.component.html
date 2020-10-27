@@ -292,6 +292,32 @@
           formControlName="title"
         />
       </div>
+      <label for="inputAddress">Color Pickers</label>
+      <span
+        [style.color]="departmentForm.value.primary"
+        [cpPosition]="'bottom'"
+        [cpPositionOffset]="'50%'"
+        [cpPositionRelativeToArrow]="true"
+        [(colorPicker)]="departmentForm.value.primary"
+        >Primary</span
+      >
+      <span
+        [style.color]="departmentForm.value.secondary"
+        [cpPosition]="'bottom'"
+        [cpPositionOffset]="'50%'"
+        [cpPositionRelativeToArrow]="true"
+        [(colorPicker)]="departmentForm.value.secondary"
+        >Secondary</span
+      >
+      <span
+        [style.color]="departmentForm.value.tertiary"
+        [cpPosition]="'bottom'"
+        [cpPositionOffset]="'50%'"
+        [cpPositionRelativeToArrow]="true"
+        [(colorPicker)]="departmentForm.value.tertiary"
+        >Tertiary</span
+      >
+      <label for="inputAddress">Title</label>
       <ejs-richtexteditor
         id="defaultRTE"
         formControlName="about"

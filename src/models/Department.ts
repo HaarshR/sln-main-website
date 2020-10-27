@@ -4,4 +4,9 @@ export interface Department {
   images: string[];
   title: string;
   about: string;
+  colors: {
+    primary: string;
+    secondary: string;
+    tertiary: string;
+  };
 }

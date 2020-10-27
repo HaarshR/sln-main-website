@@ -91,11 +91,16 @@ exports.getAll = (req, res, next) => {
 
 exports.addOne = (req, res, next) => {
   const department = new Department({
-    _id: null,
+    _id: "dpt" + req.body.title,
     date: new Date(),
     images: [],
     title: req.body.title,
     about: req.body.about,
+    color: {
+      primary: req.body.primary,
+      secondary: req.body.secondary,
+      tertiary: req.body.tertiary,
+    },
   });
 
   department

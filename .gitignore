@@ -49,4 +49,3 @@ Thumbs.db
 # backend folder
 /Backend/package-lock.json
 /Backend/node_modules
-package-lock.json
