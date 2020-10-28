@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageData } from 'src/models/PageData';
 
 import { NavbarService } from '../shared/navbar/navbar.service';
 
@@ -8,9 +9,10 @@ import { NavbarService } from '../shared/navbar/navbar.service';
   styleUrls: ['./department-page.component.scss'],
 })
 export class DepartmentPageComponent implements OnInit {
-  private pageData: { navBackground: string; navLink: string } = {
+  private pageData: PageData = {
     navBackground: '#ffffff',
     navLink: '#000000',
+    specialNavLink: '#546c55',
   };
 
   departments = [1, 2, 3];

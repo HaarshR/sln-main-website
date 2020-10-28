@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { PageData } from 'src/models/PageData';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NavbarService {
-  private pageData: { navBackground: string; navLink: string } = {
+  private pageData: PageData = {
     navBackground: '',
     navLink: '',
+    specialNavLink: '',
   };
 
   private pageDataSource = new BehaviorSubject(this.pageData);
@@ -15,7 +17,7 @@ export class NavbarService {
 
   constructor() {}
 
-  setPageData(pageData: { navBackground: string; navLink: string }): void {
+  setPageData(pageData: PageData): void {
     this.pageDataSource.next(pageData);
   }
 }

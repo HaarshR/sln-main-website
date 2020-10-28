@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import { NavbarService } from './navbar.service';
+import { PageData } from 'src/models/PageData';
 
 @Component({
   selector: 'app-navbar',
@@ -18,7 +19,7 @@ export class NavbarComponent implements OnInit {
   faInstagram = faInstagram;
   faFacebook = faFacebookF;
 
-  pageData: { navBackground: string, navLink: string };
+  pageData: PageData;
 
   constructor(private navbarService: NavbarService) {}
 
@@ -26,8 +27,6 @@ export class NavbarComponent implements OnInit {
     this.navbarService.currentPageData.subscribe(
       (pageData) => (this.pageData = pageData)
     );
-    // this.getPageData();
-    console.log(this.pageData);
   }
 
   getPageData(): void {}

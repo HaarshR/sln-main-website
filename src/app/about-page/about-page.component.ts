@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { PageData } from 'src/models/PageData';
 import { NavbarService } from '../shared/navbar/navbar.service';
 
 @Component({
@@ -9,9 +10,10 @@ import { NavbarService } from '../shared/navbar/navbar.service';
   styleUrls: ['./about-page.component.scss'],
 })
 export class AboutPageComponent implements OnInit {
-  private pageData: { navBackground: string; navLink: string } = {
+  private pageData: PageData = {
     navBackground: 'rgba(0,0,0, 0.7)',
     navLink: '#ffffff',
+    specialNavLink: '#f89825',
   };
 
   faInstagram = faInstagram;
