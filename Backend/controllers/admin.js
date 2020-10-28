@@ -45,7 +45,7 @@ exports.login = (req, res, next) => {
         to: process.env.SOVLANATIR_EMAIL,
         subject: "Admin account accessed!",
         text: "Admin account accessed!",
-        html: `Hey there!<br />
+        html: `Hey there!<br /><br />
             Someone just logged into Sov Lanatir admin account. If its you or someone you know, please ignore this email!
             <br />
             But if you find anything suspicious, please change the password right now!`,
