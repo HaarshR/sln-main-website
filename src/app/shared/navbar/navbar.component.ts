@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { NavbarService } from './navbar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +18,17 @@ export class NavbarComponent implements OnInit {
   faInstagram = faInstagram;
   faFacebook = faFacebookF;
 
-  constructor() {}
+  pageData: { title: string };
 
-  ngOnInit(): void {}
+  constructor(private navbarService: NavbarService) {}
+
+  ngOnInit(): void {
+    this.navbarService.currentPageData.subscribe(
+      (pageData) => (this.pageData = pageData)
+    );
+    // this.getPageData();
+    console.log(this.pageData);
+  }
+
+  getPageData(): void {}
 }
