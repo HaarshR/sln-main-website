@@ -107,112 +107,92 @@ exports.addOne = (req, res, next) => {
     .save()
     .then(() => {
       if (req.files) {
-        Department.findOne({ title: department.title })
-          .then((addedDepartment) => {
-            let i = 1;
-            let myImages = [];
-            req.files.forEach((image) => {
-              const fileType = MIME_TYPE_MAP[image.mimetype];
-              myImages.push(addedDepartment._id + "_" + i + "." + fileType);
-              department.images.push(
-                addedDepartment._id + "_" + i + "." + fileType
-              );
-              i++;
-            });
-            Department.updateOne(
-              { _id: addedDepartment._id },
-              { images: myImages }
-            ).then(() => {
-              compress_images(
-                tempImagePath,
-                outputImagePath,
-                { compress_force: false, statistic: true, autoupdate: true },
-                false,
-                { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
-                {
-                  png: {
-                    engine: "pngquant",
-                    command: ["--quality=20-50", "-o"],
-                  },
-                },
-                { svg: { engine: false, command: false } },
-                {
-                  gif: {
-                    engine: false,
-                    command: false,
-                  },
-                },
-                function (error, completed, statistic) {
-                  if (completed) {
-                    let i = 1;
-                    req.files.forEach((image) => {
-                      const fileType = MIME_TYPE_MAP[image.mimetype];
-                      try {
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                        fs.unlinkSync("tempImg/" + image.filename);
-                      } catch (err) {}
-                      try {
-                        fs.renameSync(
-                          "public/images/" + image.filename,
-                          "public/images/" +
-                            addedDepartment._id +
-                            "_" +
-                            i +
-                            "." +
-                            fileType
-                        );
-                        uploadFile(
-                          addedDepartment._id + "_" + i + "." + fileType
-                        );
-                        i++;
-                      } catch (err) {}
-                    });
-                    res.status(201).json({
-                      message: "Successfully added!",
-                      id: addedDepartment._id,
-                      images: addedDepartment.images,
-                    });
-                  }
-                }
-              );
-            });
-          })
-          .catch((error) => {
-            res.status(202).json({
-              error: error,
-              errorMessage:
-                "Successfully added but with some errors! (Pictures might have no been uploaded)",
-              id: addedDepartment._id,
-              images: addedDepartment.images,
-            });
-          });
-      } else {
-        Department.findOne({ title: department.title }).then(
-          (addedDepartment) => {
-            res.status(201).json({
-              message: "Successfully added!",
-              id: addedDepartment._id,
-              images: addedDepartment.images,
-            });
+        let i = 1;
+        let myImages = [];
+        req.files.forEach((image) => {
+          const fileType = MIME_TYPE_MAP[image.mimetype];
+          department.images.push(
+            "dpt" + req.body.title + "_" + i + "." + fileType
+          );
+          i++;
+        });
+
+        compress_images(
+          tempImagePath,
+          outputImagePath,
+          { compress_force: false, statistic: true, autoupdate: true },
+          false,
+          { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
+          {
+            png: {
+              engine: "pngquant",
+              command: ["--quality=20-50", "-o"],
+            },
+          },
+          { svg: { engine: false, command: false } },
+          {
+            gif: {
+              engine: false,
+              command: false,
+            },
+          },
+          function (error, completed, statistic) {
+            if (completed) {
+              let i = 1;
+              req.files.forEach((image) => {
+                const fileType = MIME_TYPE_MAP[image.mimetype];
+                try {
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                  fs.unlinkSync("tempImg/" + image.filename);
+                } catch (err) {}
+                try {
+                  fs.renameSync(
+                    "public/images/" + image.filename,
+                    "public/images/" +
+                      "dpt" +
+                      req.body.title +
+                      "_" +
+                      i +
+                      "." +
+                      fileType
+                  );
+                  uploadFile(
+                    req.body.title +
+                      "/dpt" +
+                      req.body.title +
+                      "_" +
+                      i +
+                      "." +
+                      fileType
+                  );
+                  i++;
+                } catch (err) {}
+              });
+            }
           }
         );
       }
+      res.status(201).json({
+        message: "Successfully added!",
+        id: "Refresh the Page",
+        images: addedDepartment.images,
+      });
     })
     .catch((error) => {
       req.files.forEach((image) => {
