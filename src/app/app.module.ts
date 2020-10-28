@@ -27,6 +27,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { EditDepartmentComponent } from './admin/admin-department/edit-department/edit-department.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
+import { ExecutiveMemberPageComponent } from './executive-member-page/executive-member-page.component';
+import { RegularMemberPageComponent } from './regular-member-page/regular-member-page.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,8 @@ import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
     AdminDepartmentComponent,
     EditDepartmentComponent,
     AdminLoginComponent,
+    ExecutiveMemberPageComponent,
+    RegularMemberPageComponent,
   ],
   imports: [
     BrowserModule,
