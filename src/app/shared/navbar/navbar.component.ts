@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
   faInstagram = faInstagram;
   faFacebook = faFacebookF;
 
-  pageData: { title: string };
+  pageData: { navBackground: string, navLink: string };
 
   constructor(private navbarService: NavbarService) {}
 

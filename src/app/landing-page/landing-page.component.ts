@@ -7,8 +7,9 @@ import { NavbarService } from '../shared/navbar/navbar.service';
   styleUrls: ['./landing-page.component.scss'],
 })
 export class LandingPageComponent implements OnInit {
-  private pageData: { title: string } = {
-    title: 'Landing',
+  private pageData: { navBackground: string; navLink: string } = {
+    navBackground: 'rgba(0,0,0,0.7)',
+    navLink: '#ffffff',
   };
   // Dynamic content
   backgroundImage =

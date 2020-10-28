@@ -9,8 +9,9 @@ import { NavbarService } from '../shared/navbar/navbar.service';
   styleUrls: ['./about-page.component.scss'],
 })
 export class AboutPageComponent implements OnInit {
-  private pageData: { title: string } = {
-    title: 'About Us',
+  private pageData: { navBackground: string; navLink: string } = {
+    navBackground: 'rgba(0,0,0, 0.7)',
+    navLink: '#ffffff',
   };
 
   faInstagram = faInstagram;

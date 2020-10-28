@@ -5,14 +5,17 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class NavbarService {
-  private pageData = { title: '' };
+  private pageData: { navBackground: string; navLink: string } = {
+    navBackground: '',
+    navLink: '',
+  };
 
   private pageDataSource = new BehaviorSubject(this.pageData);
   currentPageData = this.pageDataSource.asObservable();
 
   constructor() {}
 
-  setPageData(pageData: { title: string }): void {
+  setPageData(pageData: { navBackground: string; navLink: string }): void {
     this.pageDataSource.next(pageData);
   }
 }
