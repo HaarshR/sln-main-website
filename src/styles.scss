@@ -61,4 +61,8 @@ $theme-colors: (
   background-attachment: fixed;
 }
 
+:focus {
+  outline: none;
+}
+
 @import "node_modules/bootstrap/scss/bootstrap";
