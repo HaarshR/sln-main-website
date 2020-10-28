@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
+import { NavbarService } from '../shared/navbar/navbar.service';
 
 @Component({
   selector: 'app-about-page',
@@ -8,6 +9,10 @@ import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
   styleUrls: ['./about-page.component.scss'],
 })
 export class AboutPageComponent implements OnInit {
+  private pageData: { title: string } = {
+    title: 'About Us',
+  };
+
   faInstagram = faInstagram;
   faFacebook = faFacebookF;
 
@@ -20,7 +25,9 @@ export class AboutPageComponent implements OnInit {
 
   members = [1, 2, 3];
 
-  constructor() {}
+  constructor(private navbarService: NavbarService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.navbarService.setPageData(this.pageData);
+  }
 }
