@@ -11,11 +11,13 @@ import { EventsPageComponent } from './events-page/events-page.component';
 import { JoinusPageComponent } from './joinus-page/joinus-page.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AuthGuard } from './admin/admin-login/auth.guard';
+import { DepartmentPageComponent } from './department-page/department-page.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'about-us', component: AboutPageComponent },
   { path: 'blog', component: BlogPageComponent },
+  { path: 'departments', component: DepartmentPageComponent },
   { path: 'events', component: EventsPageComponent },
   { path: 'join-us', component: JoinusPageComponent },
   {
