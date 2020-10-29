@@ -1,0 +1,26 @@
+.card {
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.16);
+  }
+  
+  .image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  .avatar {
+    vertical-align: middle;
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+  }
+  
+  .card-dept-title {
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .card-info {
+    font-size: 20px;
+    color: #707070;
+  }

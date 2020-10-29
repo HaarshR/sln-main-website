@@ -29,6 +29,7 @@ import { EditDepartmentComponent } from './admin/admin-department/edit-departmen
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { ExecutiveMemberPageComponent } from './joinus-page/executive-member-page/executive-member-page.component';
 import { RegularMemberPageComponent } from './joinus-page/regular-member-page/regular-member-page.component';
+import { EventsCardComponent } from './events-page/events-card/events-card.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { RegularMemberPageComponent } from './joinus-page/regular-member-page/re
     AdminLoginComponent,
     ExecutiveMemberPageComponent,
     RegularMemberPageComponent,
+    EventsCardComponent,
   ],
   imports: [
     BrowserModule,
