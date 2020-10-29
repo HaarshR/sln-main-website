@@ -16,7 +16,7 @@ export class DepartmentPageComponent implements OnInit {
     togglerColor: '#546c55',
   };
 
-  departments = [1, 2, 3];
+  departments = [1, 2, 3, 4, 5];
 
   constructor(private navbarService: NavbarService) {}
 
