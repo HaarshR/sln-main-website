@@ -12,8 +12,8 @@ import { JoinusPageComponent } from './joinus-page/joinus-page.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { AuthGuard } from './admin/admin-login/auth.guard';
 import { DepartmentPageComponent } from './department-page/department-page.component';
-import { ExecutiveMemberPageComponent } from './executive-member-page/executive-member-page.component';
-import { RegularMemberPageComponent } from './regular-member-page/regular-member-page.component';
+import { ExecutiveMemberPageComponent } from './joinus-page/executive-member-page/executive-member-page.component';
+import { RegularMemberPageComponent } from './joinus-page/regular-member-page/regular-member-page.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -22,9 +22,8 @@ const routes: Routes = [
   { path: 'departments', component: DepartmentPageComponent },
   { path: 'events', component: EventsPageComponent },
   { path: 'join-us', component: JoinusPageComponent },
-  { path: 'executive-member', component: ExecutiveMemberPageComponent },
-  { path: 'regular-member', component: RegularMemberPageComponent },
-  
+  { path: 'join-us/executive', component: ExecutiveMemberPageComponent },
+  { path: 'join-us/regular', component: RegularMemberPageComponent },
   {
     path: 'admin',
     component: AdminLoginComponent,
