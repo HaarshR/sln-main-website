@@ -13,6 +13,7 @@ export class DepartmentPageComponent implements OnInit {
     navBackground: '#ffffff',
     navLink: '#000000',
     specialNavLink: '#546c55',
+    togglerColor: '#546c55',
   };
 
   departments = [1, 2, 3];
