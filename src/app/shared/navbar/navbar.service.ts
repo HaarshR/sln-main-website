@@ -10,6 +10,7 @@ export class NavbarService {
     navBackground: '',
     navLink: '',
     specialNavLink: '',
+    togglerColor: '',
   };
 
   private pageDataSource = new BehaviorSubject(this.pageData);

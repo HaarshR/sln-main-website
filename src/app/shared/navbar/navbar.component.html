@@ -15,7 +15,10 @@
       data-toggle="collapse"
       data-target="#navbarResponsive"
     >
-      <fa-icon [icon]="faBars" class="icon-dark"></fa-icon>
+      <fa-icon
+        [icon]="faBars"
+        [ngStyle]="{ color: pageData.togglerColor }"
+      ></fa-icon>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarResponsive">
