@@ -1,1 +1,25 @@
-<p>events-page works!</p>
+<div class="container" style="padding: 5% 0">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12 text-break text-center text-sm-left">
+          <h1 class="headm text-warning pt-5" id="main-text">
+            Upcoming events.
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 py-3">
+          <p class="psource text-center text-sm-left">
+            Check out some of our upcoming projects.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 mb-3" *ngFor="let event of events">
+          <app-events-card></app-events-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
