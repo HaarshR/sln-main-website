@@ -46,7 +46,7 @@
               type="tel"
               name="fname"
               id="fname"
-              class="form-control form-control-sm"
+              class="form-control"
               placeholder="Full Name*"
               required
             />
@@ -56,7 +56,7 @@
               type="email"
               name="email"
               id="email"
-              class="form-control form-control-sm"
+              class="form-control"
               placeholder="Email*"
               required
             />
@@ -66,7 +66,7 @@
               type="text"
               name="phone"
               id="phone"
-              class="form-control form-control-sm"
+              class="form-control"
               placeholder="Phone Number"
             />
           </div>
@@ -93,21 +93,21 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-6 col-md-12">
+          <div class="col-12 text-center text-md-right">
             <h4 class="font-weight-bold headr">Address</h4>
             <p class="psource text-info">
               <fa-icon [icon]="faMapMarkerAlt" class="px-1" size="xs"></fa-icon
               >{{ address }}
             </p>
           </div>
-          <div class="col-6 col-md-12">
+          <div class="col-12 text-center text-md-right">
             <h4 class="font-weight-bold headr">Phone</h4>
             <p class="psource text-info">
               <fa-icon [icon]="faPhone" class="px-1" size="xs"></fa-icon>
               {{ phone }}
             </p>
           </div>
-          <div class="col-12 col-md-12">
+          <div class="col-12 text-center text-md-right">
             <h4 class="font-weight-bold headr">Email</h4>
             <p class="psource text-info">
               <fa-icon [icon]="faInbox" class="px-1" size="xs"></fa-icon
@@ -116,13 +116,17 @@
           </div>
         </div>
         <div class="row">
-          <div class="offset-4 col-4 offset-md-2 col-md-5 text-warning">
+          <div
+            class="col-6 offset-md-2 col-md-5 offset-lg-6 col-lg-3 text-warning text-center text-md-right"
+          >
             <a class="psource text-warning" [href]="facebookPage"
               ><fa-icon [icon]="faFacebook" class="px-1" size="md"></fa-icon>/
               SovLanatir</a
             >
           </div>
-          <div class="col-4 col-md-5 text-warning">
+          <div
+            class="col-6 col-md-5 col-lg-3 text-warning text-center text-md-right"
+          >
             <a class="psource text-warning" [href]="instagramPage"
               ><fa-icon [icon]="faInstagram" class="px-1" size="lg"></fa-icon
               >@sovlanatir</a
