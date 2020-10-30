@@ -1,11 +1,22 @@
-.card {
-  width: 90%;
-  height: auto;
-  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
-}
+@import "../../../styles.scss";
 
-.image {
+.card {
+  border: 1rem $white solid;
+  border-radius: 10px;
+  background-color: $white;
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+
+  width: 15rem;
+  height: 15rem;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
+  transition: 0.5s;
+}
+
+.card:hover {
+  border: 1rem $gray solid;
+  filter: saturate(175%);
 }
