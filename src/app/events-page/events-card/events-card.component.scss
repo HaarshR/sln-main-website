@@ -1,3 +1,5 @@
+@import "../../../styles.scss";
+
 .image {
   background-size: cover;
   background-repeat: no-repeat;
@@ -12,8 +14,18 @@
 }
 
 .inside-card {
+  background-color: $white;
   border-radius: 20px;
   box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+  transition: 0.5s;
+}
+.inside-card:hover {
+  background-color: $gray;
+}
+
+.card-event-title {
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .card-dept-title {
