@@ -76,41 +76,45 @@
 </div>
 <!-- TODO: Replace image container with slider (slideshow) -->
 
-<ngb-carousel
-  *ngIf="images"
-  [interval]= "1000"
-  [showNavigationIndicators]="showNavigationIndicators"
->
-  <ng-template ngbSlide *ngFor="let image of images">
-    <div class="picsum-img-wrapper">
-      <img [src]="image" alt="Random slide" />
-    </div>
-    <div class="carousel-caption">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="offset-0 col-12 offset-md-1 col-md-10">
-            <p class="psource text-white text-center shadow" id="paragraph">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Exercitationem blanditiis molestias, neque veritatis sit autem
-              repellendus officiis ab ullam cum corporis? Facere aliquam,
-              reprehenderit asperiores sapiente harum non optio odio!
-            </p>
+<div class="img-container">
+  <ngb-carousel
+    *ngIf="images"
+    [keyboard]="false"
+    [interval]="5000"
+    [pauseOnFocus]="false"
+    [pauseOnHover]="false"
+    [showNavigationIndicators]="showNavigationIndicators"
+  >
+    <ng-template ngbSlide *ngFor="let image of images">
+      <div class="picsum-img-wrapper img-container">
+        <img
+          [src]="image"
+          alt="Random slide"
+          style="width: 100%; resize: both"
+        />
+      </div>
+      <div class="carousel-caption">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="offset-0 col-12 offset-md-1 col-md-10">
+              <p class="psource text-white text-center shadow" id="paragraph">
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Exercitationem blanditiis molestias, neque veritatis sit autem
+                repellendus officiis ab ullam cum corporis? Facere aliquam,
+                reprehenderit asperiores sapiente harum non optio odio!
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-12 text-center py-5">
-            <button class="btn btn-primary text-white">Apply Now</button>
+          <div class="row">
+            <div class="col-12 text-center py-5">
+              <button class="btn btn-primary text-white">Apply Now</button>
+            </div>
           </div>
         </div>
       </div>
-     
-    </div>
-  </ng-template>
-</ngb-carousel>
-
-<hr />
-
-
+    </ng-template>
+  </ngb-carousel>
+</div>
 <!-- 
 <div
   class="img-container"
