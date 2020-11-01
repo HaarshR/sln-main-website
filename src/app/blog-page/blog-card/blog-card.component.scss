@@ -5,7 +5,7 @@
   transition: 0.5s;
 }
 .inside-card:hover {
-  background-color: $gray;
+  filter: saturate(150%);
 }
 
 .blog-author {
