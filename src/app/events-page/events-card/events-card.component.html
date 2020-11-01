@@ -1,39 +1,38 @@
-
-  <div class="row m-3 inside-card" style="cursor: pointer">
-    <div class="offset-1 col-10 offset-md-1 col-md-5 py-3">
-      <div class="row align-items-center h-100">
-        <div class="col-4">
-          <img
-            src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
-            class="avatar"
-          />
-        </div>
-        <div class="col-8 mx-auto text-center">
-          <span class="headr m-0 card-event-title">Website Launch</span>
-        </div>
+<div class="row m-3 inside-card" style="cursor: pointer" (click)="onClick()">
+  <div class="offset-1 col-10 offset-md-1 col-md-5 py-3">
+    <div class="row align-items-center h-100">
+      <div class="col-4">
+        <img
+          src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
+          class="avatar"
+        />
+      </div>
+      <div class="col-8 mx-auto text-center">
+        <span class="headr m-0 card-event-title">Website Launch</span>
       </div>
     </div>
-    <div class="offset-1 col-10 offset-md-1 col-md-3 py-3">
-      <div class="row align-items-center h-100">
-        <div class="offset-1 col-11">
-          <div class="row my-2">
-            <div class="col-12">
-              <span class="headr card-dept-title">IT Department</span>
-            </div>
+  </div>
+  <div class="offset-1 col-10 offset-md-1 col-md-3 py-3">
+    <div class="row align-items-center h-100">
+      <div class="offset-1 col-11">
+        <div class="row my-2">
+          <div class="col-12">
+            <span class="headr card-dept-title">IT Department</span>
           </div>
-          <div class="row my-2">
-            <div class="col-12 card-info">
-              <fa-icon [icon]="faCalendarAlt"></fa-icon>
-              <span class="headr ml-3">Some date</span>
-            </div>
+        </div>
+        <div class="row my-2">
+          <div class="col-12 card-info">
+            <fa-icon [icon]="faCalendarAlt"></fa-icon>
+            <span class="headr ml-3">Some date</span>
           </div>
-          <div class="row my-2">
-            <div class="col-12 card-info">
-              <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-              <span class="headr ml-3">Some location</span>
-            </div>
+        </div>
+        <div class="row my-2">
+          <div class="col-12 card-info">
+            <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+            <span class="headr ml-3">Some location</span>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

@@ -19,4 +19,6 @@ export class EventsCardComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  onClick(): void {}
 }
