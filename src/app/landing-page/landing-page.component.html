@@ -78,7 +78,7 @@
 
 <ngb-carousel
   *ngIf="images"
-  [showNavigationsArrows]="showNavigationsArrows"
+  [interval]= "1000"
   [showNavigationIndicators]="showNavigationIndicators"
 >
   <ng-template ngbSlide *ngFor="let image of images">
