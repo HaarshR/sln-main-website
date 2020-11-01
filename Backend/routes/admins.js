@@ -10,9 +10,9 @@ const router = express.Router();
 router.post("/login", AdminController.login);
 
 // GET REQUEST
-router.get("/getAdmin", checkAuth, AdminController.getAdmin);
+router.get("/getAdmin", AdminController.getAdmin);
 
 // UPDATE REQUEST
-router.put("/updatePassword", checkAuth, AdminController.updatePassword);
+router.put("/updatePassword", AdminController.updatePassword);
 
 module.exports = router;

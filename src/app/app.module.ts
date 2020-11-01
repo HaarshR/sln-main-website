@@ -30,6 +30,7 @@ import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { ExecutiveMemberPageComponent } from './joinus-page/executive-member-page/executive-member-page.component';
 import { RegularMemberPageComponent } from './joinus-page/regular-member-page/regular-member-page.component';
 import { EventsCardComponent } from './events-page/events-card/events-card.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { EventsCardComponent } from './events-page/events-card/events-card.compo
     RichTextEditorModule,
     AppRoutingModule,
     ColorPickerModule,
+    NgbModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

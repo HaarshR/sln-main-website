@@ -11,7 +11,7 @@ exports.login = (req, res, next) => {
   Admin.findOne({ email: req.body.email })
     .then((admin) => {
       if (!admin) {
-        return res.status(404).json({
+        return res.status(403).json({
           errorMessage: "Authentication failed! Wrong email address.",
         });
       }
@@ -20,16 +20,19 @@ exports.login = (req, res, next) => {
     })
     .then((result) => {
       if (!result) {
-        return res.status(404).json({
+        return res.status(403).json({
           errorMessage: "Authentication failed! The password is incorrect.",
         });
       }
+
       const token = jwt.sign(
         {
+          loggedIn: true,
           adminID: fetchedUser._id,
           adminEMAIL: fetchedUser.email,
         },
-        process.env.JTW_KEY
+        process.env.JTW_KEY,
+        { expiresIn: "24h" }
       );
 
       let transport = nodemailer.createTransport({
@@ -52,7 +55,6 @@ exports.login = (req, res, next) => {
       };
       transport.sendMail(mailOptions, (error, info) => {});
       return res.status(200).json({
-        token: token,
         adminID: fetchedUser._id,
         adminEMAIL: fetchedUser.email,
       });
@@ -60,8 +62,8 @@ exports.login = (req, res, next) => {
     .catch((error) => {
       console.log(error);
       return res.status(500).json({
-        error: "An unknown error occured!",
-        errorMessage: error,
+        error: error,
+        errorMessage: "An unknown error occured!",
       });
     });
 };

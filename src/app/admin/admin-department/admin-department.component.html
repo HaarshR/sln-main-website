@@ -88,7 +88,7 @@
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h3 class="modal-title mb-0 p-0" id="staticBackdropLabel">
@@ -124,51 +124,34 @@
                 <div class="col mb-2">
                   <b>Department's Gallery</b>
                   <br />
-                  <div
-                    id="carouselExampleControls"
-                    class="carousel slide"
-                    data-ride="carousel"
+                  <ngb-carousel
+                    #carousel
+                    [interval]="5000"
+                    [pauseOnHover]="false"
+                    [showNavigationArrows]="true"
+                    [showNavigationIndicators]="false"
                   >
-                    <div class="carousel-inner">
-                      <ng-container *ngFor="let image of department.images">
-                        <div
-                          class="carousel-item"
-                          [ngClass]="{
-                            active: department.images.indexOf(image) == 0
-                          }"
-                        >
+                    <ng-template
+                      ngbSlide
+                      *ngFor="let image of department.images; index as i"
+                    >
+                      <a
+                        href="{{ imgUrl }}{{ image }}"
+                        target="_blank"
+                        rel="nofollow noopener noreferrer"
+                      >
+                        <div class="picsum-img-wrapper">
                           <img
-                            class="d-block w-100"
-                            src="{{ imgUrl }}{{ image }}"
+                            class="img-fluid"
+                            src="{{ imgUrl }}{{
+                              department.title.replace(' ', '-')
+                            }}/{{ image }}"
+                            alt="Booking Website Gallery {{ i + 1 }}"
                           />
                         </div>
-                      </ng-container>
-                    </div>
-                    <a
-                      class="carousel-control-prev"
-                      href="#carouselExampleControls"
-                      role="button"
-                      data-slide="prev"
-                    >
-                      <span
-                        class="carousel-control-prev-icon"
-                        aria-hidden="true"
-                      ></span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                    <a
-                      class="carousel-control-next"
-                      href="#carouselExampleControls"
-                      role="button"
-                      data-slide="next"
-                    >
-                      <span
-                        class="carousel-control-next-icon"
-                        aria-hidden="true"
-                      ></span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </div>
+                      </a>
+                    </ng-template>
+                  </ngb-carousel>
                 </div>
               </div>
               <div class="row">
@@ -199,7 +182,7 @@
                 If so then enter the following (as it is shown) in the input box
                 below:
               </h4>
-              <p>"YES! I am absolutely sure."</p>
+              <p>YES! I am absolutely sure.</p>
               <form [formGroup]="deleteForm" style="text-align: left">
                 <script>
                   if (document.getElementById("passPhrase").clicked) {
@@ -214,7 +197,6 @@
                 </script>
                 <span id="errorMessage"></span>
                 <div class="form-group">
-                  <label for="inputAddress">PassPhrase</label>
                   <input
                     type="text"
                     class="form-control"
@@ -257,13 +239,61 @@
         </h2>
       </div>
     </div>
+
+    <h1 *ngIf="isEditing">Already added images</h1>
+    <div class="d-flex flex-wrap flexOldImageBox">
+      <ng-container *ngFor="let image of imagesPreview2">
+        <div class="d-flex flex-column oldImageFlex p-2">
+          <img
+            class="img-fluid oldImage"
+            src="{{ imgUrl }}{{ department.title.replace(' ', '-') }}/{{
+              image
+            }}"
+            [alt]="image.substring(0, image.length - 3)"
+          />
+          <input
+            class="mt-2"
+            type="file"
+            accept=".png, .jpg"
+            (change)="onImageChange($event, image)"
+          />
+          <button
+            class="btn btn-warning mt-2"
+            type="button"
+            (click)="deletePic(image)"
+          >
+            Remove Picture
+          </button>
+        </div>
+      </ng-container>
+    </div>
+
+    <h1 *ngIf="imageChangePreview.length > 0">Changed Images</h1>
+    <div class="d-flex flex-wrap flexOldImageBox">
+      <ng-container *ngFor="let image of imageChangePreview">
+        <div class="d-flex flex-column oldImageFlex p-2">
+          <img
+            class="img-fluid"
+            src="{{ image }}"
+            alt="{{ department.title.replace(' ', '-') }}"
+          />
+        </div>
+      </ng-container>
+    </div>
+
+    <h1>New Images</h1>
     <div class="d-flex flex-wrap flexOldImageBox pt-3">
       <ng-container *ngFor="let image of imagesPreview">
         <div class="d-flex flex-column oldImageFlex p-2">
           <img class="img-fluid" [src]="image" />
         </div>
       </ng-container>
-      <ng-container *ngIf="imagesPreview.length == 0">
+      <ng-container
+        *ngIf="
+          (isAdding && imagesPreview.length == 0) ||
+          (isEditing && imagesPreview.length == 0 && imagesPreview2.length == 0)
+        "
+      >
         <div class="">At least one image should be uploaded!</div>
       </ng-container>
     </div>
@@ -323,6 +353,7 @@
         formControlName="about"
         [toolbarSettings]="rteTools"
         height="400"
+        [maxLength]="maxLength"
       >
       </ejs-richtexteditor>
     </form>

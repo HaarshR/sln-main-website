@@ -53,7 +53,6 @@ router.get("/getAll", BlogController.getAll);
 router.put(
   "/updateOne/:id",
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
-  checkAuth,
   BlogController.edit
 );
 

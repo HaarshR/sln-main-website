@@ -1,0 +1,7 @@
+File from: [tempImg/fauna_1.jpg]
+
+File to: [public/images/fauna_1.jpg]
+
+Compression algorithm: [-]
+
+Description: File does not exist!

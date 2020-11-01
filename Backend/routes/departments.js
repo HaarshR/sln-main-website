@@ -20,7 +20,7 @@ const fileStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     const name =
-      file.originalname.toLocaleLowerCase().split(" ").join("-") +
+      file.originalname.split(" ").join("-") +
       "." +
       MIME_TYPE_MAP[file.mimetype];
     cb(null, name);
@@ -41,7 +41,7 @@ const fileFilter = (req, file, cb) => {
 // POST REQUEST
 router.post(
   "/addOne",
-  multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 200),checkAuth,
+  multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 200),
   DepartmentController.addOne
 );
 
@@ -51,11 +51,11 @@ router.get("/getAll", DepartmentController.getAll);
 // UPDATE REQUEST
 router.put(
   "/updateOne/:id",
-  multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 200),checkAuth,
+  multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 200),
   DepartmentController.edit
 );
 
 // DELETE REQUEST
-router.delete("/deleteOne/:id", checkAuth,DepartmentController.deleteOne);
+router.delete("/deleteOne/:id", DepartmentController.deleteOne);
 
 module.exports = router;

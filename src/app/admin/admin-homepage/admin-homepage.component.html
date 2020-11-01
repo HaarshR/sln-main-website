@@ -1,15 +1,22 @@
 <div class="container">
-  <!-- ACCOMMDOATION -->
+  <div class="row pt-5">
+    <div class="col-lg-12">
+      <button class="btn btn-success" (click)="logout()">Logout</button>
+    </div>
+  </div>
+
   <div class="row mt-4">
-    <div class="col-lg-6 mb-3">
+    <div class="col-lg-12 mb-3">
       <app-admin-blog></app-admin-blog>
     </div>
-    <div class="col-lg-6 mb-3">
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12 mb-3">
       <app-admin-department></app-admin-department>
     </div>
   </div>
 
-  <!-- ACCOUNT -->
   <div class="row mt-3">
     <div class="col-lg-7 mb-3">
       <div class="card myCard p-3 overflow-auto">

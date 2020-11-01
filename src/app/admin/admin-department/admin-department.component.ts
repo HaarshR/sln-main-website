@@ -56,6 +56,7 @@ export class AdminDepartmentComponent implements OnInit {
       'SourceCode',
     ],
   };
+  maxLength: number = 500;
 
   isLoading = true;
   addEditMessage = '';
@@ -84,13 +85,13 @@ export class AdminDepartmentComponent implements OnInit {
     about: new FormControl('', {
       validators: [Validators.required],
     }),
-    primary: new FormControl('', {
+    primary: new FormControl('#000', {
       validators: [Validators.required],
     }),
-    secondary: new FormControl('', {
+    secondary: new FormControl('#000', {
       validators: [Validators.required],
     }),
-    tertiary: new FormControl('', {
+    tertiary: new FormControl('#000', {
       validators: [Validators.required],
     }),
   });
@@ -103,6 +104,11 @@ export class AdminDepartmentComponent implements OnInit {
 
   departments: Department[] = [];
   department: Department;
+
+  imagesPreview2 = [];
+  imageChangePreview = [];
+  imageChange = [];
+  imageDelete = [];
 
   constructor(private departmentService: DepartmentService) {}
 
@@ -156,6 +162,9 @@ export class AdminDepartmentComponent implements OnInit {
     });
     this.department = department;
     this.isEditing = true;
+    this.department.images.forEach((image) => {
+      this.imagesPreview2.push(image);
+    });
   }
 
   cancel() {
@@ -198,6 +207,23 @@ export class AdminDepartmentComponent implements OnInit {
     this.images = imagesData;
   }
 
+  onImageChange(event: Event, oldImage: string) {
+    const index = this.department.images.indexOf(oldImage);
+    this.imagesPreview2.splice(this.imagesPreview2.indexOf(oldImage), 1);
+    const file = (event.target as HTMLInputElement).files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imageChangePreview.push(reader.result);
+    };
+    this.imageChange.push([file, index]);
+    reader.readAsDataURL(file);
+  }
+
+  deletePic(imageName: string) {
+    this.imageDelete.push(imageName);
+    this.imagesPreview2.splice(this.imagesPreview2.indexOf(imageName), 1);
+  }
+
   imageType(type: string) {
     const imgType = {
       'image/png': 'png',
@@ -208,7 +234,19 @@ export class AdminDepartmentComponent implements OnInit {
   }
 
   add() {
-    if (this.departmentForm.invalid || this.imagesPreview.length == 0) {
+    if (
+      !this.departmentForm.value.title ||
+      !this.departmentForm.value.about ||
+      !this.departmentForm.value.primary ||
+      !this.departmentForm.value.secondary ||
+      !this.departmentForm.value.tertiary ||
+      this.imagesPreview.length == 0
+    ) {
+      console.log(
+        this.departmentForm.value,
+        this.departmentForm.invalid,
+        this.imagesPreview
+      );
       return;
     }
     const newDepartmentForm = new FormData();
@@ -222,7 +260,7 @@ export class AdminDepartmentComponent implements OnInit {
       newDepartmentForm.append(
         'images',
         data,
-        this.departmentForm.value.title + '_' + i
+        'dpt' + this.departmentForm.value.title.replace('_', ' ') + '_' + i
       );
       i++;
     });
@@ -268,41 +306,75 @@ export class AdminDepartmentComponent implements OnInit {
   }
 
   save() {
-    // if (this.departmentForm.invalid || this.imagesPreview.length == 0) {
-    //   return;
-    // }
-    // const newDepartmentForm = new FormData();
-    // newDepartmentForm.append('title', this.departmentForm.value.title);
-    // newDepartmentForm.append('about', this.departmentForm.value.about);
-    // let i = 1;
-    // this.images.forEach((data) => {
-    //   newDepartmentForm.append(
-    //     'images',
-    //     data,
-    //     this.departmentForm.value.title + '_' + i
-    //   );
-    //   i++;
-    // });
-    // console.log(this.images);
-    // this.departmentService.addDepartments(newDepartmentForm).subscribe(
-    //   (next) => {
-    //     if (next.message) {
-    //       this.addEditMessage = 'Department was successfully added!';
-    //     } else {
-    //       this.addEditMessage =
-    //         'Department was successfully added BUT with some errors! Pictures might have not been uploaded...';
-    //     }
-    //     this.isAdded = true;
-    //   },
-    //   (error) => {
-    //     if (error.status == 404) {
-    //       this.addEditMessage = 'Error occured! This department already exist.';
-    //     } else {
-    //       this.addEditMessage = 'An unknown error occured!';
-    //     }
-    //     this.isAdded = true;
-    //   }
-    // );
+    if (
+      !this.departmentForm.value.title ||
+      !this.departmentForm.value.about ||
+      !this.departmentForm.value.primary ||
+      !this.departmentForm.value.secondary ||
+      !this.departmentForm.value.tertiary
+    ) {
+      console.log(
+        this.departmentForm.value,
+        this.departmentForm.invalid,
+        this.imagesPreview
+      );
+      return;
+    }
+    const newDepartmentForm = new FormData();
+    newDepartmentForm.append('title', this.departmentForm.value.title);
+    newDepartmentForm.append('about', this.departmentForm.value.about);
+    newDepartmentForm.append('primary', this.departmentForm.value.primary);
+    newDepartmentForm.append('secondary', this.departmentForm.value.secondary);
+    newDepartmentForm.append('tertiary', this.departmentForm.value.tertiary);
+    if (this.imagesPreview2.length == 0) {
+      newDepartmentForm.append('oldImages', 'null');
+      newDepartmentForm.append('oldImages', 'null');
+    } else {
+      this.imagesPreview2.forEach((image) => {
+        newDepartmentForm.append('oldImages', image);
+      });
+      if (this.imagesPreview2.length == 1) {
+        newDepartmentForm.append('oldImages', 'null');
+      }
+    }
+    if (this.imageChange.length == 0) {
+      if (this.images.length == 0) {
+        newDepartmentForm.append('images', null);
+      }
+    } else {
+      this.imageChange.forEach((imageDatas) => {
+        newDepartmentForm.append(
+          'images',
+          imageDatas[0],
+          `dpt${this.department.title.replace(' ', '-')}_${imageDatas[1] + 1}`
+        );
+      });
+    }
+    let i = this.department.images.length + 1;
+    this.images.forEach((image) => {
+      newDepartmentForm.append(
+        'images',
+        image,
+        `dpt${this.department.title.replace(' ', '-')}_${i}`
+      );
+      i++;
+    });
+    this.imageDelete.forEach((imageDelete) => {
+      newDepartmentForm.append('imageDelete', imageDelete);
+    });
+    if (this.imageDelete.length == 1) {
+      newDepartmentForm.append('imageDelete', 'null');
+    }
+    this.departmentService
+      .updateDepartment(newDepartmentForm, this.department._id)
+      .subscribe(
+        (next) => {
+          console.log(next);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   }
 
   deleteDepartment(department: Department) {
