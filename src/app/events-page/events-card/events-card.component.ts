@@ -16,6 +16,14 @@ export class EventsCardComponent implements OnInit {
   faMapMarkerAlt = faMapMarkerAlt;
   faPlay = faPlay;
 
+  thumbnail =
+    'https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light';
+
+  title = 'Event Title';
+  department = 'IT Department';
+  date = '32 December 2020';
+  location = 'Trou Kanaka';
+
   constructor() {}
 
   ngOnInit(): void {}
