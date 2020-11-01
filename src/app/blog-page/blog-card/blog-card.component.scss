@@ -1,0 +1,30 @@
+@import "../../../styles.scss";
+
+.inside-card {
+  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
+  transition: 0.5s;
+}
+.inside-card:hover {
+  background-color: $gray;
+}
+
+.blog-author {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.blog-date {
+  font-weight: 300;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.card-title {
+  font-size: 22px;
+  font-weight: 700;
+}
