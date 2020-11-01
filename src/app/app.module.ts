@@ -31,6 +31,7 @@ import { ExecutiveMemberPageComponent } from './joinus-page/executive-member-pag
 import { RegularMemberPageComponent } from './joinus-page/regular-member-page/regular-member-page.component';
 import { EventsCardComponent } from './events-page/events-card/events-card.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BlogCardComponent } from './blog-page/blog-card/blog-card.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ExecutiveMemberPageComponent,
     RegularMemberPageComponent,
     EventsCardComponent,
+    BlogCardComponent,
   ],
   imports: [
     BrowserModule,
