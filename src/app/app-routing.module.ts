@@ -14,12 +14,14 @@ import { AuthGuard } from './admin/admin-login/auth.guard';
 import { DepartmentPageComponent } from './department-page/department-page.component';
 import { ExecutiveMemberPageComponent } from './joinus-page/executive-member-page/executive-member-page.component';
 import { RegularMemberPageComponent } from './joinus-page/regular-member-page/regular-member-page.component';
+import { DepartmentComponent } from './department-page/department/department.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'about-us', component: AboutPageComponent },
   { path: 'blog', component: BlogPageComponent },
   { path: 'departments', component: DepartmentPageComponent },
+  { path: 'departments/d', component: DepartmentComponent },
   { path: 'events', component: EventsPageComponent },
   { path: 'join-us', component: JoinusPageComponent },
   { path: 'join-us/executive', component: ExecutiveMemberPageComponent },
