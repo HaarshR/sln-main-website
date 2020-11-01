@@ -1,37 +1,60 @@
-<div class="card inside-card m-3" style="cursor: pointer" (click)="onClick()">
-  <div class="card-header">
+<div
+  class="card inside-card border-0 m-3"
+  style="cursor: pointer"
+  (click)="onClick()"
+>
+  <div
+    class="card-header border-0"
+    [ngStyle]="{ 'background-color': cardStyle.backgroundColor }"
+  >
     <div class="container-fluid">
       <div class="row h-100">
         <div class="col-2 p-0 pr-3 my-auto">
           <img
-            src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
-            class="avatar"
+            [src]="authorImg"
+            class="avatar shadow"
           />
         </div>
-        <div class="col-10 my-auto">
+        <div
+          class="col-10 my-auto"
+          [ngStyle]="{ color: cardStyle.primaryText }"
+        >
           <div class="row">
-            <div class="col-12 blog-author headr">Someone Someone</div>
+            <div class="col-12 blog-author headr">{{ author }}</div>
           </div>
           <div class="row">
-            <div class="col-12 blog-date psource">Some date</div>
+            <div class="col-12 blog-date psource">{{ date }}</div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="card-body">
-    <div class="py-3">
-      <h5 class="card-title headr">An Article: An Awesome Title</h5>
-      <p class="card-text psource">
-        So this is a brief description of what is written in this article. May
-        be used to lure readers in.
+  <div
+    class="card-body"
+    [ngStyle]="{ 'background-color': cardStyle.backgroundColor }"
+  >
+    <div class="py-2">
+      <h5 class="card-title headr" [ngStyle]="{ color: cardStyle.primaryText }">
+        {{ title }}
+      </h5>
+      <p
+        class="card-text psource"
+        [ngStyle]="{ color: cardStyle.secondaryText }"
+      >
+        {{ subtitle }}
       </p>
     </div>
     <hr />
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-3">Views</div>
-        <div class="col-3">Comments</div>
+      <div class="row" [ngStyle]="{ color: cardStyle.primaryText }">
+        <div class="col-6 text-center">
+          <fa-icon [icon]="faEye"></fa-icon>
+          <span class="px-3"> {{ views }} Views </span>
+        </div>
+        <div class="col-6 text-center">
+          <fa-icon [icon]="faCommentAlt"></fa-icon>
+          <span class="px-3"> {{ comments }} Comments </span>
+        </div>
       </div>
     </div>
   </div>
