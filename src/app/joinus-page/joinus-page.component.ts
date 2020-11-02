@@ -20,7 +20,7 @@ export class JoinusPageComponent implements OnInit {
   faUser = faUser;
   faHandshake = faHandshake;
 
-  backgroundImage: string = //'https://9to5mac.com/wp-content/uploads/sites/6/2014/07/hero_2x.jpg';
+  backgroundImage = // 'https://9to5mac.com/wp-content/uploads/sites/6/2014/07/hero_2x.jpg';
     'https://images.unsplash.com/photo-1539946309076-4daf2ea73899?ixlib=rb-1.2.1&w=1000&q=80';
 
   constructor(private navbarService: NavbarService) {}
