@@ -253,7 +253,7 @@
           <img
             *ngIf="thumbnailPreview"
             class="img-fluid oldImage"
-            src="{{ imgUrl }}{{ department.title }}/{{ thumbnailPreview }}"
+            src="{{ imgUrl }}{{ department.title.replace(' ', '-') }}/{{ thumbnailPreview }}"
             [alt]="thumbnailPreview.substring(0, thumbnailPreview.length - 3)"
           />
           <img
@@ -396,12 +396,12 @@
       <label style="margin-top: 2%" for="inputAddress"
         ><b>Descriptions</b></label
       >
+      <!-- [maxLength]="maxLength" -->
       <ejs-richtexteditor
         id="defaultRTE"
         formControlName="about"
         [toolbarSettings]="rteTools"
         height="400"
-        [maxLength]="maxLength"
       >
       </ejs-richtexteditor>
     </form>

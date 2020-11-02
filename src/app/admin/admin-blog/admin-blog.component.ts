@@ -62,7 +62,7 @@ export class AdminBlogComponent implements OnInit {
       'SourceCode',
     ],
   };
-  maxLength: number = 500;
+  // maxLength: number = 500;
 
   image;
   imagePreview;
@@ -155,7 +155,6 @@ export class AdminBlogComponent implements OnInit {
 
   edit(blog: Blog) {
     this.blogForm.setValue({
-      image: blog.image,
       name: blog.name,
       title: blog.title,
       detail: blog.detail,
@@ -168,7 +167,6 @@ export class AdminBlogComponent implements OnInit {
 
   cancel() {
     this.blogForm.setValue({
-      image: '',
       name: '',
       title: '',
       detail: '',

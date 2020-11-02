@@ -63,7 +63,7 @@ export class AdminDepartmentComponent implements OnInit {
       'SourceCode',
     ],
   };
-  maxLength: number = 500;
+  // maxLength: number = 500;
 
   isLoading = true;
   isLoading2 = false;
@@ -180,11 +180,7 @@ export class AdminDepartmentComponent implements OnInit {
     this.department.images.forEach((image) => {
       if (
         image.indexOf(
-          (
-            'dpt' +
-            this.department.title.replace('_', ' ') +
-            '_thumbnail'
-          ).toLowerCase()
+          'dpt' + this.department.title.replace(' ', '-') + '_thumbnail'
         ) != -1
       ) {
         this.thumbnailPreview = image;

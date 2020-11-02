@@ -311,17 +311,15 @@
           formControlName="title"
         />
       </div>
-      <div class="form-group">
-        <label for="inputAddress">Details</label>
-        <ejs-richtexteditor
-          id="defaultRTE"
-          formControlName="detail"
-          [toolbarSettings]="rteTools"
-          height="400"
-          [maxLength]="maxLength"
-        >
-        </ejs-richtexteditor>
-      </div>
+      <label for="inputAddress">Details</label>
+      <!-- [maxLength]="maxLength" -->
+      <ejs-richtexteditor
+        id="defaultRTE"
+        formControlName="detail"
+        [toolbarSettings]="rteTools"
+        height="400"
+      >
+      </ejs-richtexteditor>
     </form>
   </div>
 
