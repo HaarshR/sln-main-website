@@ -5,6 +5,7 @@ import {
   faAngleUp,
   faEdit,
 } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   ToolbarService,
   LinkService,
@@ -67,6 +68,7 @@ export class AdminDepartmentComponent implements OnInit {
   isEdited = false;
   isDeleting = false;
   isDeleted = false;
+  errorMessage = '';
 
   faAngleDown = faAngleDown;
   faAngleUp = faAngleUp;
@@ -109,8 +111,14 @@ export class AdminDepartmentComponent implements OnInit {
   imageChangePreview = [];
   imageChange = [];
   imageDelete = [];
+  thumbnailData;
+  thumbnailPreview;
+  thumbnailPreviewNew;
 
-  constructor(private departmentService: DepartmentService) {}
+  constructor(
+    private modalService: NgbModal,
+    private departmentService: DepartmentService
+  ) {}
 
   ngOnInit(): void {
     this.departmentService.getDepartments().subscribe({
@@ -132,6 +140,19 @@ export class AdminDepartmentComponent implements OnInit {
         }
       },
     });
+  }
+
+  openViewModal(content) {
+    this.modalService
+      .open(content, { scrollable: true, size: 'lg' })
+      .result.then(
+        (result) => {
+          // this.closeResult = `Closed with: ${result}`;
+        },
+        (reason) => {
+          // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+        }
+      );
   }
 
   sortProperty(propertyName: string) {
@@ -163,11 +184,25 @@ export class AdminDepartmentComponent implements OnInit {
     this.department = department;
     this.isEditing = true;
     this.department.images.forEach((image) => {
-      this.imagesPreview2.push(image);
+      if (
+        image.indexOf(
+          (
+            'dpt' +
+            this.department.title.replace('_', ' ') +
+            '_thumbnail'
+          ).toLowerCase()
+        ) != -1
+      ) {
+        this.thumbnailPreview = image;
+      } else {
+        this.imagesPreview2.push(image);
+      }
     });
+    this.modalService.dismissAll();
   }
 
   cancel() {
+    this.modalService.dismissAll();
     this.images = [];
     this.imagesPreview = [];
     this.isAdding = false;
@@ -179,13 +214,17 @@ export class AdminDepartmentComponent implements OnInit {
     this.departmentForm.setValue({
       title: '',
       about: '',
-      primary: '',
-      secondary: '',
-      tertiary: '',
+      primary: '#000',
+      secondary: '#000',
+      tertiary: '#000',
     });
     this.department = null;
     this.isDeleting = false;
     this.isDeleted = false;
+    this.errorMessage = '';
+    this.thumbnailData = null;
+    this.thumbnailPreview = null;
+    this.thumbnailPreviewNew = null;
   }
 
   onImagePicked(event: Event) {
@@ -205,6 +244,25 @@ export class AdminDepartmentComponent implements OnInit {
     );
     this.imagesPreview = imagesPreview;
     this.images = imagesData;
+  }
+
+  onThumbnailChange(event: Event) {
+    if ((event.target as HTMLInputElement).files[0]) {
+      const file = (event.target as HTMLInputElement).files[0];
+      this.thumbnailData = file;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.thumbnailPreviewNew = reader.result;
+        if (this.thumbnailPreviewNew) {
+          this.imageDelete.push(this.thumbnailPreview);
+          this.thumbnailPreview = null;
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      this.thumbnailData = null;
+      this.thumbnailPreviewNew = null;
+    }
   }
 
   onImageChange(event: Event, oldImage: string) {
@@ -240,7 +298,8 @@ export class AdminDepartmentComponent implements OnInit {
       !this.departmentForm.value.primary ||
       !this.departmentForm.value.secondary ||
       !this.departmentForm.value.tertiary ||
-      this.imagesPreview.length == 0
+      this.imagesPreview.length == 0 ||
+      !this.thumbnailPreviewNew
     ) {
       console.log(
         this.departmentForm.value,
@@ -255,6 +314,11 @@ export class AdminDepartmentComponent implements OnInit {
     newDepartmentForm.append('primary', this.departmentForm.value.primary);
     newDepartmentForm.append('secondary', this.departmentForm.value.secondary);
     newDepartmentForm.append('tertiary', this.departmentForm.value.tertiary);
+    newDepartmentForm.append(
+      'images',
+      this.thumbnailData,
+      'dpt' + this.departmentForm.value.title.replace('_', ' ') + '_thumbnail'
+    );
     let i = 1;
     this.images.forEach((data) => {
       newDepartmentForm.append(
@@ -311,13 +375,11 @@ export class AdminDepartmentComponent implements OnInit {
       !this.departmentForm.value.about ||
       !this.departmentForm.value.primary ||
       !this.departmentForm.value.secondary ||
-      !this.departmentForm.value.tertiary
+      !this.departmentForm.value.tertiary ||
+      (this.imagesPreview.length == 0 && this.imagesPreview2.length == 0) ||
+      (!this.thumbnailPreview && !this.thumbnailPreviewNew)
     ) {
-      console.log(
-        this.departmentForm.value,
-        this.departmentForm.invalid,
-        this.imagesPreview
-      );
+      console.log(this.departmentForm.value);
       return;
     }
     const newDepartmentForm = new FormData();
@@ -326,6 +388,13 @@ export class AdminDepartmentComponent implements OnInit {
     newDepartmentForm.append('primary', this.departmentForm.value.primary);
     newDepartmentForm.append('secondary', this.departmentForm.value.secondary);
     newDepartmentForm.append('tertiary', this.departmentForm.value.tertiary);
+    if (this.thumbnailPreviewNew) {
+      newDepartmentForm.append(
+        'images',
+        this.thumbnailData,
+        'dpt' + this.departmentForm.value.title.replace('_', ' ') + '_thumbnail'
+      );
+    }
     if (this.imagesPreview2.length == 0) {
       newDepartmentForm.append('oldImages', 'null');
       newDepartmentForm.append('oldImages', 'null');
@@ -369,7 +438,7 @@ export class AdminDepartmentComponent implements OnInit {
       .updateDepartment(newDepartmentForm, this.department._id)
       .subscribe(
         (next) => {
-          console.log(next);
+          window.location.reload;
         },
         (error) => {
           console.log(error);
@@ -384,8 +453,17 @@ export class AdminDepartmentComponent implements OnInit {
       return;
     }
     this.departmentService.deleteDepartment(department._id).subscribe(
-      (next) => {},
-      (error) => {}
+      (next) => {
+        this.departments.splice(this.departments.indexOf(department), 1);
+        this.isDeleted = true;
+        this.cancel();
+      },
+      (error) => {
+        this.isDeleted = true;
+        console.log(error);
+        this.errorMessage = error;
+        this.modalService.dismissAll();
+      }
     );
   }
 }

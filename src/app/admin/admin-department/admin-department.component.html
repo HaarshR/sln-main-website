@@ -67,11 +67,7 @@
     <ng-container
       *ngFor="let department of departments | sortBy: sortingWay:propertyName"
     >
-      <div
-        class="row mt-2 myRows"
-        data-toggle="modal"
-        [attr.data-target]="'#D' + department._id"
-      >
+      <div class="row mt-2 myRows" (click)="openViewModal(content)">
         <div class="col-6 text-center">
           {{ department._id }}
         </div>
@@ -79,146 +75,131 @@
           {{ department.title }}
         </div>
       </div>
-      <div
-        class="modal fade"
-        id="D{{ department._id }}"
-        data-backdrop="static"
-        data-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-scrollable modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title mb-0 p-0" id="staticBackdropLabel">
-                {{ department.title }}
-              </h3>
-              <button
-                *ngIf="!isDeleted && !isDeleting"
-                class="btn"
-                (click)="edit(department)"
-                data-dismiss="modal"
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">
+            {{ department.title }}
+          </h4>
+          <button
+            *ngIf="!isDeleted && !isDeleting"
+            class="btn"
+            (click)="edit(department)"
+          >
+            EDIT
+          </button>
+          <button
+            *ngIf="!isDeleted && !isDeleting"
+            class="btn"
+            (click)="isDeleting = true"
+          >
+            DELETE
+          </button>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="cancel()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="!isDeleted && !isDeleting">
+          <div class="row">
+            <div class="col mb-2">
+              <b>Department's Gallery</b>
+              <br />
+              <ngb-carousel
+                #carousel
+                [interval]="5000"
+                [pauseOnHover]="false"
+                [showNavigationArrows]="true"
+                [showNavigationIndicators]="false"
               >
-                EDIT
-              </button>
-              <button
-                *ngIf="!isDeleted && !isDeleting"
-                class="btn"
-                (click)="isDeleting = true"
-                data-dismiss="modal"
-              >
-                DELETE
-              </button>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body" *ngIf="!isDeleted && !isDeleting">
-              <div class="row">
-                <div class="col mb-2">
-                  <b>Department's Gallery</b>
-                  <br />
-                  <ngb-carousel
-                    #carousel
-                    [interval]="5000"
-                    [pauseOnHover]="false"
-                    [showNavigationArrows]="true"
-                    [showNavigationIndicators]="false"
+                <ng-template
+                  ngbSlide
+                  *ngFor="let image of department.images; index as i"
+                >
+                  <a
+                    href="{{ imgUrl }}{{ image }}"
+                    target="_blank"
+                    rel="nofollow noopener noreferrer"
                   >
-                    <ng-template
-                      ngbSlide
-                      *ngFor="let image of department.images; index as i"
-                    >
-                      <a
-                        href="{{ imgUrl }}{{ image }}"
-                        target="_blank"
-                        rel="nofollow noopener noreferrer"
-                      >
-                        <div class="picsum-img-wrapper">
-                          <img
-                            class="img-fluid"
-                            src="{{ imgUrl }}{{
-                              department.title.replace(' ', '-')
-                            }}/{{ image }}"
-                            alt="Booking Website Gallery {{ i + 1 }}"
-                          />
-                        </div>
-                      </a>
-                    </ng-template>
-                  </ngb-carousel>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-2">
-                  <b>Date Added:</b><br />{{
-                    department.date | date: "MMM d, y, h:mm a"
-                  }}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-2">
-                  <b>Title:</b><br />{{ department.title }}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-2">
-                  <b>Detail:</b><br />
-                  <span innerHtml="{{ department.about }}"></span>
-                </div>
-              </div>
+                    <div class="picsum-img-wrapper">
+                      <img
+                        class="img-fluid"
+                        src="{{ imgUrl }}{{
+                          department.title.replace(' ', '-')
+                        }}/{{ image }}"
+                        alt="Booking Website Gallery {{ i + 1 }}"
+                      />
+                    </div>
+                  </a>
+                </ng-template>
+              </ngb-carousel>
             </div>
-            <div class="modal-body" *ngIf="isDeleted || isDeleting">
-              <h3>
-                Are you completely & absolutely sure you want to delete this
-                department?
-              </h3>
-              <h4>
-                If so then enter the following (as it is shown) in the input box
-                below:
-              </h4>
-              <p>YES! I am absolutely sure.</p>
-              <form [formGroup]="deleteForm" style="text-align: left">
-                <script>
-                  if (document.getElementById("passPhrase").clicked) {
-                    document
-                      .getElementById("errorMessage")
-                      .appendChild(
-                        document.createTextNode(
-                          "Error! PassPhrase doesn't match."
-                        )
-                      );
-                  }
-                </script>
-                <span id="errorMessage"></span>
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="passPhrase"
-                    placeholder="Input the above sentence to continue"
-                    formControlName="password"
-                  />
-                </div>
-              </form>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <b>Date Added:</b><br />{{
+                department.date | date: "MMM d, y, h:mm a"
+              }}
             </div>
-            <div class="modal-footer" *ngIf="isDeleted || isDeleting">
-              <button
-                *ngIf="!isDeleted"
-                class="btn"
-                (click)="deleteDepartment(department)"
-              >
-                DELETE NOW
-              </button>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <b>Title:</b><br />{{ department.title }}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <b>Detail:</b><br />
+              <span innerHtml="{{ department.about }}"></span>
             </div>
           </div>
         </div>
-      </div>
+        <div class="modal-body" *ngIf="isDeleted || isDeleting">
+          <h3>
+            Are you completely & absolutely sure you want to delete this
+            department?
+          </h3>
+          <h4>
+            If so then enter the following (as it is shown) in the input box
+            below:
+          </h4>
+          <p>YES! I am absolutely sure.</p>
+          <form [formGroup]="deleteForm" style="text-align: left">
+            <script>
+              if (document.getElementById("passPhrase").clicked) {
+                document
+                  .getElementById("errorMessage")
+                  .appendChild(
+                    document.createTextNode("Error! PassPhrase doesn't match.")
+                  );
+              }
+            </script>
+            <span id="errorMessage"></span>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                id="passPhrase"
+                placeholder="Input the above sentence to continue"
+                formControlName="password"
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer" *ngIf="isDeleted || isDeleting">
+          <button
+            *ngIf="!isDeleted"
+            type="button"
+            class="btn btn-outline-dark"
+            (click)="deleteDepartment(department)"
+          >
+            DELETE NOW
+          </button>
+        </div>
+      </ng-template>
     </ng-container>
   </ng-container>
 </div>
@@ -228,7 +209,7 @@
     <div class="row">
       <div class="col-12 text-center">
         <h2>
-          Department creation form<br />
+          Department creation/editing form<br />
           <button class="btn btn-success" *ngIf="isAdding" (click)="add()">
             Add</button
           >&nbsp;
@@ -240,8 +221,45 @@
       </div>
     </div>
 
-    <h1 *ngIf="isEditing">Already added images</h1>
+    <h3>Department Thumbnail</h3>
     <div class="d-flex flex-wrap flexOldImageBox">
+      <ng-container>
+        <div class="d-flex flex-column oldImageFlex p-2">
+          <img
+            *ngIf="thumbnailPreview"
+            class="img-fluid oldImage"
+            src="{{ imgUrl }}{{ department.title }}/{{ thumbnailPreview }}"
+            [alt]="thumbnailPreview.substring(0, thumbnailPreview.length - 3)"
+          />
+          <img
+            *ngIf="thumbnailPreviewNew"
+            class="img-fluid oldImage"
+            src="{{ thumbnailPreviewNew }}"
+            [alt]=""
+          />
+          <input
+            #thumbnailPicker
+            class="mt-2"
+            type="file"
+            accept=".png, .jpg"
+            (change)="onThumbnailChange($event)"
+          />
+          <button
+            class="btn btn-success"
+            type="button"
+            (click)="thumbnailPicker.click()"
+          >
+            Add a thumbnail;<fa-icon [icon]="faEdit"></fa-icon>
+          </button>
+        </div>
+      </ng-container>
+    </div>
+
+    <h3 *ngIf="isEditing && imagesPreview2">Already added images</h3>
+    <div
+      *ngIf="isEditing && imagesPreview2"
+      class="d-flex flex-wrap flexOldImageBox"
+    >
       <ng-container *ngFor="let image of imagesPreview2">
         <div class="d-flex flex-column oldImageFlex p-2">
           <img
@@ -268,7 +286,7 @@
       </ng-container>
     </div>
 
-    <h1 *ngIf="imageChangePreview.length > 0">Changed Images</h1>
+    <h3 *ngIf="imageChangePreview.length > 0">Changed Images</h3>
     <div class="d-flex flex-wrap flexOldImageBox">
       <ng-container *ngFor="let image of imageChangePreview">
         <div class="d-flex flex-column oldImageFlex p-2">
@@ -281,7 +299,7 @@
       </ng-container>
     </div>
 
-    <h1>New Images</h1>
+    <h3>New Images</h3>
     <div class="d-flex flex-wrap flexOldImageBox pt-3">
       <ng-container *ngFor="let image of imagesPreview">
         <div class="d-flex flex-column oldImageFlex p-2">
@@ -313,7 +331,7 @@
         (change)="onImagePicked($event)"
       />
       <div class="form-group">
-        <label for="inputAddress">Title</label>
+        <label for="inputAddress"><b>Title</b></label>
         <input
           type="text"
           class="form-control"
@@ -322,32 +340,35 @@
           formControlName="title"
         />
       </div>
-      <label for="inputAddress">Color Pickers</label>
-      <span
-        [style.color]="departmentForm.value.primary"
-        [cpPosition]="'bottom'"
-        [cpPositionOffset]="'50%'"
-        [cpPositionRelativeToArrow]="true"
-        [(colorPicker)]="departmentForm.value.primary"
-        >Primary</span
-      >
-      <span
-        [style.color]="departmentForm.value.secondary"
-        [cpPosition]="'bottom'"
-        [cpPositionOffset]="'50%'"
-        [cpPositionRelativeToArrow]="true"
-        [(colorPicker)]="departmentForm.value.secondary"
-        >Secondary</span
-      >
-      <span
-        [style.color]="departmentForm.value.tertiary"
-        [cpPosition]="'bottom'"
-        [cpPositionOffset]="'50%'"
-        [cpPositionRelativeToArrow]="true"
-        [(colorPicker)]="departmentForm.value.tertiary"
-        >Tertiary</span
-      >
-      <label for="inputAddress">Title</label>
+      <label for="inputAddress"><b>Color Pickers</b></label>
+      <div>
+        <label for="inputAddress">Primary color</label>
+        <input
+          ejs-colorpicker
+          type="color"
+          id="colorpicker1"
+          formControlName="primary"
+        />
+      </div>
+      <div>
+        <label for="inputAddress">Secondary color</label>
+        <input
+          ejs-colorpicker
+          type="color"
+          id="colorpicker2"
+          formControlName="secondary"
+        />
+      </div>
+      <div>
+        <label for="inputAddress">Tertiary color</label>
+        <input
+          ejs-colorpicker
+          type="color"
+          id="colorpicker3"
+          formControlName="tertiary"
+        />
+      </div>
+      <label style="margin-top: 2%" for="inputAddress"><b>Descriptions</b></label>
       <ejs-richtexteditor
         id="defaultRTE"
         formControlName="about"

@@ -4,6 +4,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ColorPickerModule } from '@syncfusion/ej2-angular-inputs';
 
 import { AppComponent } from './app.component';
 
@@ -24,13 +26,11 @@ import { EventsPageComponent } from './events-page/events-page.component';
 import { BlogPageComponent } from './blog-page/blog-page.component';
 import { AdminDepartmentComponent } from './admin/admin-department/admin-department.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ColorPickerModule } from 'ngx-color-picker';
 import { EditDepartmentComponent } from './admin/admin-department/edit-department/edit-department.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { ExecutiveMemberPageComponent } from './joinus-page/executive-member-page/executive-member-page.component';
 import { RegularMemberPageComponent } from './joinus-page/regular-member-page/regular-member-page.component';
 import { EventsCardComponent } from './events-page/events-card/events-card.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BlogCardComponent } from './blog-page/blog-card/blog-card.component';
 import { DepartmentComponent } from './department-page/department/department.component';
 
@@ -66,8 +66,8 @@ import { DepartmentComponent } from './department-page/department/department.com
     ReactiveFormsModule,
     RichTextEditorModule,
     AppRoutingModule,
-    ColorPickerModule,
     NgbModule,
+    ColorPickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
