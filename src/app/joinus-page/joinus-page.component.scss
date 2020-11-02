@@ -1,5 +1,13 @@
-@import '../../styles.scss';
+@import "../../styles.scss";
 
-.bg-card{
-    background-color: rgb($primary, 0.5);
+.bg-card {
+  background-color: rgb($primary, 0.5);
+}
+
+.member-card {
+  cursor: pointer;
+}
+
+.member-card:hover {
+  filter: saturate(150%);
 }

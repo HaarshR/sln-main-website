@@ -1,7 +1,7 @@
 <div
   class="img-container"
   [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
-  style="padding: 20% 0"
+  style="padding: 10% 0"
 >
   <div class="contianer-fluid">
     <div class="row">
@@ -29,17 +29,40 @@
       <div class="container my-5">
         <div class="row">
           <div
-            class="col-sm-12 col-md-5 px-2 rounded text-center text-white bg-card"
-            style="padding: 10% 0"
+            class="offset-1 col-10 offset-md-2 col-md-4 text-center text-white"
           >
-            <fa-icon [icon]="faUser" class="px-1" size="5x"></fa-icon>
-            Regular Member
+            <div class="bg-card m-3 p-4 rounded member-card" (click)="onClick('regular')">
+              <div class="row pb-2 pt-3">
+                <div class="col-12">
+                  <fa-icon [icon]="faUser" class="px-1" size="3x"></fa-icon>
+                </div>
+              </div>
+              <div class="row pt-2 pb-3">
+                <div class="col-12 font-weight-bold">
+                  <h5>Regular Member</h5>
+                </div>
+              </div>
+            </div>
           </div>
           <div
-            class="col-sm-12 col-md-5 px-2 rounded text-center text-white bg-card"
-            style="padding: 10% 0"
+            class="offset-1 col-10 offset-md-0 col-md-4 text-center text-white"
           >
-            Executive Member
+            <div class="bg-card m-3 p-4 rounded member-card" (click)="onClick('executive')">
+              <div class="row pb-2 pt-3">
+                <div class="col-12">
+                  <fa-icon
+                    [icon]="faHandshake"
+                    class="px-1"
+                    size="3x"
+                  ></fa-icon>
+                </div>
+              </div>
+              <div class="row pt-2 pb-3">
+                <div class="col-12 font-weight-bold">
+                  <h5>Executive Member</h5>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
