@@ -39,12 +39,11 @@ const fileFilter = (req, file, cb) => {
 };
 
 // POST REQUEST
-// router.post(
-//   "/addAccommodations",
-//   checkAuth,
-//   multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 20),
-//   AccommodationController.addAccommodations
-// );
+router.post(
+  "/addOne",
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
+  BlogController.addOne
+);
 
 // GET REQUEST
 router.get("/getAll", BlogController.getAll);
@@ -57,6 +56,6 @@ router.put(
 );
 
 // DELETE REQUEST
-// router.delete("/:id", AccommodationController.deleteAccommodation);
+router.delete("/deleteOne/:id", BlogController.deleteOne);
 
 module.exports = router;

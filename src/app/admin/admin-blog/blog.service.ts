@@ -16,9 +16,22 @@ export class BlogService {
     }>(BACKEND_URL + 'getAll');
   }
 
+  addBlog(department: any) {
+    return this.http.post<{ message: string; id: string; image: string }>(
+      BACKEND_URL + 'addOne',
+      department
+    );
+  }
+
   updateBlog(blog: any, id: string) {
     return this.http.put<{
       message: string;
     }>(BACKEND_URL + 'updateOne/' + id, blog);
+  }
+
+  deleteBlog(id: string) {
+    return this.http.delete<{
+      message: string;
+    }>(BACKEND_URL + 'deleteOne/' + id);
   }
 }

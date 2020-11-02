@@ -12,17 +12,33 @@ const s3 = new AWS.S3({
 
 const tempImagePath = "tempImg/*.{jpg,JPG,jpeg,JPEG,png}";
 const outputImagePath = "public/images/";
-const MIME_TYPE_MAP = {
-  "image/png": "png",
-  "image/jpeg": "jpg",
-  "image/jpg": "jpg",
+
+const deleteFile = (fileName) => {
+  let objects = [];
+  objects.push({
+    Key: "blog/" + fileName,
+  });
+
+  let params = {
+    Bucket: process.env.BUCKET_NAME,
+    Delete: {
+      Objects: objects,
+    },
+  };
+
+  s3.deleteObjects(params, function (err, data) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(`Successfully deleted file from bucket`);
+  });
 };
 
 const uploadFile = (fileName) => {
   // Read content from the file
   fs.readFile("public/images/" + fileName, (err, data) => {
     if (err) {
-      return "Error uploading image! Image could not be read.";
+      console.log("Error uploading image! Image could not be read.");
     }
     let params = {
       Bucket: process.env.BUCKET_NAME,
@@ -31,7 +47,7 @@ const uploadFile = (fileName) => {
     };
     s3.upload(params, function (err, data) {
       if (err) {
-        return "Error uploading image! Connection to DB failed.";
+        console.log("Error uploading image! Connection failed.");
       }
       try {
         fs.unlinkSync("public/images/" + fileName);
@@ -40,7 +56,7 @@ const uploadFile = (fileName) => {
         fs.unlinkSync("public/images/" + fileName);
         fs.unlinkSync("public/images/" + fileName);
       } catch (err) {}
-      return `Image uploaded successfully. ${data.Location}`;
+      console.log(`Image uploaded successfully. ${data.Location}`);
     });
   });
 };
@@ -67,6 +83,88 @@ exports.getAll = (req, res, next) => {
     });
 };
 
+exports.addOne = (req, res, next) => {
+  const blog = new Blog({
+    _id: null,
+    date: new Date(),
+    image: req.file.filename,
+    name: req.body.name,
+    title: req.body.title,
+    detail: req.body.detail,
+    viewCount: null,
+    comments: [],
+  });
+
+  blog
+    .save()
+    .then(() => {
+      if (req.file) {
+        compress_images(
+          tempImagePath,
+          outputImagePath,
+          { compress_force: false, statistic: true, autoupdate: true },
+          false,
+          { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
+          {
+            png: {
+              engine: "pngquant",
+              command: ["--quality=20-50", "-o"],
+            },
+          },
+          { svg: { engine: false, command: false } },
+          {
+            gif: {
+              engine: false,
+              command: false,
+            },
+          },
+          function (error, completed, statistic) {
+            if (completed) {
+              try {
+                fs.unlinkSync("tempImg/" + image.filename);
+                fs.unlinkSync("tempImg/" + image.filename);
+                fs.unlinkSync("tempImg/" + image.filename);
+                fs.unlinkSync("tempImg/" + image.filename);
+                fs.unlinkSync("tempImg/" + image.filename);
+              } catch (err) {}
+              try {
+                uploadFile(image.filename);
+                i++;
+              } catch (err) {}
+            }
+          }
+        );
+      }
+      res.status(201).json({
+        message: "Successfully added!",
+        id: "Refresh the Page",
+        images: blog.image,
+      });
+    })
+    .catch((error) => {
+      try {
+        fs.unlinkSync("tempImg/" + image.filename);
+        fs.unlinkSync("tempImg/" + image.filename);
+        fs.unlinkSync("tempImg/" + image.filename);
+        fs.unlinkSync("tempImg/" + image.filename);
+      } catch (err) {}
+      if (
+        error.errors.title &&
+        error.errors.title.properties.type &&
+        error.errors.title.properties.type == "unique"
+      ) {
+        res.status(404).json({
+          error: "Error occured! This blog title already exist.",
+        });
+      } else {
+        res.status(500).json({
+          error: error,
+          errorMessage: "An unknown error occured!",
+        });
+      }
+    });
+};
+
 exports.edit = (req, res, next) => {
   const blog = {
     image: req.body.oldFileName,
@@ -78,7 +176,6 @@ exports.edit = (req, res, next) => {
   if (req.file) {
     const image = req.file;
     blog.image = image.filename;
-    const fileName = image.filename.substring(0, image.filename.length - 3);
     compress_images(
       tempImagePath,
       outputImagePath,
@@ -94,50 +191,17 @@ exports.edit = (req, res, next) => {
         },
       },
       function (error, completed, statistic) {
-        try {
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-          fs.unlinkSync("tempImg/" + fileName + "jpg");
-        } catch (err) {}
-        try {
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-          fs.unlinkSync("tempImg/" + fileName + "png");
-        } catch (err) {}
-        uploadFile(image.filename);
+        if (completed) {
+          try {
+            fs.unlinkSync("tempImg/" + image.filename);
+            fs.unlinkSync("tempImg/" + image.filename);
+            fs.unlinkSync("tempImg/" + image.filename);
+            fs.unlinkSync("tempImg/" + image.filename);
+          } catch (err) {}
+          try {
+            uploadFile(image.filename);
+          } catch (err) {}
+        }
       }
     );
   }
@@ -160,4 +224,26 @@ exports.edit = (req, res, next) => {
         errorMessage: error,
       });
     });
+};
+
+exports.deleteOne = (req, res, next) => {
+  Blog.findOne({ _id: req.params.id }).then((document) => {
+    Blog.deleteOne({ _id: req.params.id })
+      .then((result) => {
+        if (result.n > 0) {
+          deleteFile(document.image);
+          res.status(200).json({ message: "Successfully removed!" });
+        } else {
+          res.status(404).json({
+            error: "Nothing was deleted.",
+          });
+        }
+      })
+      .catch((error) => {
+        res.status(500).json({
+          error: "An unknown error occured!.",
+          errorMessage: error,
+        });
+      });
+  });
 };

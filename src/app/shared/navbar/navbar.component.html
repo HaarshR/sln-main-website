@@ -5,6 +5,7 @@
   <div class="container-fluid px-5">
     <a
       routerLink=""
+      (click)="changePage('')"
       class="navbar-brand"
       [ngStyle]="{ color: pageData.navLink }"
       >Sov Lanatir</a
@@ -26,6 +27,7 @@
         <li class="navbar-item">
           <a
             routerLink="departments"
+            (click)="changePage('departments')"
             routerLinkActive="active"
             class="nav-link"
             [ngStyle]="{ color: pageData.navLink }"
@@ -43,20 +45,39 @@
             About Us
           </a>
           <div class="dropdown-menu bg-light border-0 rounded bshadow">
-            <a class="dropdown-item text-primary" routerLink="about-us"
+            <a
+              class="dropdown-item text-primary"
+              routerLink="about-us"
+              (click)="changePage('about-us')"
               >What We Do</a
             >
-            <a class="dropdown-item text-primary" routerLink="events">Events</a>
-            <a class="dropdown-item text-primary" routerLink="blog">Blog</a>
+            <a
+              class="dropdown-item text-primary"
+              routerLink="events"
+              (click)="changePage('events')"
+              >Events</a
+            >
+            <a
+              class="dropdown-item text-primary"
+              routerLink="blog"
+              (click)="changePage('blog')"
+              >Blog</a
+            >
           </div>
         </li>
         <li routerLink="join-us" routerLinkActive="active" class="navbar-item">
-          <a class="nav-link" [ngStyle]="{ color: pageData.navLink }"
+          <a
+            class="nav-link"
+            [ngStyle]="{ color: pageData.navLink }"
+            (click)="changePage('join-us')"
             >Join SLN</a
           >
         </li>
         <li class="navbar-item">
-          <a href="#" class="nav-link" [ngStyle]="{ color: pageData.navLink }"
+          <a
+            href="{{ routeUrl }}#footer"
+            class="nav-link"
+            [ngStyle]="{ color: pageData.navLink }"
             >Contact</a
           >
         </li>

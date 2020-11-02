@@ -34,7 +34,6 @@ export class AuthService {
   }
 
   login(admin: any) {
-    console.log(admin);
     this.http
       .post<{
         adminID: string;
@@ -51,7 +50,6 @@ export class AuthService {
           });
           this.authStatusListener.next(this.isAuthenticated);
           this.saveAuthData();
-          this.http.get(BACKEND_URL + 'getLogin/').subscribe();
         },
         (error) => {
           this.authErrorListener.next({

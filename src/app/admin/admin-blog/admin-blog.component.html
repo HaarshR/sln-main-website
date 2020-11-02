@@ -1,7 +1,12 @@
-<div class="card p-3 overflow-auto">
+<div *ngIf="!isEditing && !isAdding" class="card p-3 overflow-auto">
   <div class="row">
     <div class="col-12 text-center">
-      <h2>BLOGS</h2>
+      <h2>
+        BLOGS&nbsp;
+        <button class="btn btn-success" (click)="isAdding = true">
+          Add Blog
+        </button>
+      </h2>
     </div>
   </div>
   <div class="row border-bottom border-top">
@@ -68,19 +73,19 @@
       </div>
     </div>
   </div>
-  <ng-container *ngIf="!isLoading && errorMessage">
+  <ng-container *ngIf="!isLoading && fetchErrorMessage">
     <div class="row">
       <div class="myLoader">
-        {{ errorMessage }}
+        {{ fetchErrorMessage }}
       </div>
     </div>
   </ng-container>
-  <ng-container *ngIf="!isLoading">
+  <ng-container *ngIf="!isLoading && !fetchErrorMessage">
     <ng-container *ngFor="let blog of blogs | sortBy: sortingWay:propertyName">
       <div
         class="row mt-2 myRows"
         data-toggle="modal"
-        [attr.data-target]="'#D' + blog._id"
+        (click)="openViewModal(content)"
       >
         <div class="col-4 text-center">
           {{ blog.date | date: "MMM d, y, h:mm a" }}
@@ -92,196 +97,261 @@
           {{ blog.name }}
         </div>
       </div>
-      <div
-        class="modal fade"
-        id="D{{ blog._id }}"
-        data-backdrop="static"
-        data-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-dialog-scrollable">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h3 class="modal-title mb-0 p-0" id="staticBackdropLabel">
-                <span *ngIf="editingBlog && !isSaving">Editing </span>
-                <span *ngIf="!editingBlog && isSaved">Saved </span>
-                {{ blog.name }}'s blog
-                <button
-                  class="btn"
-                  *ngIf="!editingBlog && !isSaved && !error"
-                  (click)="edit(blog)"
-                >
-                  EDIT
-                </button>
-                <button class="btn" *ngIf="!editingBlog && !isSaved && !error">
-                  DELETE
-                </button>
-                <button
-                  class="btn"
-                  *ngIf="editingBlog && !isSaving"
-                  (click)="save(blog)"
-                >
-                  SAVE
-                </button>
-                <button
-                  class="btn"
-                  *ngIf="editingBlog && !isSaving"
-                  (click)="cancel()"
-                >
-                  CANCEL
-                </button>
-              </h3>
-              <button
-                *ngIf="!editingBlog || isSaved || error"
-                type="button"
-                class="close"
-                (click)="closeModal()"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div *ngIf="!editingBlog && !isSaved && !error" class="modal-body">
-              <div class="row">
-                <div class="col mb-2">
-                  <b>Profile Picture</b>
-                  <br />
-                  <img
-                    src="{{ imgUrl }}{{ blog.image }}"
-                    alt=""
-                    class="img-fluid"
-                  />
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-2">
-                  <b>Date Added:</b><br />{{
-                    blog.date | date: "MMM d, y, h:mm a"
-                  }}
-                </div>
-                <div class="col mb-2">
-                  <b>View count: </b>{{ blog.viewCount }}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-2"><b>Title:</b><br />{{ blog.title }}</div>
-              </div>
-              <div class="row">
-                <div class="col mb-2">
-                  <b>Detail:</b><br />
-                  <span innerHtml="{{ blog.detail }}"></span>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col mb-2">
-                  <b>ALL COMMENTS</b><br />
-                  <ng-container *ngFor="let comment of blog.comments">
-                    <div class="row">
-                      <div class="col mb-2">
-                        <b>Date: </b>{{ comment.date | date: "MMM d, y, h:mm a"
-                        }}<br />
-                        <b>Name: </b>
-                        <ng-container *ngIf="comment.anonymous">
-                          ANONYMOUS
-                        </ng-container>
-                        <ng-container *ngIf="!comment.anonymous">
-                          {{ comment.name }}
-                        </ng-container>
-                        <br />
-                        <b>Comment: </b><br />
-                        {{ comment.comment }}<br />
-                      </div>
-                    </div>
-                  </ng-container>
-                </div>
-              </div>
-            </div>
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title" *ngIf="!isDeleted">
+            {{ blog.name }}'s Blog&nbsp;
+            <button *ngIf="!isDeleting" class="btn" (click)="edit(blog)">
+              EDIT
+            </button>
+            <button *ngIf="!isDeleting" class="btn" (click)="isDeleting = true">
+              DELETE
+            </button>
+          </h4>
+          <h4 class="modal-title" id="modal-basic-title" *ngIf="isDeleted">
+            {{ errorMessage }}
+          </h4>
+          <button
+            type="button"
+            class="close"
+            aria-label="Close"
+            (click)="cancel()"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-boy" *ngIf="isLoading2">
+          <div class="myLoader2">
             <div
-              *ngIf="editingBlog && !isSaved && !error && !isSaving"
-              class="modal-body"
+              class="spinner-border text-success"
+              style="width: 8rem; height: 8rem"
+              role="status"
             >
-              <form [formGroup]="blogForm">
-                <button
-                  class="btn btn-success"
-                  type="button"
-                  (click)="profilePicturePicker.click()"
-                >
-                  <img
-                    *ngIf="imagePreview"
-                    class="img-fluid"
-                    src="{{ imagePreview }}"
-                    [alt]="blog.name"
-                  />
-                  <img
-                    *ngIf="!imagePreview"
-                    class="img-fluid"
-                    src="{{ imgUrl }}{{ blog.image }}"
-                    [alt]="blog.name"
-                  />
-                  <br /><fa-icon [icon]="faEdit"></fa-icon>
-                </button>
-                <input
-                  type="file"
-                  #profilePicturePicker
-                  accept=".png, .jpg"
-                  (change)="onImagePicked($event)"
-                />
-
-                <div class="form-group">
-                  <label for="inputAddress">Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="inputAddress"
-                    placeholder="Name"
-                    formControlName="name"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="inputAddress">Title</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="inputAddress"
-                    placeholder="Title"
-                    formControlName="title"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="inputAddress">Detail</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="inputAddress"
-                    placeholder="Detail"
-                    formControlName="detail"
-                  />
-                </div>
-              </form>
-            </div>
-            <div *ngIf="editingBlog && isSaving">
-              <div class="myLoader2">
-                <div
-                  class="spinner-border text-success"
-                  style="width: 8rem; height: 8rem"
-                  role="status"
-                >
-                  <span class="sr-only">Loading...</span>
-                </div>
-              </div>
-            </div>
-            <div *ngIf="!editingBlog && isSaved" class="modal-body">
-              <p>Update successfull!</p>
-            </div>
-            <div *ngIf="!editingBlog && error" class="modal-body">
-              <p>An error occured!</p>
+              <span class="sr-only">Loading...</span>
             </div>
           </div>
         </div>
-      </div>
+        <div
+          class="modal-body"
+          *ngIf="!isDeleted && !isDeleting && !isLoading2"
+        >
+          <div class="row">
+            <div class="col mb-2">
+              <b>Author's profile Picture</b>
+              <br />
+              <img
+                src="{{ imgUrl }}{{ blog.image }}"
+                alt=""
+                class="img-fluid"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <b>Date Added:</b><br />{{ blog.date | date: "MMM d, y, h:mm a" }}
+            </div>
+            <div class="col mb-2"><b>View count: </b>{{ blog.viewCount }}</div>
+          </div>
+          <div class="row">
+            <div class="col mb-2"><b>Title:</b><br />{{ blog.title }}</div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <b>Detail:</b><br />
+              <span innerHtml="{{ blog.detail }}"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <b>ALL COMMENTS</b><br />
+              <ng-container *ngFor="let comment of blog.comments">
+                <div class="row">
+                  <div class="col mb-2">
+                    <b>Date: </b>{{ comment.date | date: "MMM d, y, h:mm a"
+                    }}<br />
+                    <b>Name: </b>
+                    <ng-container *ngIf="comment.anonymous">
+                      ANONYMOUS
+                    </ng-container>
+                    <ng-container *ngIf="!comment.anonymous">
+                      {{ comment.name }}
+                    </ng-container>
+                    <br />
+                    <b>Comment: </b><br />
+                    {{ comment.comment }}<br />
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body" *ngIf="isDeleting">
+          <h3>
+            Are you completely & absolutely sure you want to delete this blog?
+          </h3>
+          <h4>
+            If so then enter the following (as it is shown) in the input box
+            below:
+          </h4>
+          <p>YES! I am absolutely sure.</p>
+          <form [formGroup]="deleteForm" style="text-align: left">
+            <script>
+              if (document.getElementById("passPhrase").clicked) {
+                document
+                  .getElementById("errorMessage")
+                  .appendChild(
+                    document.createTextNode("Error! PassPhrase doesn't match.")
+                  );
+              }
+            </script>
+            <span id="errorMessage"></span>
+            <div class="form-group">
+              <input
+                type="text"
+                class="form-control"
+                id="passPhrase"
+                placeholder="Input the above sentence to continue"
+                formControlName="password"
+              />
+            </div>
+          </form>
+        </div>
+
+        <div
+          class="modal-footer"
+          *ngIf="(isDeleted || isDeleting) && !isLoading2"
+        >
+          <button
+            *ngIf="!isDeleted"
+            type="button"
+            class="btn btn-outline-dark"
+            (click)="deleteBlog(blog)"
+          >
+            DELETE NOW
+          </button>
+          <button
+            *ngIf="isDeleted"
+            type="button"
+            class="btn btn-outline-dark"
+            (click)="cancel()"
+          >
+            CLOSE
+          </button>
+        </div>
+      </ng-template>
     </ng-container>
   </ng-container>
 </div>
+
+<ng-container *ngIf="isEditing || isAdding">
+  <div
+    *ngIf="!isLoading2 && !isEdited && !isAdded"
+    class="card p-3 overflow-auto"
+  >
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2>
+          Blog creation/editing form<br />
+          <button class="btn btn-success" *ngIf="isAdding" (click)="add()">
+            Add</button
+          >&nbsp;
+          <button class="btn btn-success" *ngIf="isEditing" (click)="save()">
+            Save</button
+          >&nbsp;
+          <button class="btn btn-success" (click)="cancel()">Cancel</button>
+        </h2>
+      </div>
+    </div>
+
+    <form [formGroup]="blogForm" style="text-align: left">
+      <button
+        class="btn btn-success"
+        type="button"
+        (click)="profilePicturePicker.click()"
+      >
+        <img
+          *ngIf="imagePreview"
+          class="img-fluid oldImage"
+          src="{{ imgUrl }}{{ imagePreview }}"
+          [alt]="imagePreview.substring(0, thumbnailPreview.length - 3)"
+        />
+        <img
+          *ngIf="imagePreviewNew"
+          class="img-fluid oldImage"
+          src="{{ imagePreviewNew }}"
+          [alt]=""
+        />
+        <br /><fa-icon [icon]="faEdit"></fa-icon>
+      </button>
+      <input
+        type="file"
+        #profilePicturePicker
+        accept=".png, .jpg"
+        (change)="onImagePicked($event)"
+      />
+
+      <div class="form-group">
+        <label for="inputAddress">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputAddress"
+          placeholder="Name"
+          formControlName="name"
+        />
+      </div>
+      <div class="form-group">
+        <label for="inputAddress">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputAddress"
+          placeholder="Title"
+          formControlName="title"
+        />
+      </div>
+      <div class="form-group">
+        <label for="inputAddress">Details</label>
+        <ejs-richtexteditor
+          id="defaultRTE"
+          formControlName="detail"
+          [toolbarSettings]="rteTools"
+          height="400"
+          [maxLength]="maxLength"
+        >
+        </ejs-richtexteditor>
+      </div>
+    </form>
+  </div>
+
+  <div *ngIf="isLoading2" class="card p-3 overflow-auto">
+    <div class="row">
+      <div class="myLoader">
+        <div
+          class="spinner-border text-success"
+          style="width: 8rem; height: 8rem"
+          role="status"
+        >
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="!isLoading2 && (isAdded || isEdited)"
+    class="card p-3 overflow-auto"
+  >
+    <div class="row">
+      <div class="col-12 text-center mt-2">
+        <h3>{{ addEditMessage }}</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 text-center">
+        <button class="btn btn-success" (click)="cancel()">Close</button>
+      </div>
+    </div>
+  </div>
+</ng-container>

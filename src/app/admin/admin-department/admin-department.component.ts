@@ -12,7 +12,9 @@ import {
   ImageService,
   HtmlEditorService,
 } from '@syncfusion/ej2-angular-richtexteditor';
+
 import { environment } from '../../../environments/environment';
+
 import { Department } from '../../../models/Department';
 import { DepartmentService } from './department.service';
 
@@ -26,6 +28,10 @@ const IMAGE_URL = environment.fileUrl;
 })
 export class AdminDepartmentComponent implements OnInit {
   imgUrl = IMAGE_URL + 'department/';
+
+  faAngleDown = faAngleDown;
+  faAngleUp = faAngleUp;
+  faEdit = faEdit;
 
   rteTools: object = {
     type: 'MultiRow',
@@ -60,6 +66,7 @@ export class AdminDepartmentComponent implements OnInit {
   maxLength: number = 500;
 
   isLoading = true;
+  isLoading2 = false;
   addEditMessage = '';
   fetchErrorMessage = '';
   isAdding = false;
@@ -70,14 +77,10 @@ export class AdminDepartmentComponent implements OnInit {
   isDeleted = false;
   errorMessage = '';
 
-  faAngleDown = faAngleDown;
-  faAngleUp = faAngleUp;
-  faEdit = faEdit;
-
   images = [];
   imagesPreview = [];
 
-  sortingWay = 'desc';
+  sortingWay = 'asc';
   propertyName = 'dateAdded';
 
   departmentForm = new FormGroup({
@@ -127,10 +130,8 @@ export class AdminDepartmentComponent implements OnInit {
           this.departments.push(department);
         });
         this.isLoading = false;
-        console.log('NEXT');
       },
       error: (error) => {
-        console.log('ERROR');
         if (error.status == 404) {
           this.fetchErrorMessage = 'No departments found!';
           this.isLoading = false;
@@ -145,14 +146,7 @@ export class AdminDepartmentComponent implements OnInit {
   openViewModal(content) {
     this.modalService
       .open(content, { scrollable: true, size: 'lg' })
-      .result.then(
-        (result) => {
-          // this.closeResult = `Closed with: ${result}`;
-        },
-        (reason) => {
-          // this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        }
-      );
+      .result.then();
   }
 
   sortProperty(propertyName: string) {
@@ -202,6 +196,7 @@ export class AdminDepartmentComponent implements OnInit {
   }
 
   cancel() {
+    this.isLoading2 = false;
     this.modalService.dismissAll();
     this.images = [];
     this.imagesPreview = [];
@@ -217,6 +212,9 @@ export class AdminDepartmentComponent implements OnInit {
       primary: '#000',
       secondary: '#000',
       tertiary: '#000',
+    });
+    this.deleteForm.setValue({
+      password: '',
     });
     this.department = null;
     this.isDeleting = false;
@@ -282,15 +280,6 @@ export class AdminDepartmentComponent implements OnInit {
     this.imagesPreview2.splice(this.imagesPreview2.indexOf(imageName), 1);
   }
 
-  imageType(type: string) {
-    const imgType = {
-      'image/png': 'png',
-      'image/jpeg': 'jpg',
-      'image/jpg': 'jpg',
-    };
-    return imgType[type];
-  }
-
   add() {
     if (
       !this.departmentForm.value.title ||
@@ -301,13 +290,9 @@ export class AdminDepartmentComponent implements OnInit {
       this.imagesPreview.length == 0 ||
       !this.thumbnailPreviewNew
     ) {
-      console.log(
-        this.departmentForm.value,
-        this.departmentForm.invalid,
-        this.imagesPreview
-      );
       return;
     }
+    this.isLoading2 = true;
     const newDepartmentForm = new FormData();
     newDepartmentForm.append('title', this.departmentForm.value.title);
     newDepartmentForm.append('about', this.departmentForm.value.about);
@@ -357,6 +342,7 @@ export class AdminDepartmentComponent implements OnInit {
         });
         this.departments.push(obj);
         this.isAdded = true;
+        this.isLoading2 = false;
       },
       (error) => {
         if (error.status == 404) {
@@ -365,6 +351,7 @@ export class AdminDepartmentComponent implements OnInit {
           this.addEditMessage = 'An unknown error occured!';
         }
         this.isAdded = true;
+        this.isLoading2 = false;
       }
     );
   }
@@ -379,9 +366,9 @@ export class AdminDepartmentComponent implements OnInit {
       (this.imagesPreview.length == 0 && this.imagesPreview2.length == 0) ||
       (!this.thumbnailPreview && !this.thumbnailPreviewNew)
     ) {
-      console.log(this.departmentForm.value);
       return;
     }
+    this.isLoading2 = true;
     const newDepartmentForm = new FormData();
     newDepartmentForm.append('title', this.departmentForm.value.title);
     newDepartmentForm.append('about', this.departmentForm.value.about);
@@ -438,10 +425,17 @@ export class AdminDepartmentComponent implements OnInit {
       .updateDepartment(newDepartmentForm, this.department._id)
       .subscribe(
         (next) => {
+          this.isEdited = true;
           window.location.reload;
         },
         (error) => {
-          console.log(error);
+          if (error.status == 404) {
+            this.addEditMessage = 'Error occured! Update failed.';
+          } else {
+            this.addEditMessage = 'An unknown error occured!';
+          }
+          this.isEdited = true;
+          this.isLoading2 = false;
         }
       );
   }
@@ -452,17 +446,23 @@ export class AdminDepartmentComponent implements OnInit {
     } else if (this.deleteForm.value.password != 'YES! I am absolutely sure.') {
       return;
     }
+    this.isDeleting = false;
+    this.isLoading2 = true;
     this.departmentService.deleteDepartment(department._id).subscribe(
       (next) => {
         this.departments.splice(this.departments.indexOf(department), 1);
         this.isDeleted = true;
-        this.cancel();
+        this.errorMessage = 'Department deleted successfully!';
+        this.isLoading2 = false;
       },
       (error) => {
         this.isDeleted = true;
-        console.log(error);
-        this.errorMessage = error;
-        this.modalService.dismissAll();
+        if (error.status == 404) {
+          this.errorMessage = 'Error occured! Deletion failed.';
+        } else {
+          this.errorMessage = 'An unknown error occured!';
+        }
+        this.isLoading2 = false;
       }
     );
   }
