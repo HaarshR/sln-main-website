@@ -3,4 +3,5 @@ export interface PageData {
   navLink: string;
   specialNavLink: string;
   togglerColor: string;
+  visible: boolean;
 }

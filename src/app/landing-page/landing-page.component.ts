@@ -11,16 +11,18 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
   providers: [NgbCarouselConfig],
 })
 export class LandingPageComponent implements OnInit {
-
   showNavigationArrows = false;
   showNavigationIndicators = false;
-  images = [1055, 194, 368].map( (n) => `https://picsum.photos/id/${n}/1500/600`);
+  images = [1055, 194, 368].map(
+    (n) => `https://picsum.photos/id/${n}/1500/600`
+  );
 
   private pageData: PageData = {
     navBackground: 'rgba(0,0,0,0.7)',
     navLink: '#ffffff',
     specialNavLink: '#f89825',
     togglerColor: '#ffffff',
+    visible: true,
   };
   // Dynamic content
   backgroundImage =

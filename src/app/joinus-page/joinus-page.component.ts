@@ -15,6 +15,7 @@ export class JoinusPageComponent implements OnInit {
     navLink: '#ffffff',
     specialNavLink: '#f89825',
     togglerColor: '#ffffff',
+    visible: true,
   };
 
   faUser = faUser;

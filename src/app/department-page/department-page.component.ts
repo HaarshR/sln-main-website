@@ -14,6 +14,7 @@ export class DepartmentPageComponent implements OnInit {
     navLink: '#000000',
     specialNavLink: '#546c55',
     togglerColor: '#546c55',
+    visible: true,
   };
 
   departments = [1, 2, 3, 4, 5];

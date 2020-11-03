@@ -1,126 +1,132 @@
-<nav
-  class="navbar navbar-expand-lg fixed-top"
-  [ngStyle]="{ 'background-color': pageData.navBackground }"
->
-  <div class="container-fluid px-5">
-    <a
-      routerLink=""
-      (click)="changePage('')"
-      class="navbar-brand"
-      [ngStyle]="{ color: pageData.navLink }"
-      >Sov Lanatir</a
-    >
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarResponsive"
-    >
-      <fa-icon
-        [icon]="faBars"
-        [ngStyle]="{ color: pageData.togglerColor }"
-      ></fa-icon>
-    </button>
+<ng-container *ngIf="pageData.visible">
+  <nav
+    class="navbar navbar-expand-lg fixed-top"
+    [ngStyle]="{ 'background-color': pageData.navBackground }"
+  >
+    <div class="container-fluid px-5">
+      <a
+        routerLink=""
+        (click)="changePage('')"
+        class="navbar-brand"
+        [ngStyle]="{ color: pageData.navLink }"
+        >Sov Lanatir</a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+      >
+        <fa-icon
+          [icon]="faBars"
+          [ngStyle]="{ color: pageData.togglerColor }"
+        ></fa-icon>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="navbar-item">
-          <a
-            routerLink="departments"
-            (click)="changePage('departments')"
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="navbar-item">
+            <a
+              routerLink="departments"
+              (click)="changePage('departments')"
+              routerLinkActive="active"
+              class="nav-link"
+              [ngStyle]="{ color: pageData.navLink }"
+              >Departments</a
+            >
+          </li>
+          <li class="nav-item dropdown" routerLinkActive="active">
+            <a
+              class="nav-link dropdown-toggle"
+              id="aboutUsDD"
+              role="button"
+              data-toggle="dropdown"
+              [ngStyle]="{ color: pageData.navLink }"
+            >
+              About Us
+            </a>
+            <div class="dropdown-menu bg-light border-0 rounded bshadow">
+              <a
+                class="dropdown-item text-primary"
+                routerLink="about-us"
+                (click)="changePage('about-us')"
+                >What We Do</a
+              >
+              <a
+                class="dropdown-item text-primary"
+                routerLink="events"
+                (click)="changePage('events')"
+                >Events</a
+              >
+              <a
+                class="dropdown-item text-primary"
+                routerLink="blog"
+                (click)="changePage('blog')"
+                >Blog</a
+              >
+            </div>
+          </li>
+          <li
+            routerLink="join-us"
             routerLinkActive="active"
-            class="nav-link"
-            [ngStyle]="{ color: pageData.navLink }"
-            >Departments</a
+            class="navbar-item"
           >
-        </li>
-        <li class="nav-item dropdown" routerLinkActive="active">
-          <a
-            class="nav-link dropdown-toggle"
-            id="aboutUsDD"
-            role="button"
-            data-toggle="dropdown"
-            [ngStyle]="{ color: pageData.navLink }"
-          >
-            About Us
-          </a>
-          <div class="dropdown-menu bg-light border-0 rounded bshadow">
             <a
-              class="dropdown-item text-primary"
-              routerLink="about-us"
-              (click)="changePage('about-us')"
-              >What We Do</a
+              class="nav-link"
+              [ngStyle]="{ color: pageData.navLink }"
+              (click)="changePage('join-us')"
+              >Join SLN</a
             >
+          </li>
+          <li class="navbar-item">
             <a
-              class="dropdown-item text-primary"
-              routerLink="events"
-              (click)="changePage('events')"
-              >Events</a
+              href="{{ routeUrl }}#footer"
+              class="nav-link"
+              [ngStyle]="{ color: pageData.navLink }"
+              >Contact</a
             >
+          </li>
+          <li class="navbar-item">
             <a
-              class="dropdown-item text-primary"
-              routerLink="blog"
-              (click)="changePage('blog')"
-              >Blog</a
+              href="#"
+              class="nav-link font-weight-bold"
+              [ngStyle]="{ color: pageData.specialNavLink }"
+              >Donate</a
             >
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <div class="row d-md-none border border-light my-4"></div>
+          <div class="row text-center">
+            <div class="col-6 col-md-4">
+              <li class="navbar-item">
+                <a
+                  [href]="instagramPage"
+                  class="nav-link"
+                  [ngStyle]="{ color: pageData.specialNavLink }"
+                  target="_blank"
+                >
+                  <fa-icon [icon]="faInstagram" size="lg"></fa-icon>
+                  <span class="d-md-none pl-3 h5">Instagram</span>
+                </a>
+              </li>
+            </div>
+            <div class="col-6 col-md-4">
+              <li class="navbar-item">
+                <a
+                  [href]="facebookPage"
+                  class="nav-link"
+                  [ngStyle]="{ color: pageData.specialNavLink }"
+                  target="_blank"
+                >
+                  <fa-icon [icon]="faFacebook" size="md"></fa-icon>
+                  <span class="d-md-none pl-3 h5">Facebook</span>
+                </a>
+              </li>
+            </div>
           </div>
-        </li>
-        <li routerLink="join-us" routerLinkActive="active" class="navbar-item">
-          <a
-            class="nav-link"
-            [ngStyle]="{ color: pageData.navLink }"
-            (click)="changePage('join-us')"
-            >Join SLN</a
-          >
-        </li>
-        <li class="navbar-item">
-          <a
-            href="{{ routeUrl }}#footer"
-            class="nav-link"
-            [ngStyle]="{ color: pageData.navLink }"
-            >Contact</a
-          >
-        </li>
-        <li class="navbar-item">
-          <a
-            href="#"
-            class="nav-link font-weight-bold"
-            [ngStyle]="{ color: pageData.specialNavLink }"
-            >Donate</a
-          >
-        </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <div class="row d-md-none border border-light my-4"></div>
-        <div class="row text-center">
-          <div class="col-6 col-md-4">
-            <li class="navbar-item">
-              <a
-                [href]="instagramPage"
-                class="nav-link"
-                [ngStyle]="{ color: pageData.specialNavLink }"
-                target="_blank"
-              >
-                <fa-icon [icon]="faInstagram" size="lg"></fa-icon>
-                <span class="d-md-none pl-3 h5">Instagram</span>
-              </a>
-            </li>
-          </div>
-          <div class="col-6 col-md-4">
-            <li class="navbar-item">
-              <a
-                [href]="facebookPage"
-                class="nav-link"
-                [ngStyle]="{ color: pageData.specialNavLink }"
-                target="_blank"
-              >
-                <fa-icon [icon]="faFacebook" size="md"></fa-icon>
-                <span class="d-md-none pl-3 h5">Facebook</span>
-              </a>
-            </li>
-          </div>
-        </div>
-      </ul>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
+</ng-container>

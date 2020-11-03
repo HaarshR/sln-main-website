@@ -13,7 +13,8 @@ export class ExecutiveMemberPageComponent implements OnInit {
     navBackground: '#ffffff',
     navLink: '#000000',
     specialNavLink: '#546c55',
-    togglerColor: '#546c55'
+    togglerColor: '#546c55',
+    visible: true,
   };
 
   executiveMemberForm = new FormGroup({});
