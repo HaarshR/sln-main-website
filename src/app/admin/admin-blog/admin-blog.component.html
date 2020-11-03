@@ -101,7 +101,11 @@
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title" *ngIf="!isDeleted">
             {{ blog.name }}'s Blog&nbsp;
-            <button *ngIf="!isDeleting" class="btn" (click)="edit(blog)">
+            <button
+              *ngIf="!isDeleting"
+              class="btn"
+              (click)="edit(blog); modal.close('Close')"
+            >
               EDIT
             </button>
             <button *ngIf="!isDeleting" class="btn" (click)="isDeleting = true">
@@ -115,7 +119,7 @@
             type="button"
             class="close"
             aria-label="Close"
-            (click)="cancel()"
+            (click)="cancel(); modal.close('Close')"
           >
             <span aria-hidden="true">&times;</span>
           </button>
@@ -234,7 +238,7 @@
             *ngIf="isDeleted"
             type="button"
             class="btn btn-outline-dark"
-            (click)="cancel()"
+            (click)="cancel(); modal.close('Close')"
           >
             CLOSE
           </button>
@@ -265,24 +269,24 @@
     </div>
 
     <form [formGroup]="blogForm" style="text-align: left">
+      <img
+        *ngIf="imagePreview"
+        class="img-fluid oldImage"
+        src="{{ imgUrl }}{{ imagePreview }}"
+        [alt]="imagePreview.substring(0, imagePreview.length - 3)"
+      />
+      <img
+        *ngIf="imagePreviewNew"
+        class="img-fluid oldImage"
+        src="{{ imagePreviewNew }}"
+        [alt]=""
+      />
       <button
         class="btn btn-success"
         type="button"
         (click)="profilePicturePicker.click()"
       >
-        <img
-          *ngIf="imagePreview"
-          class="img-fluid oldImage"
-          src="{{ imgUrl }}{{ imagePreview }}"
-          [alt]="imagePreview.substring(0, thumbnailPreview.length - 3)"
-        />
-        <img
-          *ngIf="imagePreviewNew"
-          class="img-fluid oldImage"
-          src="{{ imagePreviewNew }}"
-          [alt]=""
-        />
-        <br /><fa-icon [icon]="faEdit"></fa-icon>
+        Add/Change Thumbnail<fa-icon [icon]="faEdit"></fa-icon>
       </button>
       <input
         type="file"
@@ -291,27 +295,27 @@
         (change)="onImagePicked($event)"
       />
 
-      <div class="form-group">
-        <label for="inputAddress">Name</label>
+      <div>
+        <label for="inputName"><b>Name</b></label>
         <input
           type="text"
           class="form-control"
-          id="inputAddress"
+          id="inputName"
           placeholder="Name"
           formControlName="name"
         />
       </div>
-      <div class="form-group">
-        <label for="inputAddress">Title</label>
+      <div>
+        <label for="inputTitle"><b>Title</b></label>
         <input
           type="text"
           class="form-control"
-          id="inputAddress"
+          id="inputTitle"
           placeholder="Title"
           formControlName="title"
         />
       </div>
-      <label for="inputAddress">Details</label>
+      <label for="defaultRTE"><b>Details</b></label>
       <!-- [maxLength]="maxLength" -->
       <ejs-richtexteditor
         id="defaultRTE"

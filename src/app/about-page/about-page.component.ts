@@ -15,6 +15,7 @@ export class AboutPageComponent implements OnInit {
     navLink: '#ffffff',
     specialNavLink: '#f89825',
     togglerColor: '#ffffff',
+    visible: true,
   };
 
   faInstagram = faInstagram;

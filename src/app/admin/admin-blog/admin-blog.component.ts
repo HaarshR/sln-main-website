@@ -160,25 +160,23 @@ export class AdminBlogComponent implements OnInit {
       detail: blog.detail,
     });
     this.blog = blog;
-    this.isEditing = true;
     this.imagePreview = this.blog.image;
-    this.modalService.dismissAll();
+    this.isEditing = true;
   }
 
   cancel() {
-    this.blogForm.setValue({
-      name: '',
-      title: '',
-      detail: '',
-    });
     this.isLoading2 = false;
-    this.modalService.dismissAll();
     this.isAdding = false;
     this.isAdded = false;
     this.fetchErrorMessage = '';
     this.addEditMessage = '';
     this.isEditing = false;
     this.isEdited = false;
+    this.blogForm.setValue({
+      name: '',
+      title: '',
+      detail: '',
+    });
     this.deleteForm.setValue({
       password: '',
     });
@@ -223,12 +221,7 @@ export class AdminBlogComponent implements OnInit {
     newBlogForm.append('name', this.blogForm.value.name);
     newBlogForm.append('title', this.blogForm.value.title);
     newBlogForm.append('detail', this.blogForm.value.detail);
-    newBlogForm.append(
-      'images',
-      this.image,
-      'blg' + this.blogForm.value.title.replace('_', ' ')
-    );
-    let i = 1;
+    newBlogForm.append('image', this.image, 'blg' + this.blogForm.value.title);
     this.blogService.addBlog(newBlogForm).subscribe(
       (next) => {
         if (next.message) {
@@ -252,6 +245,7 @@ export class AdminBlogComponent implements OnInit {
         this.isLoading2 = false;
       },
       (error) => {
+        console.log(error)
         if (error.status == 404) {
           this.addEditMessage = 'Error occured! This blog title already exist.';
         } else {
@@ -278,7 +272,7 @@ export class AdminBlogComponent implements OnInit {
       newBlogForm.append(
         'image',
         this.image,
-        'blg' + this.blogForm.value.title.replace('_', ' ')
+        'blg' + this.blogForm.value.title
       );
     } else {
       newBlogForm.append('image', null);
@@ -290,7 +284,7 @@ export class AdminBlogComponent implements OnInit {
     this.blogService.updateBlog(newBlogForm, this.blog._id).subscribe(
       (next) => {
         this.isEdited = true;
-        window.location.reload;
+        window.location.reload();
       },
       (error) => {
         if (error.status == 404) {

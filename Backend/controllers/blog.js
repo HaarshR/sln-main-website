@@ -38,7 +38,7 @@ const uploadFile = (fileName) => {
   // Read content from the file
   fs.readFile("public/images/" + fileName, (err, data) => {
     if (err) {
-      console.log("Error uploading image! Image could not be read.");
+      console.log(err);
     }
     let params = {
       Bucket: process.env.BUCKET_NAME,
@@ -47,7 +47,7 @@ const uploadFile = (fileName) => {
     };
     s3.upload(params, function (err, data) {
       if (err) {
-        console.log("Error uploading image! Connection failed.");
+        console.log(err);
       }
       try {
         fs.unlinkSync("public/images/" + fileName);
@@ -64,8 +64,7 @@ const uploadFile = (fileName) => {
 exports.getAll = (req, res, next) => {
   Blog.find()
     .then((documents) => {
-      if (documents) {
-        console.log(documents);
+      if (documents.length != 0) {
         res.status(200).json({
           blogs: documents,
         });
@@ -77,8 +76,8 @@ exports.getAll = (req, res, next) => {
     })
     .catch((error) => {
       res.status(500).json({
-        error: "An unknown error occured!.",
-        errorMessage: error,
+        error: error,
+        errorMessage: "An unknown error occured!",
       });
     });
 };
@@ -91,9 +90,10 @@ exports.addOne = (req, res, next) => {
     name: req.body.name,
     title: req.body.title,
     detail: req.body.detail,
-    viewCount: null,
+    viewCount: +0,
     comments: [],
   });
+
 
   blog
     .save()
@@ -119,19 +119,13 @@ exports.addOne = (req, res, next) => {
             },
           },
           function (error, completed, statistic) {
-            if (completed) {
-              try {
-                fs.unlinkSync("tempImg/" + image.filename);
-                fs.unlinkSync("tempImg/" + image.filename);
-                fs.unlinkSync("tempImg/" + image.filename);
-                fs.unlinkSync("tempImg/" + image.filename);
-                fs.unlinkSync("tempImg/" + image.filename);
-              } catch (err) {}
-              try {
-                uploadFile(image.filename);
-                i++;
-              } catch (err) {}
-            }
+            try {
+              fs.unlinkSync("tempImg/" + blog.image);
+              fs.unlinkSync("tempImg/" + blog.image);
+              fs.unlinkSync("tempImg/" + blog.image);
+              fs.unlinkSync("tempImg/" + blog.image);
+            } catch (err) {}
+            uploadFile(blog.image);
           }
         );
       }
@@ -143,10 +137,10 @@ exports.addOne = (req, res, next) => {
     })
     .catch((error) => {
       try {
-        fs.unlinkSync("tempImg/" + image.filename);
-        fs.unlinkSync("tempImg/" + image.filename);
-        fs.unlinkSync("tempImg/" + image.filename);
-        fs.unlinkSync("tempImg/" + image.filename);
+        fs.unlinkSync("tempImg/" + blog.image);
+        fs.unlinkSync("tempImg/" + blog.image);
+        fs.unlinkSync("tempImg/" + blog.image);
+        fs.unlinkSync("tempImg/" + blog.image);
       } catch (err) {}
       if (
         error.errors.title &&
@@ -220,30 +214,27 @@ exports.edit = (req, res, next) => {
     })
     .catch((error) => {
       res.status(500).json({
-        error: "An unknown error occured!.",
-        errorMessage: error,
+        error: error,
+        errorMessage: "An unknown error occured!",
       });
     });
 };
 
 exports.deleteOne = (req, res, next) => {
-  Blog.findOne({ _id: req.params.id }).then((document) => {
-    Blog.deleteOne({ _id: req.params.id })
-      .then((result) => {
-        if (result.n > 0) {
-          deleteFile(document.image);
-          res.status(200).json({ message: "Successfully removed!" });
-        } else {
-          res.status(404).json({
-            error: "Nothing was deleted.",
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(500).json({
-          error: "An unknown error occured!.",
-          errorMessage: error,
+  Blog.deleteOne({ _id: req.params.id })
+    .then((result) => {
+      if (result.n > 0) {
+        res.status(200).json({ message: "Successfully removed!" });
+      } else {
+        res.status(404).json({
+          error: "Nothing was deleted.",
         });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error,
+        errorMessage: "An unknown error occured!",
       });
-  });
+    });
 };

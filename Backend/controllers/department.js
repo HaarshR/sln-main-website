@@ -90,6 +90,7 @@ exports.addOne = (req, res, next) => {
     _id: null,
     date: new Date(),
     images: [],
+    imageFolder: req.body.title.split(" ").join("-"),
     title: req.body.title,
     about: req.body.about,
     colors: {
@@ -143,7 +144,7 @@ exports.addOne = (req, res, next) => {
                   fs.unlinkSync("tempImg/" + image.filename);
                 } catch (err) {}
                 try {
-                  uploadFile(image.filename, req.body.title.replace(" ", "-"));
+                  uploadFile(image.filename, department.imageFolder);
                   i++;
                 } catch (err) {}
               });
@@ -160,20 +161,6 @@ exports.addOne = (req, res, next) => {
     .catch((error) => {
       req.files.forEach((image) => {
         try {
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
-          fs.unlinkSync("tempImg/" + image.filename);
           fs.unlinkSync("tempImg/" + image.filename);
           fs.unlinkSync("tempImg/" + image.filename);
           fs.unlinkSync("tempImg/" + image.filename);
@@ -200,7 +187,6 @@ exports.addOne = (req, res, next) => {
 exports.edit = (req, res, next) => {
   let imageDelete = [];
   if (req.body.imageDelete != null && req.body.imageDelete != "null") {
-    deleteFile(req.body.imageDelete, req.body.title);
     req.body.imageDelete.forEach((image) => {
       if (image != "null") {
         imageDelete.push(image);
@@ -236,13 +222,6 @@ exports.edit = (req, res, next) => {
   if (req.files) {
     req.files.forEach((image) => {
       department.images.push(image.filename);
-      const fileName = image.filename.substring(0, image.filename.length - 3);
-      try {
-        deleteFile(fileName + "jpg", department.title);
-      } catch (err) {}
-      try {
-        deleteFile(fileName + "png", department.title);
-      } catch (err) {}
     });
     compress_images(
       tempImagePath,
@@ -274,7 +253,7 @@ exports.edit = (req, res, next) => {
               fs.unlinkSync("tempImg/" + image.filename);
             } catch (err) {}
             try {
-              uploadFile(image.filename, req.body.title.replace(" ", "-"));
+              uploadFile(image.filename, req.body.imageFolder);
               i++;
             } catch (err) {}
           });
@@ -282,6 +261,7 @@ exports.edit = (req, res, next) => {
       }
     );
   }
+
   Department.updateOne({ _id: req.params.id }, department)
     .then((result) => {
       if (result.n == 0) {
@@ -303,23 +283,20 @@ exports.edit = (req, res, next) => {
 };
 
 exports.deleteOne = (req, res, next) => {
-  Department.findOne({ _id: req.params.id }).then((document) => {
-    Department.deleteOne({ _id: req.params.id })
-      .then((result) => {
-        if (result.n > 0) {
-          deleteFile(document.images, document.title.replace(" ", "-"));
-          res.status(200).json({ message: "Successfully removed!" });
-        } else {
-          res.status(404).json({
-            error: "Nothing was deleted.",
-          });
-        }
-      })
-      .catch((error) => {
-        res.status(500).json({
-          error: "An unknown error occured!.",
-          errorMessage: error,
+  Department.deleteOne({ _id: req.params.id })
+    .then((result) => {
+      if (result.n > 0) {
+        res.status(200).json({ message: "Successfully removed!" });
+      } else {
+        res.status(404).json({
+          error: "Nothing was deleted.",
         });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: "An unknown error occured!.",
+        errorMessage: error,
       });
-  });
+    });
 };

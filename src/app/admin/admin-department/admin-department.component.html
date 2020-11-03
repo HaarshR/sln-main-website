@@ -79,7 +79,11 @@
         <div class="modal-header" *ngIf="!isLoading2">
           <h4 class="modal-title" id="modal-basic-title" *ngIf="!isDeleted">
             {{ department.title }}&nbsp;
-            <button *ngIf="!isDeleting" class="btn" (click)="edit(department)">
+            <button
+              *ngIf="!isDeleting"
+              class="btn"
+              (click)="edit(department); modal.close('Close')"
+            >
               EDIT
             </button>
             <button *ngIf="!isDeleting" class="btn" (click)="isDeleting = true">
@@ -93,7 +97,7 @@
             type="button"
             class="close"
             aria-label="Close"
-            (click)="cancel()"
+            (click)="cancel(); modal.close('Close')"
           >
             <span aria-hidden="true">&times;</span>
           </button>
@@ -136,9 +140,9 @@
                     <div class="picsum-img-wrapper">
                       <img
                         class="img-fluid"
-                        src="{{ imgUrl }}{{
-                          department.title.replace(' ', '-')
-                        }}/{{ image }}"
+                        src="{{ imgUrl }}{{ department.imageFolder }}/{{
+                          image
+                        }}"
                         alt="Booking Website Gallery {{ i + 1 }}"
                       />
                     </div>
@@ -216,7 +220,7 @@
             *ngIf="isDeleted"
             type="button"
             class="btn btn-outline-dark"
-            (click)="cancel()"
+            (click)="cancel(); modal.close('Close')"
           >
             CLOSE
           </button>
@@ -253,7 +257,7 @@
           <img
             *ngIf="thumbnailPreview"
             class="img-fluid oldImage"
-            src="{{ imgUrl }}{{ department.title.replace(' ', '-') }}/{{ thumbnailPreview }}"
+            src="{{ imgUrl }}{{ imageFolderPub }}/{{ thumbnailPreview }}"
             [alt]="thumbnailPreview.substring(0, thumbnailPreview.length - 3)"
           />
           <img
@@ -289,9 +293,7 @@
         <div class="d-flex flex-column oldImageFlex p-2">
           <img
             class="img-fluid oldImage"
-            src="{{ imgUrl }}{{ department.title.replace(' ', '-') }}/{{
-              image
-            }}"
+            src="{{ imgUrl }}{{ imageFolderPub }}/{{ image }}"
             [alt]="image.substring(0, image.length - 3)"
           />
           <input
@@ -356,18 +358,18 @@
         (change)="onImagePicked($event)"
       />
       <div class="form-group">
-        <label for="inputAddress"><b>Title</b></label>
+        <label for="inputTitle"><b>Title</b></label>
         <input
           type="text"
           class="form-control"
-          id="inputAddress"
+          id="inputTitle"
           placeholder="Title"
           formControlName="title"
         />
       </div>
-      <label for="inputAddress"><b>Color Pickers</b></label>
+      <label for="colorpicker"><b>Color Pickers</b></label>
       <div>
-        <label for="inputAddress">Primary color</label>
+        <label for="colorpicker1">Primary color</label>
         <input
           ejs-colorpicker
           type="color"
@@ -376,7 +378,7 @@
         />
       </div>
       <div>
-        <label for="inputAddress">Secondary color</label>
+        <label for="colorpicker2">Secondary color</label>
         <input
           ejs-colorpicker
           type="color"
@@ -385,7 +387,7 @@
         />
       </div>
       <div>
-        <label for="inputAddress">Tertiary color</label>
+        <label for="colorpicker3">Tertiary color</label>
         <input
           ejs-colorpicker
           type="color"
@@ -393,7 +395,7 @@
           formControlName="tertiary"
         />
       </div>
-      <label style="margin-top: 2%" for="inputAddress"
+      <label  for="inputAddress"
         ><b>Descriptions</b></label
       >
       <!-- [maxLength]="maxLength" -->

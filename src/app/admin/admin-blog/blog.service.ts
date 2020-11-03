@@ -16,10 +16,10 @@ export class BlogService {
     }>(BACKEND_URL + 'getAll');
   }
 
-  addBlog(department: any) {
+  addBlog(blog: any) {
     return this.http.post<{ message: string; id: string; image: string }>(
       BACKEND_URL + 'addOne',
-      department
+      blog
     );
   }
 
