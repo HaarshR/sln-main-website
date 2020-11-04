@@ -1,6 +1,6 @@
 const express = require("express");
 
-const BlogController = require("../controllers/blog");
+const ServiceController = require("../controllers/service");
 
 const checkAuth = require("../middleware/check-auth");
 
@@ -39,23 +39,23 @@ const fileFilter = (req, file, cb) => {
 };
 
 // POST REQUEST
-router.post(
-  "/addOne",
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
-  BlogController.addOne
-);
+// router.post(
+//   "/addOne",
+//   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
+//   ServiceController.addOne
+// );
 
 // GET REQUEST
-router.get("/getAll", BlogController.getAll);
+// router.get("/getAll", ServiceController.getAll);
 
 // UPDATE REQUEST
-router.put(
-  "/updateOne/:id",
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
-  BlogController.edit
-);
+// router.put(
+//   "/updateOne/:id",
+//   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
+//   ServiceController.edit
+// );
 
 // DELETE REQUEST
-router.delete("/deleteOne/:id&:image", BlogController.deleteOne);
+// router.delete("/deleteOne/:id", ServiceController.deleteOne);
 
 module.exports = router;

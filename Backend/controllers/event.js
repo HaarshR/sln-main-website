@@ -1,5 +1,5 @@
 // IMPORTS THE MODELS
-const Blog = require("../models/blog");
+const Event = require("../models/event");
 
 const compress_images = require("compress-images");
 const fs = require("fs");
@@ -13,10 +13,11 @@ const s3 = new AWS.S3({
 const tempImagePath = "tempImg/*.{jpg,JPG,jpeg,JPEG,png}";
 const outputImagePath = "public/images/";
 
-const deleteFile = (fileName) => {
+const deleteFile = (fileName, eventName) => {
+
   let params = {
     Bucket: process.env.BUCKET_NAME,
-    Key: "blog/" + fileName,
+    Key: "event/" + eventName.split(" ").join("-") + "/" + fileName,
   };
 
   s3.deleteObject(params, function (err, data) {
@@ -27,7 +28,7 @@ const deleteFile = (fileName) => {
   });
 };
 
-const uploadFile = (fileName) => {
+const uploadFile = (fileName, eventName) => {
   // Read content from the file
   fs.readFile("public/images/" + fileName, (err, data) => {
     if (err) {
@@ -35,7 +36,7 @@ const uploadFile = (fileName) => {
     }
     let params = {
       Bucket: process.env.BUCKET_NAME,
-      Key: "blog/" + fileName, // File name you want to save as in S3
+      Key: "event/" + eventName.split(" ").join("-") + "/" + fileName, // File name you want to save as in S3
       Body: data,
     };
     s3.upload(params, function (err, data) {
@@ -55,11 +56,11 @@ const uploadFile = (fileName) => {
 };
 
 exports.getAll = (req, res, next) => {
-  Blog.find()
+  Event.find()
     .then((documents) => {
       if (documents.length != 0) {
         res.status(200).json({
-          blogs: documents,
+          events: documents,
         });
       } else {
         res.status(404).json({
@@ -76,18 +77,18 @@ exports.getAll = (req, res, next) => {
 };
 
 exports.addOne = (req, res, next) => {
-  const blog = new Blog({
+  const event = new Event({
     _id: null,
-    date: new Date(),
-    image: req.file.filename,
+    date: req.body.date,
+    logo: req.file.filename,
+    images: [],
     name: req.body.name,
-    title: req.body.title,
-    detail: req.body.detail,
-    viewCount: +0,
-    comments: [],
+    description: req.body.description,
+    departmentName: req.body.departmentName,
+    location: req.body.location,
   });
 
-  blog
+  event
     .save()
     .then(() => {
       if (req.file) {
@@ -112,27 +113,27 @@ exports.addOne = (req, res, next) => {
           },
           function (error, completed, statistic) {
             try {
-              fs.unlinkSync("tempImg/" + blog.image);
-              fs.unlinkSync("tempImg/" + blog.image);
-              fs.unlinkSync("tempImg/" + blog.image);
-              fs.unlinkSync("tempImg/" + blog.image);
+              fs.unlinkSync("tempImg/" + event.logo);
+              fs.unlinkSync("tempImg/" + event.logo);
+              fs.unlinkSync("tempImg/" + event.logo);
+              fs.unlinkSync("tempImg/" + event.logo);
             } catch (err) {}
-            uploadFile(blog.image);
+            uploadFile(event.logo, event.name);
           }
         );
       }
       res.status(201).json({
         message: "Successfully added!",
         id: "Refresh the Page",
-        images: blog.image,
+        images: event.logo,
       });
     })
     .catch((error) => {
       try {
-        fs.unlinkSync("tempImg/" + blog.image);
-        fs.unlinkSync("tempImg/" + blog.image);
-        fs.unlinkSync("tempImg/" + blog.image);
-        fs.unlinkSync("tempImg/" + blog.image);
+        fs.unlinkSync("tempImg/" + event.logo);
+        fs.unlinkSync("tempImg/" + event.logo);
+        fs.unlinkSync("tempImg/" + event.logo);
+        fs.unlinkSync("tempImg/" + event.logo);
       } catch (err) {}
       if (
         error.errors.title &&
@@ -140,7 +141,7 @@ exports.addOne = (req, res, next) => {
         error.errors.title.properties.type == "unique"
       ) {
         res.status(404).json({
-          error: "Error occured! This blog title already exist.",
+          error: "Error occured! This event already exist.",
         });
       } else {
         res.status(500).json({
@@ -185,7 +186,6 @@ exports.edit = (req, res, next) => {
             fs.unlinkSync("tempImg/" + image.filename);
           } catch (err) {}
           try {
-            deleteFile(req.body.oldFileName);
             uploadFile(image.filename);
           } catch (err) {}
         }
@@ -214,10 +214,10 @@ exports.edit = (req, res, next) => {
 };
 
 exports.deleteOne = (req, res, next) => {
-  Blog.deleteOne({ _id: req.params.id })
+  Event.deleteOne({ _id: req.params.id })
     .then((result) => {
-      deleteFile(req.params.image);
       if (result.n > 0) {
+        deleteFile(req.params.image, req.params.name);
         res.status(200).json({ message: "Successfully removed!" });
       } else {
         res.status(404).json({

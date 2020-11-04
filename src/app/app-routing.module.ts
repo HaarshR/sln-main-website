@@ -4,7 +4,6 @@ import { Router, RouterModule, Routes } from '@angular/router';
 // Components
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { AboutPageComponent } from './about-page/about-page.component';
-import { EditDepartmentComponent } from './admin/admin-department/edit-department/edit-department.component';
 import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.component';
 import { BlogPageComponent } from './blog-page/blog-page.component';
 import { EventsPageComponent } from './events-page/events-page.component';
@@ -15,6 +14,7 @@ import { DepartmentPageComponent } from './department-page/department-page.compo
 import { ExecutiveMemberPageComponent } from './joinus-page/executive-member-page/executive-member-page.component';
 import { RegularMemberPageComponent } from './joinus-page/regular-member-page/regular-member-page.component';
 import { DepartmentComponent } from './department-page/department/department.component';
+import { AdminSendmailComponent } from './admin/admin-members/admin-sendmail/admin-sendmail.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -36,8 +36,8 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin/home/editDepartment',
-    component: EditDepartmentComponent,
+    path: 'admin/sendMail',
+    component: AdminSendmailComponent,
     canActivate: [AuthGuard],
   },
 ];
@@ -52,9 +52,9 @@ const routes: Routes = [
   providers: [AuthGuard],
 })
 export class AppRoutingModule {
-  constructor(private router: Router) {
-    this.router.errorHandler = (error: any) => {
-      this.router.navigate(['']); // or redirect to default route
-    };
-  }
+  // constructor(private router: Router) {
+  //   this.router.errorHandler = (error: any) => {
+  //     this.router.navigate(['']); // or redirect to default route
+  //   };
+  // }
 }

@@ -18,6 +18,7 @@ import { DepartmentCardComponent } from './department-page/department-card/depar
 import { AboutPageComponent } from './about-page/about-page.component';
 import { JoinusPageComponent } from './joinus-page/joinus-page.component';
 import { ServiceCardComponent } from './landing-page/service-card/service-card.component';
+
 // Admin Components
 import { SortByPipe } from './sorting.pipe';
 import { AdminHomepageComponent } from './admin/admin-homepage/admin-homepage.component';
@@ -26,13 +27,16 @@ import { EventsPageComponent } from './events-page/events-page.component';
 import { BlogPageComponent } from './blog-page/blog-page.component';
 import { AdminDepartmentComponent } from './admin/admin-department/admin-department.component';
 import { AppRoutingModule } from './app-routing.module';
-import { EditDepartmentComponent } from './admin/admin-department/edit-department/edit-department.component';
 import { AdminLoginComponent } from './admin/admin-login/admin-login.component';
 import { ExecutiveMemberPageComponent } from './joinus-page/executive-member-page/executive-member-page.component';
 import { RegularMemberPageComponent } from './joinus-page/regular-member-page/regular-member-page.component';
 import { EventsCardComponent } from './events-page/events-card/events-card.component';
 import { BlogCardComponent } from './blog-page/blog-card/blog-card.component';
 import { DepartmentComponent } from './department-page/department/department.component';
+import { AdminEventComponent } from './admin/admin-event/admin-event.component';
+import { AdminServiceComponent } from './admin/admin-service/admin-service.component';
+import { AdminMembersComponent } from './admin/admin-members/admin-members.component';
+import { AdminSendmailComponent } from './admin/admin-members/admin-sendmail/admin-sendmail.component';
 
 @NgModule({
   declarations: [
@@ -51,13 +55,16 @@ import { DepartmentComponent } from './department-page/department/department.com
     EventsPageComponent,
     BlogPageComponent,
     AdminDepartmentComponent,
-    EditDepartmentComponent,
     AdminLoginComponent,
     ExecutiveMemberPageComponent,
     RegularMemberPageComponent,
     EventsCardComponent,
     BlogCardComponent,
     DepartmentComponent,
+    AdminEventComponent,
+    AdminServiceComponent,
+    AdminMembersComponent,
+    AdminSendmailComponent,
   ],
   imports: [
     BrowserModule,

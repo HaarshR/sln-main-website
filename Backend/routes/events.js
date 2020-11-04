@@ -1,6 +1,6 @@
 const express = require("express");
 
-const BlogController = require("../controllers/blog");
+const EventController = require("../controllers/event");
 
 const checkAuth = require("../middleware/check-auth");
 
@@ -41,21 +41,21 @@ const fileFilter = (req, file, cb) => {
 // POST REQUEST
 router.post(
   "/addOne",
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
-  BlogController.addOne
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("logo"),
+  EventController.addOne
 );
 
 // GET REQUEST
-router.get("/getAll", BlogController.getAll);
+router.get("/getAll", EventController.getAll);
 
 // UPDATE REQUEST
 router.put(
   "/updateOne/:id",
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
-  BlogController.edit
+  multer({ storage: fileStorage, fileFilter: fileFilter }).array("image", 200),
+  EventController.edit
 );
 
 // DELETE REQUEST
-router.delete("/deleteOne/:id&:image", BlogController.deleteOne);
+router.delete("/deleteOne/:id&:name&:image", EventController.deleteOne);
 
 module.exports = router;

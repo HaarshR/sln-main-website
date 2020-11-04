@@ -2,9 +2,9 @@
   <div class="row">
     <div class="col-12 text-center">
       <h2>
-        BLOGS&nbsp;
+        EVENTS&nbsp;
         <button class="btn btn-success" (click)="isAdding = true">
-          Add Blog
+          Add Event
         </button>
       </h2>
     </div>
@@ -45,17 +45,17 @@
       ></fa-icon>
     </div>
     <div class="col-3 text-center pb-2 pt-2">
-      <span class="headers" (click)="sortProperty('name')">Name</span>
+      <span class="headers" (click)="sortProperty('title')">Title</span>
       <fa-icon
         class="hovering"
-        *ngIf="sortingWay == 'desc' && propertyName == 'name'"
+        *ngIf="sortingWay == 'desc' && propertyName == 'title'"
         [icon]="faAngleDown"
         transform="grow-13"
         (click)="sortWay('asc')"
       ></fa-icon>
       <fa-icon
         class="hovering"
-        *ngIf="sortingWay == 'asc' && propertyName == 'name'"
+        *ngIf="sortingWay == 'asc' && propertyName == 'title'"
         [icon]="faAngleUp"
         transform="grow-13"
         (click)="sortWay('desc')"
@@ -81,33 +81,35 @@
     </div>
   </ng-container>
   <ng-container *ngIf="!isLoading && !fetchErrorMessage">
-    <ng-container *ngFor="let blog of blogs | sortBy: sortingWay:propertyName">
+    <ng-container
+      *ngFor="let event of events | sortBy: sortingWay:propertyName"
+    >
       <div
         class="row mt-2 myRows"
         data-toggle="modal"
         (click)="openViewModal(content)"
       >
         <div class="col-4 text-center">
-          {{ blog.date | date: "MMM d, y, h:mm a" }}
+          {{ event.date | date: "MMM d, y, h:mm a" }}
         </div>
         <div class="col-5 text-center">
-          {{ blog._id }}
+          {{ event._id }}
         </div>
         <div class="col-3 text-center">
-          {{ blog.name }}
+          {{ event.title }}
         </div>
       </div>
       <ng-template #content let-modal>
         <div class="modal-header">
           <h4 class="modal-title" id="modal-basic-title" *ngIf="!isDeleted">
-            {{ blog.name }}'s Blog&nbsp;
-            <button
+            {{ event.name }}
+            <!-- <button
               *ngIf="!isDeleting"
               class="btn"
-              (click)="edit(blog); modal.close('Close')"
+              (click)="edit(event); modal.close('Close')"
             >
               EDIT
-            </button>
+            </button> -->
             <button *ngIf="!isDeleting" class="btn" (click)="isDeleting = true">
               DELETE
             </button>
@@ -141,10 +143,12 @@
         >
           <div class="row text-center">
             <div class="col mb-2">
-              <b>Author's profile Picture</b>
+              <b>Event's logo</b>
               <br />
               <img
-                src="{{ imgUrl }}{{ blog.image }}"
+                src="{{ imgUrl }}{{ event.name.split(' ').join('-') }}/{{
+                  event.logo
+                }}"
                 alt=""
                 width="40%"
                 class="img-fluid"
@@ -153,24 +157,28 @@
           </div>
           <div class="row text-center">
             <div class="col mb-2">
-              <b>Date Added:</b><br />{{ blog.date | date: "MMM d, y, h:mm a" }}
+              <b>Date Of Event:</b><br />{{
+                event.date | date: "MMM d, y, h:mm a"
+              }}
             </div>
-            <div class="col mb-2"><b>View count: </b>{{ blog.viewCount }}</div>
-          </div>
-          <div class="row">
-            <div class="col mb-2"><b>Title: </b>{{ blog.title }}</div>
-          </div>
-          <div class="row">
             <div class="col mb-2">
-              <b>Detail:</b><br />
-              <span innerHtml="{{ blog.detail }}"></span>
+              <b>Department name: </b><br />{{ event.departmentName }}
             </div>
           </div>
           <div class="row">
+            <div class="col mb-2"><b>Location: </b>{{ event.location }}</div>
+          </div>
+          <div class="row">
             <div class="col mb-2">
-              <b>ALL COMMENTS</b><br />
-              <ng-container *ngFor="let comment of blog.comments">
-                <div class="row">
+              <b>Description:</b><br />
+              <span innerHtml="{{ event.description }}"></span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
+              <b>All the event's images that was taken:</b><br />
+              <ng-container *ngFor="let image of event.images">
+                <!-- <div class="row">
                   <div class="col mb-2">
                     <b>Date: </b>{{ comment.date | date: "MMM d, y, h:mm a"
                     }}<br />
@@ -185,7 +193,7 @@
                     <b>Comment: </b><br />
                     {{ comment.comment }}<br />
                   </div>
-                </div>
+                </div> -->
               </ng-container>
             </div>
           </div>
@@ -231,7 +239,7 @@
             *ngIf="!isDeleted"
             type="button"
             class="btn btn-outline-dark"
-            (click)="deleteBlog(blog)"
+            (click)="deleteEvent(event)"
           >
             DELETE NOW
           </button>
@@ -258,12 +266,17 @@
       <div class="col-12 text-center">
         <h2>
           Blog creation/editing form<br />
-          <button class="btn btn-success" *ngIf="isAdding" (click)="add()">
+          <button
+            class="btn btn-success"
+            id="addBtn"
+            *ngIf="isAdding"
+            (click)="add()"
+          >
             Add</button
           >&nbsp;
-          <button class="btn btn-success" *ngIf="isEditing" (click)="save()">
+          <!-- <button class="btn btn-success" *ngIf="isEditing" (click)="save()">
             Save</button
-          >&nbsp;
+          >&nbsp; -->
           <button class="btn btn-success" (click)="cancel()">Cancel</button>
         </h2>
       </div>
@@ -274,7 +287,9 @@
         *ngIf="imagePreview"
         width="40%"
         class="img-fluid oldImage"
-        src="{{ imgUrl }}{{ imagePreview }}"
+        src="{{ imgUrl }}{{ event.name.split(' ').join('-') }}/{{
+          imagePreview
+        }}"
         [alt]="imagePreview.substring(0, imagePreview.length - 3)"
       />
       <img
@@ -301,32 +316,66 @@
       </button>
     </div>
 
-    <form [formGroup]="blogForm" style="text-align: left">
+    <form [formGroup]="eventForm" style="text-align: left">
       <div>
         <label for="inputName"><b>Name</b></label>
         <input
           type="text"
           class="form-control"
           id="inputName"
-          placeholder="Enter the author's name"
+          placeholder="Enter the name of the event"
           formControlName="name"
         />
       </div>
       <div>
-        <label for="inputTitle"><b>Title</b></label>
+        <label for="inputDate"><b>Date & Time of the event</b></label>
+        <div class="input-group mb-2">
+          <ngb-timepicker formControlName="time"></ngb-timepicker>
+        </div>
+        <div class="input-group mb-2">
+          <input
+            class="form-control"
+            placeholder="yyyy-mm-dd"
+            name="dp"
+            formControlName="date"
+            ngbDatepicker
+            #d="ngbDatepicker"
+            [minDate]="minDate"
+          />
+          <div class="input-group-append">
+            <button
+              class="btn btn-outline-secondary calendar"
+              (click)="d.toggle()"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="inputLocation"><b>Location</b></label>
         <input
           type="text"
           class="form-control"
-          id="inputTitle"
-          placeholder="Enter the title of the blog"
-          formControlName="title"
+          id="inputLocation"
+          placeholder="Enter where is the event situated"
+          formControlName="location"
         />
       </div>
-      <label for="defaultRTE"><b>Details</b></label>
+      <div>
+        <label for="inputDepartment"><b>Department Name</b></label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputDepartment"
+          placeholder="Enter the name of the department"
+          formControlName="departmentName"
+        />
+      </div>
+      <label for="defaultRTE"><b>Description</b></label>
       <!-- [maxLength]="maxLength" -->
       <ejs-richtexteditor
         id="defaultRTE"
-        formControlName="detail"
+        formControlName="description"
         [toolbarSettings]="rteTools"
         height="400"
       >
