@@ -33,6 +33,8 @@ import { RegularMemberPageComponent } from './joinus-page/regular-member-page/re
 import { EventsCardComponent } from './events-page/events-card/events-card.component';
 import { BlogCardComponent } from './blog-page/blog-card/blog-card.component';
 import { DepartmentComponent } from './department-page/department/department.component';
+import { ViewBlogComponent } from './blog-page/view-blog/view-blog.component';
+import { ViewEventComponent } from './events-page/view-event/view-event.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { DepartmentComponent } from './department-page/department/department.com
     EventsCardComponent,
     BlogCardComponent,
     DepartmentComponent,
+    ViewBlogComponent,
+    ViewEventComponent,
   ],
   imports: [
     BrowserModule,

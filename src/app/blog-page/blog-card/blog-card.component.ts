@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { faCommentAlt, faEye } from '@fortawesome/free-regular-svg-icons';
+import { Blog } from 'src/models/Blogs/Blog';
 
 @Component({
   selector: 'app-blog-card',
@@ -31,9 +33,11 @@ export class BlogCardComponent implements OnInit {
   views = 3;
   comments = 6;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
-  onClick(): void {}
+  onClick(): void {
+    this.router.navigateByUrl('blog/vb');
+  }
 }

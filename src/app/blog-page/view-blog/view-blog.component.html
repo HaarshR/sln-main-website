@@ -1,0 +1,145 @@
+<div class="container" style="padding: 125px 0 40px 0">
+  <div class="row">
+    <div class="offset-1 col-10 offset-md-2 col-md-5">
+      <h5 class="headr">
+        <a
+          routerLink="../../blog"
+          style="font-weight: 700"
+          class="text-primary"
+        >
+          <fa-icon [icon]="faArrowLeft" class="mr-2"></fa-icon>
+          Sov Lanatir Blogs
+        </a>
+      </h5>
+    </div>
+  </div>
+</div>
+<div class="container pb-5">
+  <div class="row">
+    <div class="offset-1 col-10 offset-md-2 col-md-6">
+      <h1 class="headm" style="font-size: 70px; font-weight: 700">
+        An Awesome Title
+      </h1>
+    </div>
+  </div>
+  <div class="row py-4">
+    <div class="offset-1 col-10 offset-md-2 col-md-5">
+      <span class="headr" style="font-weight: 900">BY SOMEONE AWESOME</span>
+      <br />
+      <span class="headr" style="font-weight: 300">32 December 2020</span>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="offset-1 col-10 offset-md-2 col-md-3 bg-primary p-1"></div>
+  </div>
+  <div class="row mb-4">
+    <div class="offset-1 col-10 offset-md-2 col-md-8">
+      <p
+        class="psource text-justify m-0"
+        style="font-weight: 300; font-style: italic"
+      >
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa possimus
+        ipsum dolores eius in delectus nam, itaque neque minus qui, cum
+        asperiores nihil, inventore quo maxime doloribus aliquam totam repellat?
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="offset-1 col-10 offset-md-2 col-md-8">
+      <p class="psource text-justify" style="font-weight: 400">
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia eligendi
+        dolores soluta. Officia in culpa sequi facilis natus modi eligendi
+        doloribus vitae veritatis iure at quos consequuntur quia, harum sint
+        beatae totam fugit nemo sed expedita aut! Accusantium, sapiente ipsa
+        voluptatem officia nihil amet, aliquid magni placeat optio ipsum,
+        impedit unde! Repellat porro, quibusdam iste nam fuga dolorem iusto
+        minus ullam accusamus aperiam quia facere quidem! Sequi, nam? Fugiat,
+        repellendus. Veritatis labore reprehenderit iure at iusto accusamus
+        mollitia fugit earum impedit exercitationem debitis fuga omnis laborum
+        obcaecati et, quisquam porro ullam blanditiis dolore eaque! Tempora
+        saepe enim facilis hic consequuntur.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="offset-1 col-10 offset-md-2 col-md-8 border-bottom p-2"></div>
+  </div>
+</div>
+
+<div class="container pb-5">
+  <div class="row">
+    <div class="offset-1 col-10 offset-md-2 col-md-8">
+      <h5 class="py-2">Comments ({{ comments.length }})</h5>
+    </div>
+  </div>
+  <div class="row h-100">
+    <div class="offset-1 col-10 offset-md-2 col-md-8 border p-3 my-auto">
+      <div class="row">
+        <div class="col-12">
+          <div class="form-check form-check-inline">
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              placeholder="Name"
+            />
+            <input
+              class="form-check-input mx-2"
+              type="checkbox"
+              id="anonymous"
+            />
+            <label class="form-check-label">
+              <span class="psource text-info" style="font-size: 13px"
+                >Anonymous</span
+              >
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <textarea
+            class="form-control"
+            id="comment"
+            rows="3"
+            placeholder="Leave a comment"
+          ></textarea>
+        </div>
+      </div>
+      <div class="row my-3">
+        <div class="col-12 text-right">
+          <button class="btn btn-success px-3">Post</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div
+      class="offset-1 col-10 offset-md-2 col-md-8 border p-3"
+      style="height: 300px; overflow-y: scroll"
+    >
+      <div
+        class="container-fluid p-2 mb-2 rounded"
+        style="background-color: #f0f0f0"
+        *ngFor="let comment of comments"
+      >
+        <div class="row">
+          <div class="col-12">
+            <span class="headr" style="font-weight: 700; font-size: medium"
+              >Person's Name</span
+            >
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <span class="psource" style="font-size: small">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque,
+              quibusdam! Similique quae nihil ea aliquid consequatur, expedita
+              autem magnam reiciendis temporibus excepturi iure tempora modi
+              tempore molestiae corrupti in error?
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

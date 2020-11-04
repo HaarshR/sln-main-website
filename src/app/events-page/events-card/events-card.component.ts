@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import {
   faCalendarAlt,
@@ -24,9 +25,11 @@ export class EventsCardComponent implements OnInit {
   date = '32 December 2020';
   location = 'Trou Kanaka';
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
-  onClick(): void {}
+  onClick(): void {
+    this.router.navigateByUrl('/events/ve');
+  }
 }
