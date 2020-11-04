@@ -16,7 +16,7 @@ import {
 import { environment } from '../../../environments/environment';
 
 import { Department } from '../../../models/Department';
-import { DepartmentService } from './department.service';
+import { DepartmentService } from './admin-department.service';
 
 const IMAGE_URL = environment.fileUrl;
 
@@ -147,7 +147,7 @@ export class AdminDepartmentComponent implements OnInit {
 
   openViewModal(content) {
     this.modalService
-      .open(content, { scrollable: true, size: 'lg' })
+      .open(content, { scrollable: true, size: 'xl' })
       .result.then();
   }
 

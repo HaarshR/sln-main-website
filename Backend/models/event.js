@@ -9,6 +9,7 @@ const eventSchema = mongoose.Schema({
   departmentName: { type: String, required: true },
   date: { type: Date, required: true },
   location: { type: String, required: true },
+  images: { type: Array, required: false },
 });
 
 eventSchema.plugin(uniqueValidator);

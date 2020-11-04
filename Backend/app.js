@@ -7,6 +7,9 @@ const fs = require("fs");
 
 const blogRoute = require("./routes/blogs");
 const adminRoute = require("./routes/admins");
+const eventRoute = require("./routes/events");
+const memberRoute = require("./routes/members");
+const serviceRoute = require("./routes/services");
 const departmentRoute = require("./routes/departments");
 
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@myprojectfreecluster.5aj2p.gcp.mongodb.net/${process.env.MONGO_DATABASE}`;
@@ -50,6 +53,9 @@ app.use((req, res, next) => {
 app.use("/api/blogs", blogRoute);
 app.use("/api/admins", adminRoute);
 app.use("/api/departments", departmentRoute);
+app.use("/api/events", eventRoute);
+app.use("/api/members", memberRoute);
+// app.use("/api/services", serviceRoute);
 
 mongoose
   .connect(MONGODB_URI, {

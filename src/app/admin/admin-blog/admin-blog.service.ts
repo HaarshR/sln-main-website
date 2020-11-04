@@ -29,9 +29,9 @@ export class BlogService {
     }>(BACKEND_URL + 'updateOne/' + id, blog);
   }
 
-  deleteBlog(id: string) {
+  deleteBlog(id: string, name: string) {
     return this.http.delete<{
       message: string;
-    }>(BACKEND_URL + 'deleteOne/' + id);
+    }>(BACKEND_URL + 'deleteOne/' + id + "&" + name);
   }
 }

@@ -16,7 +16,7 @@ import {
 import { environment } from '../../../environments/environment';
 
 import { Blog } from '../../../models/Blogs/Blog';
-import { BlogService } from './blog.service';
+import { BlogService } from './admin-blog.service';
 
 const IMAGE_URL = environment.fileUrl;
 @Component({
@@ -81,7 +81,7 @@ export class AdminBlogComponent implements OnInit {
   errorMessage = '';
 
   sortingWay = 'asc';
-  propertyName = 'date';
+  propertyName = 'dor';
 
   blogs: Blog[] = [];
   blog: Blog;
@@ -131,7 +131,7 @@ export class AdminBlogComponent implements OnInit {
 
   openViewModal(content) {
     this.modalService
-      .open(content, { scrollable: true, size: 'lg' })
+      .open(content, { scrollable: true, size: 'xl' })
       .result.then();
   }
 
@@ -245,7 +245,7 @@ export class AdminBlogComponent implements OnInit {
         this.isLoading2 = false;
       },
       (error) => {
-        console.log(error)
+        console.log(error);
         if (error.status == 404) {
           this.addEditMessage = 'Error occured! This blog title already exist.';
         } else {
@@ -306,7 +306,7 @@ export class AdminBlogComponent implements OnInit {
     }
     this.isDeleting = false;
     this.isLoading2 = true;
-    this.blogService.deleteBlog(blog._id).subscribe(
+    this.blogService.deleteBlog(blog._id, blog.image).subscribe(
       (next) => {
         this.blogs.splice(this.blogs.indexOf(blog), 1);
         this.isDeleted = true;
