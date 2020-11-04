@@ -15,14 +15,18 @@ import { DepartmentPageComponent } from './department-page/department-page.compo
 import { ExecutiveMemberPageComponent } from './joinus-page/executive-member-page/executive-member-page.component';
 import { RegularMemberPageComponent } from './joinus-page/regular-member-page/regular-member-page.component';
 import { DepartmentComponent } from './department-page/department/department.component';
+import { ViewBlogComponent } from './blog-page/view-blog/view-blog.component';
+import { ViewEventComponent } from './events-page/view-event/view-event.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'about-us', component: AboutPageComponent },
   { path: 'blog', component: BlogPageComponent },
+  { path: 'blog/vb', component: ViewBlogComponent },
   { path: 'departments', component: DepartmentPageComponent },
   { path: 'departments/d', component: DepartmentComponent },
   { path: 'events', component: EventsPageComponent },
+  { path: 'events/ve', component: ViewEventComponent },
   { path: 'join-us', component: JoinusPageComponent },
   { path: 'join-us/executive', component: ExecutiveMemberPageComponent },
   { path: 'join-us/regular', component: RegularMemberPageComponent },
