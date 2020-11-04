@@ -14,12 +14,9 @@ import { DepartmentPageComponent } from './department-page/department-page.compo
 import { ExecutiveMemberPageComponent } from './joinus-page/executive-member-page/executive-member-page.component';
 import { RegularMemberPageComponent } from './joinus-page/regular-member-page/regular-member-page.component';
 import { DepartmentComponent } from './department-page/department/department.component';
-<<<<<<< HEAD
 import { ViewBlogComponent } from './blog-page/view-blog/view-blog.component';
 import { ViewEventComponent } from './events-page/view-event/view-event.component';
-=======
 import { AdminSendmailComponent } from './admin/admin-members/admin-sendmail/admin-sendmail.component';
->>>>>>> 4d994635410ee6a150687c8c53bd42474f5f7c12
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },

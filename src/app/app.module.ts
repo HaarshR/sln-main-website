@@ -33,15 +33,12 @@ import { RegularMemberPageComponent } from './joinus-page/regular-member-page/re
 import { EventsCardComponent } from './events-page/events-card/events-card.component';
 import { BlogCardComponent } from './blog-page/blog-card/blog-card.component';
 import { DepartmentComponent } from './department-page/department/department.component';
-<<<<<<< HEAD
 import { ViewBlogComponent } from './blog-page/view-blog/view-blog.component';
 import { ViewEventComponent } from './events-page/view-event/view-event.component';
-=======
 import { AdminEventComponent } from './admin/admin-event/admin-event.component';
 import { AdminServiceComponent } from './admin/admin-service/admin-service.component';
 import { AdminMembersComponent } from './admin/admin-members/admin-members.component';
 import { AdminSendmailComponent } from './admin/admin-members/admin-sendmail/admin-sendmail.component';
->>>>>>> 4d994635410ee6a150687c8c53bd42474f5f7c12
 
 @NgModule({
   declarations: [
@@ -66,15 +63,12 @@ import { AdminSendmailComponent } from './admin/admin-members/admin-sendmail/adm
     EventsCardComponent,
     BlogCardComponent,
     DepartmentComponent,
-<<<<<<< HEAD
     ViewBlogComponent,
     ViewEventComponent,
-=======
     AdminEventComponent,
     AdminServiceComponent,
     AdminMembersComponent,
     AdminSendmailComponent,
->>>>>>> 4d994635410ee6a150687c8c53bd42474f5f7c12
   ],
   imports: [
     BrowserModule,
