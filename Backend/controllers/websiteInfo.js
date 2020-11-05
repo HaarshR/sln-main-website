@@ -86,7 +86,7 @@ exports.get = (req, res, next) => {
     });
 };
 
-exports.updateDepartment = (req, res, next) => {
+exports.update = (req, res, next) => {
   let websiteInfo;
   if (req.body.departmentPage) {
     websiteInfo = {
