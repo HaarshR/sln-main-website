@@ -20,7 +20,9 @@ export class AdminHomepageComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private navbarService: NavbarService
-  ) {}
+  ) {
+    window.scrollTo(0, 0);
+  }
 
   ngOnInit(): void {
     this.navbarService.setPageData(this.pageData);

@@ -64,7 +64,9 @@ export class AdminSendmailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private memberService: MemberService
-  ) {}
+  ) {
+    window.scrollTo(0, 0);
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {

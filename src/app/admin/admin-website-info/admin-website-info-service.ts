@@ -20,29 +20,23 @@ export class WebsiteInfoService {
   updateDepartmentPage(id: string, detail: string) {
     return this.http.put<{
       message: string;
-    }>(BACKEND_URL + 'updateDepartment/' + id, {
+    }>(BACKEND_URL + 'update/' + id, {
       departmentPage: {
         detail: detail,
       },
     });
   }
 
-  // updateLandingPage(id: string, landingPage: any) {
-  //   return this.http.put<{
-  //     message: string;
-  //   }>(BACKEND_URL + 'updateDepartment/' + id, {
-  //     landingPage: {
-  //       detail: detail,
-  //       helpPara: helpPara,
-  //       joinPara: joinPara,
-  //     },
-  //   });
-  // }
+  updateLandingPage(id: string, landingPage: any) {
+    return this.http.put<{
+      message: string;
+    }>(BACKEND_URL + 'updateLanding/' + id, landingPage);
+  }
 
   updateAboutUs(id: string, aboutUsPage: any) {
     return this.http.put<{
       message: string;
-    }>(BACKEND_URL + 'updateDepartment/' + id, {
+    }>(BACKEND_URL + 'update/' + id, {
       aboutUsPage: {
         details: aboutUsPage.details,
         mission: aboutUsPage.mission,

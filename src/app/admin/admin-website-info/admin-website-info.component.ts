@@ -7,6 +7,10 @@ import {
 } from '@syncfusion/ej2-angular-richtexteditor';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { WebsiteInfo } from 'src/models/WebsiteInfo/WebsiteInfo';
+import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { environment } from '../../../environments/environment';
+
+const IMAGE_URL = environment.fileUrl;
 
 @Component({
   selector: 'app-admin-website-info',
@@ -15,6 +19,8 @@ import { WebsiteInfo } from 'src/models/WebsiteInfo/WebsiteInfo';
   providers: [ToolbarService, LinkService, HtmlEditorService],
 })
 export class AdminWebsiteInfoComponent implements OnInit {
+  imgUrl = IMAGE_URL + 'websiteInfo/';
+
   rteTools: object = {
     type: 'MultiRow',
     items: [
@@ -46,8 +52,10 @@ export class AdminWebsiteInfoComponent implements OnInit {
     ],
   };
 
+  faEdit = faEdit;
+
   departmentForm = new FormGroup({
-    detail: new FormControl('', {
+    details: new FormControl('', {
       validators: [Validators.required],
     }),
   });
@@ -55,10 +63,6 @@ export class AdminWebsiteInfoComponent implements OnInit {
   departmentMessage;
   departmentMessageError;
   isEditedDepartment = false;
-
-  aboutUsMessage;
-  aboutUsMessageError;
-  isEditedAboutUs = false;
 
   aboutUsForm = new FormGroup({
     details: new FormControl('', {
@@ -72,6 +76,32 @@ export class AdminWebsiteInfoComponent implements OnInit {
     }),
   });
 
+  aboutUsMessage;
+  aboutUsMessageError;
+  isEditedAboutUs = false;
+
+  landingForm = new FormGroup({
+    detail: new FormControl('', {
+      validators: [Validators.required],
+    }),
+    helpPara: new FormControl('', {
+      validators: [Validators.required],
+    }),
+    joinPara: new FormControl('', {
+      validators: [Validators.required],
+    }),
+  });
+
+  landingMessage;
+  landingMessageError;
+  isEditedLanding = false;
+  image;
+  imagePreview;
+  images;
+  imagesPreview;
+  imagesPreview2;
+  deletePicArray = [];
+
   isLoading = true;
 
   websiteInfo: WebsiteInfo;
@@ -84,13 +114,19 @@ export class AdminWebsiteInfoComponent implements OnInit {
         console.log(next.websiteInfo);
         this.websiteInfo = next.websiteInfo;
         this.departmentForm.setValue({
-          detail: next.websiteInfo.departmentPage.details,
+          details: next.websiteInfo.departmentPage.details,
         });
         this.aboutUsForm.setValue({
           details: next.websiteInfo.aboutUsPage.details,
           mission: next.websiteInfo.aboutUsPage.mission,
           galleryDetail: next.websiteInfo.aboutUsPage.galleryDetail,
         });
+        this.landingForm.setValue({
+          detail: next.websiteInfo.landingPage.detail,
+          helpPara: next.websiteInfo.landingPage.helpPara,
+          joinPara: next.websiteInfo.landingPage.joinPara,
+        });
+        this.imagesPreview2 = next.websiteInfo.landingPage.joinParaImages;
         this.isLoading = false;
       },
       (error) => {
@@ -99,9 +135,47 @@ export class AdminWebsiteInfoComponent implements OnInit {
     );
   }
 
+  onClimateImagePicked(event: Event) {
+    if ((event.target as HTMLInputElement).files[0]) {
+      const file = (event.target as HTMLInputElement).files[0];
+      this.image = file;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      this.image = null;
+      this.imagePreview = null;
+    }
+  }
+
+  onImagesPicked(event: Event) {
+    let imagesPreview = [];
+    let imagesData = [];
+    Array.prototype.forEach.call(
+      (event.target as HTMLInputElement).files,
+      (file) => {
+        imagesData.push(file);
+        const reader = new FileReader();
+        reader.onload = () => {
+          imagesPreview.push(reader.result);
+        };
+        reader.readAsDataURL(file);
+      }
+    );
+    this.imagesPreview = imagesPreview;
+    this.images = imagesData;
+  }
+
+  deletePic(image: string) {
+    this.deletePicArray.push(image);
+    this.imagesPreview2.splice(this.imagesPreview2.indexOf(image), 1);
+  }
+
   saveDepartmentPage() {
     if (
-      this.departmentForm.value.detail ==
+      this.departmentForm.value.details ==
       this.websiteInfo.departmentPage.details
     ) {
       return;
@@ -137,35 +211,71 @@ export class AdminWebsiteInfoComponent implements OnInit {
 
   saveLandingPage() {
     if (
-      this.departmentForm.value.detail ==
-      this.websiteInfo.departmentPage.details
+      this.landingForm.value.detail == this.websiteInfo.landingPage.detail &&
+      this.landingForm.value.helpPara ==
+        this.websiteInfo.landingPage.helpPara &&
+      this.landingForm.value.joinPara ==
+        this.websiteInfo.landingPage.joinPara &&
+      !this.image &&
+      !this.images
     ) {
       return;
     }
-    this.isEditedDepartment = true;
-    this.departmentForm.controls['detail'].disable();
+
+    this.isEditedLanding = true;
+    this.landingForm.controls['detail'].disable();
+    this.landingForm.controls['helpPara'].disable();
+    this.landingForm.controls['joinPara'].disable();
+
+    const newLandingForm = new FormData();
+    newLandingForm.append('detail', this.landingForm.value.detail);
+    newLandingForm.append('helpPara', this.landingForm.value.helpPara);
+    newLandingForm.append('joinPara', this.landingForm.value.joinPara);
+
+    if (this.imagesPreview2) {
+      this.imagesPreview2.forEach((image) => {
+        newLandingForm.append('oldImages', image);
+      });
+    }
+
+    if (this.deletePicArray) {
+      this.deletePicArray.forEach((pic) => {
+        newLandingForm.append('deletePicArray', pic);
+      });
+    } else {
+      newLandingForm.append('deletePicArray', null);
+    }
+
+    if (this.image) {
+      newLandingForm.append('images', this.image, 'landingPage-climate');
+    }
+    if (this.images) {
+      let i = 1;
+      this.images.forEach((data) => {
+        newLandingForm.append('images', data, 'landingPage-slider_' + i);
+        i++;
+      });
+    } else {
+      newLandingForm.append('images', null);
+    }
     this.websiteInfoService
-      .updateDepartmentPage(
-        this.websiteInfo._id,
-        this.departmentForm.value.detail
-      )
+      .updateLandingPage(this.websiteInfo._id, newLandingForm)
       .subscribe(
         (next) => {
-          this.departmentMessageError = null;
-          this.departmentMessage = 'Successfully Edited!';
+          this.landingMessageError = null;
+          this.landingMessage = 'Successfully Edited!';
 
           setTimeout(() => {
-            this.departmentMessage = null;
-          }, 3000);
-          this.websiteInfo.departmentPage.details = this.departmentForm.value.detail;
+            this.landingMessage = null;
+          }, 5000);
         },
         (error) => {
           if (error.status == 404) {
-            this.departmentMessage = null;
-            this.departmentMessageError = 'Failed to update, Not Found!';
+            this.landingMessage = null;
+            this.landingMessageError = 'Failed to update, Not Found!';
           } else {
-            this.departmentMessage = null;
-            this.departmentMessageError = 'An unknown error occured!';
+            this.landingMessage = null;
+            this.landingMessageError = 'An unknown error occured!';
           }
         }
       );
@@ -178,8 +288,11 @@ export class AdminWebsiteInfoComponent implements OnInit {
       this.aboutUsForm.value.galleryDetail ==
         this.websiteInfo.aboutUsPage.galleryDetail
     ) {
+      console.log('dddddddddddcsdc');
+
       return;
     }
+    console.log('djcnsdcsdc');
     this.isEditedAboutUs = true;
     this.aboutUsForm.controls['details'].disable();
     this.aboutUsForm.controls['mission'].disable();

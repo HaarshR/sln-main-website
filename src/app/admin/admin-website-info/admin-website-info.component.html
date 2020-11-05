@@ -5,7 +5,138 @@
 </div>
 <div class="row">
   <div class="col-lg-12">
-    <div class="card mb-4 p-3 overflow-auto" style="height: 500px"></div>
+    <div class="card mb-4 p-3 overflow-auto" style="height: 500px">
+      <div class="row text-center">
+        <div class="col mb-2">
+          <h5>Home Page</h5>
+        </div>
+      </div>
+      <div class="row" *ngIf="!isLoading">
+        <div class="col mb-3">
+          <div class="custom-file">
+            <input
+              type="file"
+              class="custom-file-input"
+              id="validatedCustomFile"
+              accept=".png, .jpg"
+              (change)="onClimateImagePicked($event)"
+            />
+            <label class="custom-file-label" for="validatedCustomFile"
+              >Choose an image for Climate Change!</label
+            >
+          </div>
+          <ng-container *ngFor="let image of imagesPreview2">
+            <div class="d-flex flex-row oldImageFlex p-2">
+              <img
+                class="img-fluid oldImage"
+                src="{{ imgUrl }}{{ image }}"
+                [alt]="image.substring(0, image.length - 3)"
+              />
+              <button
+                class="btn btn-warning mt-2"
+                type="button"
+                [disabled]="isEditedLanding"
+                (click)="deletePic(image)"
+              >
+                Remove Picture
+              </button>
+            </div>
+          </ng-container>
+          <div class="custom-file mt-2">
+            <input
+              type="file"
+              class="custom-file-input"
+              id="validatedCustomFile"
+              accept=".png, .jpg"
+              [disabled]="isEditedLanding"
+              multiple
+              (change)="onImagesPicked($event)"
+            />
+            <label class="custom-file-label" for="validatedCustomFile"
+              >Choose images for Join-us Slider</label
+            >
+          </div>
+        </div>
+      </div>
+      <form [formGroup]="landingForm" *ngIf="!isLoading">
+        <div class="row">
+          <div class="col mb-3">
+            <ejs-richtexteditor
+              floatingToolbarOffset="1"
+              formControlName="detail"
+              [toolbarSettings]="rteTools"
+              height="480"
+            >
+            </ejs-richtexteditor>
+          </div>
+          <div class="col mb-3">
+            <ejs-richtexteditor
+              floatingToolbarOffset="1"
+              formControlName="helpPara"
+              [toolbarSettings]="rteTools"
+              height="480"
+            >
+            </ejs-richtexteditor>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <ejs-richtexteditor
+              floatingToolbarOffset="1"
+              formControlName="joinPara"
+              [toolbarSettings]="rteTools"
+              height="480"
+            >
+            </ejs-richtexteditor>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <button
+              class="btn btn-success mt-3 mb-3"
+              (click)="saveLandingPage()"
+              [disabled]="
+                landingForm.value.detail == websiteInfo.landingPage.detail &&
+                landingForm.value.helpPara ==
+                  websiteInfo.landingPage.helpPara &&
+                landingForm.value.joinPara ==
+                  websiteInfo.landingPage.joinPara &&
+                !image &&
+                !images
+              "
+            >
+              Save Landing Page</button
+            ><span
+              *ngIf="
+                landingForm.value.detail == websiteInfo.landingPage.detail &&
+                landingForm.value.helpPara ==
+                  websiteInfo.landingPage.helpPara &&
+                landingForm.value.joinPara ==
+                  websiteInfo.landingPage.joinPara &&
+                !image &&
+                !images &&
+                !isEditedLanding
+              "
+              ><small>&nbsp;* No changes made yet!</small></span
+            >
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngIf="landingMessageError"
+            >
+              {{ landingMessageError }}
+            </div>
+            <div
+              class="alert alert-success"
+              role="alert"
+              *ngIf="landingMessage"
+            >
+              {{ landingMessage }}
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 <div class="row">
@@ -16,8 +147,7 @@
         <label>Small paragraph at the top of department page:</label>
         <ejs-richtexteditor
           floatingToolbarOffset="1"
-          id="defaultRTE"
-          formControlName="detail"
+          formControlName="details"
           [toolbarSettings]="rteTools"
           height="480"
         >
@@ -57,7 +187,6 @@
         <label>About us details:</label>
         <ejs-richtexteditor
           floatingToolbarOffset="1"
-          id="defaultRTE"
           formControlName="details"
           [toolbarSettings]="rteTools"
           height="480"
@@ -66,7 +195,6 @@
         <label>About us mission paragraph:</label>
         <ejs-richtexteditor
           floatingToolbarOffset="1"
-          id="defaultRTE"
           formControlName="mission"
           [toolbarSettings]="rteTools"
           height="480"
@@ -75,7 +203,6 @@
         <label>Gallery small paragraph:</label>
         <ejs-richtexteditor
           floatingToolbarOffset="1"
-          id="defaultRTE"
           formControlName="galleryDetail"
           [toolbarSettings]="rteTools"
           height="480"
@@ -84,7 +211,7 @@
 
         <button
           class="btn btn-success mt-3 mb-3"
-          (click)="saveDepartmentPage()"
+          (click)="saveAboutUsPage()"
           [disabled]="
             (aboutUsForm.value.details == websiteInfo.aboutUsPage.details &&
               aboutUsForm.value.mission == websiteInfo.aboutUsPage.mission &&
@@ -96,17 +223,20 @@
           Save detail</button
         ><span
           *ngIf="
-            departmentForm.value.detail == websiteInfo.departmentPage.details &&
-            !isEditedDepartment
+            aboutUsForm.value.details == websiteInfo.aboutUsPage.details &&
+            aboutUsForm.value.mission == websiteInfo.aboutUsPage.mission &&
+            aboutUsForm.value.galleryDetail ==
+              websiteInfo.aboutUsPage.galleryDetail &&
+            !isEditedAboutUs
           "
           ><small>&nbsp;* No changes made yet!</small></span
         >
         <span *ngIf="isEditedDepartment"
-          ><small style="color: red" *ngIf="departmentMessageError">
-            {{ departmentMessageError }}
+          ><small style="color: red" *ngIf="aboutUsMessageError">
+            {{ aboutUsMessageError }}
           </small>
-          <small style="color: green" *ngIf="departmentMessage">
-            {{ departmentMessage }}
+          <small style="color: green" *ngIf="aboutUsMessage">
+            {{ aboutUsMessage }}
           </small></span
         >
       </form>

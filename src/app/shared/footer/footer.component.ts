@@ -6,6 +6,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faInstagram, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import { FormGroup } from '@angular/forms';
+import { NavbarService } from '../navbar/navbar.service';
+import { PageData } from 'src/models/PageData';
 
 @Component({
   selector: 'app-footer',
@@ -29,7 +31,13 @@ export class FooterComponent implements OnInit {
   subscribeForm = new FormGroup({});
   contactUsForm = new FormGroup({});
 
-  constructor() {}
+  pageData: PageData;
 
-  ngOnInit(): void {}
+  constructor(private navbarService: NavbarService) {}
+
+  ngOnInit(): void {
+    this.navbarService.currentPageData.subscribe(
+      (pageData) => (this.pageData = pageData)
+    );
+  }
 }

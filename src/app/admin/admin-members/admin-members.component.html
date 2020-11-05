@@ -1,13 +1,10 @@
 <div class="card p-3 overflow-auto">
   <div class="row">
-    <div class="col-12 text-center">
+    <div class="col-12 text-center" *ngIf="memberType != 'subscriber'">
       <h2>{{ memberType.toUpperCase() }}&nbsp;MEMBERS</h2>
-      <button
-        class="btn btn-success mb-3"
-        [routerLink]="['sendMail', memberType]"
-      >
-        SEND EMAIL
-      </button>
+    </div>
+    <div class="col-12 text-center" *ngIf="memberType == 'subscriber'">
+      <h2>{{ memberType.toUpperCase() }}</h2>
     </div>
   </div>
   <div class="row border-bottom border-top">
@@ -232,7 +229,7 @@
           </div>
           <div class="row">
             <div class="col mb-2">
-              <h5 class="mb-1 mt-2">QUETSIONS</h5>
+              <h5 class="mb-1 mt-2">QUESTIONS</h5>
             </div>
           </div>
           <ng-container *ngFor="let question of member.questions; index as i">

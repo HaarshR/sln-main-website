@@ -1,68 +1,67 @@
 // IMPORTS THE MODELS
 const WebsiteInfo = require("../models/websiteInfo");
 
-// const compress_images = require("compress-images");
-// const fs = require("fs");
+const compress_images = require("compress-images");
+const fs = require("fs");
 
-// const AWS = require("aws-sdk");
-// const s3 = new AWS.S3({
-//   accessKeyId: process.env.AWS_KEYID,
-//   secretAccessKey: process.env.AWS_SECRETKEY,
-// });
+const AWS = require("aws-sdk");
+const s3 = new AWS.S3({
+  accessKeyId: process.env.AWS_KEYID,
+  secretAccessKey: process.env.AWS_SECRETKEY,
+});
 
-// const tempImagePath = "tempImg/*.{jpg,JPG,jpeg,JPEG,png}";
-// const outputImagePath = "public/images/";
+const tempImagePath = "tempImg/*.{jpg,JPG,jpeg,JPEG,png}";
+const outputImagePath = "public/images/";
 
-// const deleteFile = (fileNames, title) => {
-//   let objects = [];
-//   fileNames.forEach((fileName) => {
-//     objects.push({
-//       Key: "department/" + title + "/" + fileName,
-//     });
-//   });
+const deleteFile = (fileNames) => {
+  let objects = [];
+  fileNames.forEach((fileName) => {
+    objects.push({
+      Key: "websiteInfo/" + fileName,
+    });
+  });
 
-//   let params = {
-//     Bucket: process.env.BUCKET_NAME,
-//     Delete: {
-//       Objects: objects,
-//     },
-//   };
+  let params = {
+    Bucket: process.env.BUCKET_NAME,
+    Delete: {
+      Objects: objects,
+    },
+  };
 
-//   s3.deleteObjects(params, function (err, data) {
-//     if (err) {
-//       console.log(err);
-//     }
-//     console.log(`Successfully deleted file from bucket`);
-//   });
-// };
+  s3.deleteObjects(params, function (err, data) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(`Successfully deleted file from bucket`);
+  });
+};
 
-// const uploadFile = (fileName, title) => {
-//   // Read content from the file
-//   fs.readFile("public/images/" + fileName, (err, data) => {
-//     if (err) {
-//       console.log("Error uploading image! Image could not be read.");
-//     }
-//     console.log(fileName);
-//     let params = {
-//       Bucket: process.env.BUCKET_NAME,
-//       Key: "department/" + title + "/" + fileName, // File name you want to save as in S3
-//       Body: data,
-//     };
-//     s3.upload(params, function (err, data) {
-//       if (err) {
-//         console.log("Error uploading image! Connection failed.");
-//       }
-//       try {
-//         fs.unlinkSync("public/images/" + fileName);
-//         fs.unlinkSync("public/images/" + fileName);
-//         fs.unlinkSync("public/images/" + fileName);
-//         fs.unlinkSync("public/images/" + fileName);
-//         fs.unlinkSync("public/images/" + fileName);
-//       } catch (err) {}
-//       console.log(`Image uploaded successfully. ${data.Location}`);
-//     });
-//   });
-// };
+const uploadFile = (fileName) => {
+  // Read content from the file
+  fs.readFile("public/images/" + fileName, (err, data) => {
+    if (err) {
+      console.log("Error uploading image! Image could not be read.");
+    }
+    let params = {
+      Bucket: process.env.BUCKET_NAME,
+      Key: "websiteInfo/" + fileName, // File name you want to save as in S3
+      Body: data,
+    };
+    s3.upload(params, function (err, data) {
+      if (err) {
+        console.log("Error uploading image! Connection failed.");
+      }
+      try {
+        fs.unlinkSync("public/images/" + fileName);
+        fs.unlinkSync("public/images/" + fileName);
+        fs.unlinkSync("public/images/" + fileName);
+        fs.unlinkSync("public/images/" + fileName);
+        fs.unlinkSync("public/images/" + fileName);
+      } catch (err) {}
+      console.log(`Image uploaded successfully. ${data.Location}`);
+    });
+  });
+};
 
 exports.get = (req, res, next) => {
   WebsiteInfo.findOne()
@@ -94,21 +93,12 @@ exports.update = (req, res, next) => {
         details: req.body.departmentPage.detail,
       },
     };
-  } else if (req.body.landingPage) {
-    websiteInfo = {
-      landingPage: {
-        detail: req.body.landingPage.detail,
-        helpPara: req.body.landingPage.helpPara,
-        joinPara: req.body.landingPage.joinPara,
-      },
-    };
   } else if (req.body.aboutUsPage) {
     websiteInfo = {
-      landingPage: {
-        details: req.body.landingPage.details,
-        mission: req.body.landingPage.mission,
-        teamMembers: req.body.landingPage.teamMembers,
-        galleryDetail: req.body.landingPage.galleryDetail,
+      aboutUsPage: {
+        details: req.body.aboutUsPage.details,
+        mission: req.body.aboutUsPage.mission,
+        galleryDetail: req.body.aboutUsPage.galleryDetail,
       },
     };
   }
@@ -126,6 +116,101 @@ exports.update = (req, res, next) => {
       }
     })
     .catch((error) => {
+      res.status(500).json({
+        error: error,
+        errorMessage: "An unknown error occured!",
+      });
+    });
+};
+
+exports.updateLanding = (req, res, next) => {
+  let websiteInfo = {
+    landingPage: {
+      detail: req.body.detail,
+      helpPara: req.body.helpPara,
+      joinPara: req.body.joinPara,
+      joinParaImages: [],
+    },
+  };
+
+  if (req.body.oldImages) {
+    req.body.oldImages.forEach((image) => {
+      websiteInfo.landingPage.joinParaImages.push(image);
+    });
+  }
+
+  let deteleArray = [];
+  if (req.body.deletePicArray) {
+    req.body.deletePicArray.forEach((pic) => {
+      deteleArray.push(pic);
+    });
+  }
+
+  if (req.files) {
+    req.files.forEach((image) => {
+      websiteInfo.landingPage.joinParaImages.push(image.filename);
+    });
+  }
+
+  WebsiteInfo.updateOne({ _id: req.params.id }, websiteInfo)
+    .then((result) => {
+      if (result.n == 0) {
+        res.status(404).json({
+          error: "Update failed!",
+        });
+      } else {
+        if (req.files) {
+          compress_images(
+            tempImagePath,
+            outputImagePath,
+            { compress_force: false, statistic: true, autoupdate: true },
+            false,
+            { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
+            {
+              png: {
+                engine: "pngquant",
+                command: ["--quality=20-50", "-o"],
+              },
+            },
+            { svg: { engine: false, command: false } },
+            {
+              gif: {
+                engine: false,
+                command: false,
+              },
+            },
+            function (error, completed, statistic) {
+              if (completed) {
+                let i = 1;
+                req.files.forEach((image) => {
+                  try {
+                    fs.unlinkSync("tempImg/" + image.filename);
+                    fs.unlinkSync("tempImg/" + image.filename);
+                    fs.unlinkSync("tempImg/" + image.filename);
+                    fs.unlinkSync("tempImg/" + image.filename);
+                    fs.unlinkSync("tempImg/" + image.filename);
+                    fs.unlinkSync("tempImg/" + image.filename);
+                    fs.unlinkSync("tempImg/" + image.filename);
+                    fs.unlinkSync("tempImg/" + image.filename);
+                  } catch (err) {}
+                  try {
+                    uploadFile(image.filename);
+                  } catch (err) {}
+                });
+              }
+            }
+          );
+        }
+        if (deteleArray.length > 0) {
+          deleteFile(deteleArray);
+        }
+        res.status(201).json({
+          message: "Update successfull!",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
       res.status(500).json({
         error: error,
         errorMessage: "An unknown error occured!",

@@ -12,10 +12,17 @@
   </div>
   <div class="card p-4" *ngIf="!isLoading">
     <h2>
-      Send an email to all
-      <ng-container *ngIf="type != 'subscriber'"
-        >{{ type }} members</ng-container
-      ><ng-container *ngIf="type == 'subscriber'">{{ type }}</ng-container>
+      Send an email to
+      <ng-container
+        *ngIf="type != 'subscriber' && type != 'all' && type != 'allMembers'"
+        >All {{ type }} members</ng-container
+      ><ng-container *ngIf="type == 'subscriber'">all {{ type }}</ng-container>
+      <ng-container *ngIf="type == 'all'"
+        >All Members & Subscribers</ng-container
+      >
+      <ng-container *ngIf="type == 'allMembers'"
+        >All Members</ng-container
+      >
     </h2>
     <form [formGroup]="emailForm">
       <div class="form-group">

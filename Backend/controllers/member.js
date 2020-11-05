@@ -76,23 +76,28 @@ exports.getAll = (req, res, next) => {
 exports.sendEmail = (req, res, next) => {
   let subject = req.body.subject;
   let mail = req.body.email;
-  Member.find({ membershipType: req.params.memberType })
+
+  let member;
+  if (req.params.memberType == "subscriber") {
+    member = Member.find({
+      membershipType: "subscriber",
+    });
+  } else if (req.params.memberType == "executive") {
+    member = Member.find({ membershipType: "executive" });
+  } else if (req.params.memberType == "regular") {
+    member = Member.find({ membershipType: "regular" });
+  } else if (req.params.memberType == "allMembers") {
+    member = Member.find({
+      $or: [{ membershipType: "executive" }, { membershipType: "regular" }],
+    });
+  } else if (req.params.memberType == "all") {
+    member = Member.find();
+  }
+  member
     .then((documents) => {
       if (documents.length != 0) {
         let error = 0;
-        let emailList = [];
-        emailList.push("husseinaltaaf@outlook.com");
-        emailList.push("yhrambhojun@student.udm.ac.mu");
-        emailList.push("sdmamodesaeb@student.udm.ac.mu");
-        emailList.push("vhakloo@student.udm.ac.mu");
-        emailList.push("altaafhamod@hotmail.com");
-        emailList.push("mahamod@student.udm.ac.mu");
-        emailList.push("yhrambhojun@student.udm.ac.mu");
-        emailList.push("sdmamodesaeb@student.udm.ac.mu");
-        emailList.push("vhakloo@student.udm.ac.mu");
-        emailList.push("altaafhamod@hotmail.com");
-        emailList.push("mahamod@student.udm.ac.mu");
-        emailList.forEach((receiver) => {
+        documents.forEach((receiver) => {
           let transport = nodemailer.createTransport({
             host: "smtp.gmail.com",
             port: 587,
@@ -103,7 +108,7 @@ exports.sendEmail = (req, res, next) => {
           });
           let mailOptions = {
             from: '"Sov Lanatir" <noreply@sovlanatir.com>',
-            to: receiver,
+            to: receiver.email,
             subject: subject,
             html: mail,
           };
