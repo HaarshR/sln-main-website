@@ -1,0 +1,115 @@
+<div class="row text-center">
+  <div class="col-lg-12">
+    <h3>Website Individual pages informations</h3>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card mb-4 p-3 overflow-auto" style="height: 500px"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-5">
+    <div class="card mb-4 p-3 overflow-auto" style="height: 600px">
+      <h5 class="text-center">Department Page</h5>
+      <form [formGroup]="departmentForm" *ngIf="!isLoading">
+        <label>Small paragraph at the top of department page:</label>
+        <ejs-richtexteditor
+          floatingToolbarOffset="1"
+          id="defaultRTE"
+          formControlName="detail"
+          [toolbarSettings]="rteTools"
+          height="480"
+        >
+        </ejs-richtexteditor>
+
+        <button
+          class="btn btn-success mt-3 mb-3"
+          (click)="saveDepartmentPage()"
+          [disabled]="
+            departmentForm.value.detail == websiteInfo.departmentPage.details ||
+            isEditedDepartment
+          "
+        >
+          Save detail</button
+        ><span
+          *ngIf="
+            departmentForm.value.detail == websiteInfo.departmentPage.details &&
+            !isEditedDepartment
+          "
+          ><small>&nbsp;* No changes made yet!</small></span
+        >
+        <span *ngIf="isEditedDepartment"
+          ><small style="color: red" *ngIf="departmentMessageError">
+            {{ departmentMessageError }}
+          </small>
+          <small style="color: green" *ngIf="departmentMessage">
+            {{ departmentMessage }}
+          </small></span
+        >
+      </form>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="card p-3 overflow-auto" style="height: 600px">
+      <h5 class="text-center">About US page</h5>
+      <form [formGroup]="aboutUsForm" *ngIf="!isLoading">
+        <label>About us details:</label>
+        <ejs-richtexteditor
+          floatingToolbarOffset="1"
+          id="defaultRTE"
+          formControlName="details"
+          [toolbarSettings]="rteTools"
+          height="480"
+        >
+        </ejs-richtexteditor>
+        <label>About us mission paragraph:</label>
+        <ejs-richtexteditor
+          floatingToolbarOffset="1"
+          id="defaultRTE"
+          formControlName="mission"
+          [toolbarSettings]="rteTools"
+          height="480"
+        >
+        </ejs-richtexteditor>
+        <label>Gallery small paragraph:</label>
+        <ejs-richtexteditor
+          floatingToolbarOffset="1"
+          id="defaultRTE"
+          formControlName="galleryDetail"
+          [toolbarSettings]="rteTools"
+          height="480"
+        >
+        </ejs-richtexteditor>
+
+        <button
+          class="btn btn-success mt-3 mb-3"
+          (click)="saveDepartmentPage()"
+          [disabled]="
+            (aboutUsForm.value.details == websiteInfo.aboutUsPage.details &&
+              aboutUsForm.value.mission == websiteInfo.aboutUsPage.mission &&
+              aboutUsForm.value.galleryDetail ==
+                websiteInfo.aboutUsPage.galleryDetail) ||
+            isEditedAboutUs
+          "
+        >
+          Save detail</button
+        ><span
+          *ngIf="
+            departmentForm.value.detail == websiteInfo.departmentPage.details &&
+            !isEditedDepartment
+          "
+          ><small>&nbsp;* No changes made yet!</small></span
+        >
+        <span *ngIf="isEditedDepartment"
+          ><small style="color: red" *ngIf="departmentMessageError">
+            {{ departmentMessageError }}
+          </small>
+          <small style="color: green" *ngIf="departmentMessage">
+            {{ departmentMessage }}
+          </small></span
+        >
+      </form>
+    </div>
+  </div>
+</div>

@@ -3,6 +3,7 @@ const Member = require("../models/member");
 
 const compress_images = require("compress-images");
 const fs = require("fs");
+const nodemailer = require("nodemailer");
 
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3({
@@ -65,6 +66,64 @@ exports.getAll = (req, res, next) => {
       }
     })
     .catch((error) => {
+      res.status(500).json({
+        error: error,
+        errorMessage: "An unknown error occured!",
+      });
+    });
+};
+
+exports.sendEmail = (req, res, next) => {
+  let subject = req.body.subject;
+  let mail = req.body.email;
+  Member.find({ membershipType: req.params.memberType })
+    .then((documents) => {
+      if (documents.length != 0) {
+        let error = 0;
+        let emailList = [];
+        emailList.push("husseinaltaaf@outlook.com");
+        emailList.push("yhrambhojun@student.udm.ac.mu");
+        emailList.push("sdmamodesaeb@student.udm.ac.mu");
+        emailList.push("vhakloo@student.udm.ac.mu");
+        emailList.push("altaafhamod@hotmail.com");
+        emailList.push("mahamod@student.udm.ac.mu");
+        emailList.push("yhrambhojun@student.udm.ac.mu");
+        emailList.push("sdmamodesaeb@student.udm.ac.mu");
+        emailList.push("vhakloo@student.udm.ac.mu");
+        emailList.push("altaafhamod@hotmail.com");
+        emailList.push("mahamod@student.udm.ac.mu");
+        emailList.forEach((receiver) => {
+          let transport = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            auth: {
+              user: process.env.NODEMAILER_USER,
+              pass: process.env.NODEMAILER_PASS,
+            },
+          });
+          let mailOptions = {
+            from: '"Sov Lanatir" <noreply@sovlanatir.com>',
+            to: receiver,
+            subject: subject,
+            html: mail,
+          };
+          transport.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              error++;
+            }
+          });
+        });
+        res.status(200).json({
+          message: "Email sent successfully!",
+        });
+      } else {
+        res.status(404).json({
+          error: "No emails were sent since no user was found!",
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
       res.status(500).json({
         error: error,
         errorMessage: "An unknown error occured!",

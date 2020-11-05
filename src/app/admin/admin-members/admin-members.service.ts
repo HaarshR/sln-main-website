@@ -16,6 +16,15 @@ export class MemberService {
     }>(BACKEND_URL + 'getAll/' + memberType);
   }
 
+  sendEmail(memberType: string, email: string, subject: string) {
+    return this.http.post<{
+      message: string;
+    }>(BACKEND_URL + 'sendMail/' + memberType, {
+      email: email,
+      subject: subject,
+    });
+  }
+
   // addDepartments(department: any) {
   //   return this.http.post<{ message: string; id: string; images: string[] }>(
   //     BACKEND_URL + 'addOne',

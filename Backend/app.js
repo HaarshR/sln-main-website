@@ -11,6 +11,7 @@ const eventRoute = require("./routes/events");
 const memberRoute = require("./routes/members");
 const serviceRoute = require("./routes/services");
 const departmentRoute = require("./routes/departments");
+const websiteInfoRoute = require("./routes/websiteInfos");
 
 const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@myprojectfreecluster.5aj2p.gcp.mongodb.net/${process.env.MONGO_DATABASE}`;
 
@@ -55,6 +56,7 @@ app.use("/api/admins", adminRoute);
 app.use("/api/departments", departmentRoute);
 app.use("/api/events", eventRoute);
 app.use("/api/members", memberRoute);
+app.use("/api/websiteInfos", websiteInfoRoute);
 // app.use("/api/services", serviceRoute);
 
 mongoose

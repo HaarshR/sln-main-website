@@ -7,10 +7,7 @@ const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
 
 // POST REQUEST
-// router.post(
-//   "/addOne",
-//   MemberController.addOne
-// );
+router.post("/sendMail/:memberType", MemberController.sendEmail);
 
 // GET REQUEST
 router.get("/getAll/:memberType", MemberController.getAll);

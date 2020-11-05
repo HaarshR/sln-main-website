@@ -19,6 +19,7 @@ import { Blog } from '../../../models/Blogs/Blog';
 import { BlogService } from './admin-blog.service';
 
 const IMAGE_URL = environment.fileUrl;
+
 @Component({
   selector: 'app-admin-blog',
   templateUrl: './admin-blog.component.html',

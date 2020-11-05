@@ -40,7 +40,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'admin/sendMail',
+    path: 'admin/home/sendMail/:type',
     component: AdminSendmailComponent,
     canActivate: [AuthGuard],
   },

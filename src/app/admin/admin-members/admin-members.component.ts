@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Member } from 'src/models/Member';
 import { MemberService } from './admin-members.service';
@@ -11,7 +11,6 @@ import {
   ToolbarService,
   LinkService,
   HtmlEditorService,
-  RichTextEditorComponent,
 } from '@syncfusion/ej2-angular-richtexteditor';
 
 import { environment } from '../../../environments/environment';
@@ -61,7 +60,6 @@ export class AdminMembersComponent implements OnInit {
       'SourceCode',
     ],
   };
-  @ViewChild('sendEmailRTE') rteEle: RichTextEditorComponent;
 
   faAngleDown = faAngleDown;
   faAngleUp = faAngleUp;
@@ -80,12 +78,6 @@ export class AdminMembersComponent implements OnInit {
 
   deleteForm = new FormGroup({
     password: new FormControl('', {
-      validators: [Validators.required],
-    }),
-  });
-
-  emailForm = new FormGroup({
-    email: new FormControl('', {
       validators: [Validators.required],
     }),
   });
@@ -117,21 +109,8 @@ export class AdminMembersComponent implements OnInit {
 
   cancel() {}
 
-  openViewModal(content, mail: string = null) {
-    if (mail == null) {
-      this.modalService.open(content, { scrollable: true }).result.then();
-    } else {
-      this.modalService
-        .open(content, { scrollable: true, size: 'xl' })
-        .result.then();
-      console.log(this.rteEle);
-
-      try {
-        this.rteEle.refreshUI;
-      } catch (err) {
-        console.log(err);
-      }
-    }
+  openViewModal(content) {
+    this.modalService.open(content, { scrollable: true }).result.then();
   }
 
   sortProperty(propertyName: string) {

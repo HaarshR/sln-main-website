@@ -1,1 +1,49 @@
-<p>admin-sendmail works!</p>
+<div class="container pt-4 pb-4">
+  <div class="card" *ngIf="isLoading">
+    <div class="myLoader">
+      <div
+        class="spinner-border text-success"
+        style="width: 8rem; height: 8rem"
+        role="status"
+      >
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <div class="card p-4" *ngIf="!isLoading">
+    <h2>
+      Send an email to all
+      <ng-container *ngIf="type != 'subscriber'"
+        >{{ type }} members</ng-container
+      ><ng-container *ngIf="type == 'subscriber'">{{ type }}</ng-container>
+    </h2>
+    <form [formGroup]="emailForm">
+      <div class="form-group">
+        <input
+          type="email"
+          class="form-control"
+          id="subject"
+          formControlName="subject"
+          placeholder="Enter a subject"
+        />
+      </div>
+
+      <ejs-richtexteditor
+        id="defaultRTE"
+        formControlName="email"
+        [toolbarSettings]="rteTools"
+        height="600"
+      >
+      </ejs-richtexteditor>
+    </form>
+    <button class="btn btn-success mt-3 mb-3" (click)="sendMail()">
+      Send Email
+    </button>
+    <div class="alert alert-danger" role="alert" *ngIf="messageError">
+      {{ messageError }}
+    </div>
+    <div class="alert alert-success" role="alert" *ngIf="message">
+      {{ message }}
+    </div>
+  </div>
+</div>

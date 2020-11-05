@@ -4,8 +4,7 @@
       <h2>{{ memberType.toUpperCase() }}&nbsp;MEMBERS</h2>
       <button
         class="btn btn-success mb-3"
-        [routerLink]="['/admin/sendMail']"
-        [queryParams]="{ type: memberType }"
+        [routerLink]="['sendMail', memberType]"
       >
         SEND EMAIL
       </button>

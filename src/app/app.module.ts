@@ -40,6 +40,7 @@ import { AdminServiceComponent } from './admin/admin-service/admin-service.compo
 import { AdminMembersComponent } from './admin/admin-members/admin-members.component';
 import { AdminSendmailComponent } from './admin/admin-members/admin-sendmail/admin-sendmail.component';
 import { ViewServiceComponent } from './landing-page/view-service/view-service.component';
+import { AdminWebsiteInfoComponent } from './admin/admin-website-info/admin-website-info.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { ViewServiceComponent } from './landing-page/view-service/view-service.c
     AdminMembersComponent,
     AdminSendmailComponent,
     ViewServiceComponent,
+    AdminWebsiteInfoComponent,
   ],
   imports: [
     BrowserModule,
