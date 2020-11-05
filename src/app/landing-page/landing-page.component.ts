@@ -49,38 +49,41 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.navbarService.setPageData(this.pageData);
-    if (!this.websiteInformationService.getWebsiteInfo()) {
-      this.websiteInformationService.get();
-    }
+    this.websiteInformationService.get();
     this.webInfoSub = this.websiteInformationService
       .getWebsiteInfoStatusListener()
-      .subscribe((websiteInfo) => {
-        if (websiteInfo.websiteInfo) {
-          this.websiteInfo = websiteInfo.websiteInfo.landingPage;
-          if (
-            this.websiteInfo.joinParaImages.indexOf(
-              'landingPage-climate.jpg'
-            ) != -1
-          ) {
-            this.websiteInfo.joinParaImages.splice(
+      .subscribe(
+        (websiteInfo) => {
+          if (websiteInfo.websiteInfo) {
+            this.websiteInfo = websiteInfo.websiteInfo.landingPage;
+            if (
               this.websiteInfo.joinParaImages.indexOf(
                 'landingPage-climate.jpg'
-              ),
-              1
-            );
-            this.backgroundImage = 'landingPage-climate.jpg';
-          } else {
-            this.websiteInfo.joinParaImages.splice(
-              this.websiteInfo.joinParaImages.indexOf(
-                'landingPage-climate.png'
-              ),
-              1
-            );
-            this.backgroundImage = 'landingPage-climate.png';
+              ) != -1
+            ) {
+              this.websiteInfo.joinParaImages.splice(
+                this.websiteInfo.joinParaImages.indexOf(
+                  'landingPage-climate.jpg'
+                ),
+                1
+              );
+              this.backgroundImage = 'landingPage-climate.jpg';
+            } else {
+              this.websiteInfo.joinParaImages.splice(
+                this.websiteInfo.joinParaImages.indexOf(
+                  'landingPage-climate.png'
+                ),
+                1
+              );
+              this.backgroundImage = 'landingPage-climate.png';
+            }
           }
           this.isLoading = false;
+        },
+        (error) => {
+          console.log(error);
         }
-      });
+      );
   }
 
   ngOnDestroy() {

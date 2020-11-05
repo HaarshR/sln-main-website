@@ -1,7 +1,8 @@
 <!-- Title Container -->
 <div
+  *ngIf="!isLoading"
   class="img-container"
-  [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
+  [ngStyle]="{ 'background-image': 'url(' + imgUrl + backgroundImage + ')' }"
   style="padding: 20% 0"
 >
   <div class="container-fluid">
@@ -10,12 +11,11 @@
         <h1 class="font-weight-bold text-white shadow py-3" id="main-text">
           About Us
         </h1>
-        <p class="psource text-white shadow" id="paragraph">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde placeat
-          tempore praesentium libero, sunt, nesciunt, illo ipsum quos at commodi
-          sint. Consequuntur deserunt, quod maiores quibusdam dolorum expedita
-          tempore eos.
-        </p>
+        <p
+          class="psource text-white shadow"
+          id="paragraph"
+          [innerHTML]="websiteInfo.details"
+        ></p>
       </div>
     </div>
   </div>
@@ -26,6 +26,14 @@
     <div class="col-12">
       <h1 class="headm text-success font-weight-bold">Our mission.</h1>
     </div>
+    <div>
+      <p
+        *ngIf="!isLoading"
+        class="psource text-black shadow"
+        id="paragraph"
+        [innerHTML]="websiteInfo.mission"
+      ></p>
+    </div>
   </div>
 </div>
 <!-- Meet the team page -->
@@ -35,30 +43,30 @@
       <h1 class="headm text-success font-weight-bold">Meet the team.</h1>
     </div>
   </div>
-  <div class="row">
-    <div class="col-12 col-md-6 pb-5" *ngFor="let member of members">
+  <div class="row" *ngIf="!isLoading">
+    <div
+      class="col-12 col-md-6 pb-5"
+      *ngFor="let member of websiteInfo.teamMembers"
+    >
       <div class="row">
         <div class="col-4">
-          <img
-            src="https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
-            class="avatar"
-          />
+          <img src="{{ member.picture }}" class="avatar" />
         </div>
         <div class="col-8">
           <div class="row py-2">
             <div class="col-12">
-              <h5 class="m-0 headr">Mrs. Someone Someone</h5>
+              <h5 class="m-0 headr">{{ member.name }}</h5>
             </div>
           </div>
           <div class="row py-2">
             <div class="col-12">
-              <p class="m-0 psource">Some position</p>
+              <p class="m-0 psource">{{ member.position }}</p>
             </div>
           </div>
           <div class="row psource">
             <div class="col-12 col-sm-6">
               <a
-                [href]="facebookPage"
+                [href]="member.facebook"
                 style="font-size: 13px"
                 class="text-primary"
               >
@@ -68,7 +76,7 @@
             </div>
             <div class="col-12 col-sm-6">
               <a
-                [href]="instagramPage"
+                [href]="member.instagram"
                 style="font-size: 13px"
                 class="text-primary"
               >
@@ -87,10 +95,11 @@
   <div class="row-py-5 text-center">
     <div class="col-12">
       <h1 class="headm text-warning font-weight-bold">Gallery.</h1>
-      <p class="psource py-3">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum,
-        officia!
-      </p>
+      <p
+        *ngIf="!isLoading"
+        class="psource py-3"
+        [innerHTML]="websiteInfo.galleryDetail"
+      ></p>
     </div>
   </div>
 </div>

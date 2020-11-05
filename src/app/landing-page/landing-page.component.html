@@ -69,9 +69,8 @@
 </div>
 <!-- TODO: Replace image container with slider (slideshow) -->
 
-<div class="img-container">
+<div class="img-container" *ngIf="!isLoading">
   <ngb-carousel
-    *ngIf="websiteInfo"
     [keyboard]="false"
     [interval]="5000"
     [pauseOnFocus]="false"

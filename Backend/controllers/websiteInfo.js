@@ -99,6 +99,7 @@ exports.update = (req, res, next) => {
         details: req.body.aboutUsPage.details,
         mission: req.body.aboutUsPage.mission,
         galleryDetail: req.body.aboutUsPage.galleryDetail,
+        $push: { teamMembers: null },
       },
     };
   }
