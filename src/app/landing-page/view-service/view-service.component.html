@@ -1,1 +1,157 @@
-<p>view-service works!</p>
+<div class="container">
+    <form [formGroup]="serviceForm">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputLastName">Last Name</label>
+          <input type="text" class="form-control" id="inputLastName" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputFirstName">First Name</label>
+          <input type="text" class="form-control" id="inputFirstName" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputDOB">Date of Birth</label>
+          <input type="text" class="form-control" id="inputDOB" />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail">Email Address</label>
+          <input type="text" class="form-control" id="inputEmail" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputPhone">Phone number</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <select class="custom-select" id="inputPhonePrefix">
+                <option value="+230" selected>+230</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <input type="text" class="form-control" id="inputPhone" />
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputSocialAccount"
+            >Social Account <b>(Optional)</b></label
+          >
+          <input type="text" class="form-control" id="inputSocialAccount" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEducationInstitution">Education Institution</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputEducationInstitution"
+          />
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputFieldOfStudy">Field of Study</label>
+          <input type="text" class="form-control" id="inputFieldOfStudy" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-12">
+          <label for="inputAboutSovLanatir"
+            >How did you get to know about Sov Lanatir?</label
+          >
+          <input type="text" class="form-control" id="inputAboutSovLanatir" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-12">
+          <label for="inputWhyJoinUs">Why do you want to join us?</label>
+          <textarea
+            class="form-control"
+            id="inputWhyJoinUs"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-12">
+          <label for="inputBiggestAchievement"
+            >What is your biggest achievement?</label
+          >
+          <textarea
+            class="form-control"
+            id="inputBiggestAchievement"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-12">
+          <label for="inputRole"
+            >Have you been in any other organisations? If yes, what was your
+            role?</label
+          >
+          <input type="text" class="form-control" id="inputRole" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-12">
+          <label for="inputIndividual"
+            >What are you already doing as an individual, to save Nature?</label
+          >
+          <textarea
+            class="form-control"
+            id="inputIndividual"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-12">
+          <label for="inputNature"
+            >If nature contained all answers of the universe, what would you ask
+            her?</label
+          >
+          <textarea class="form-control" id="inputNature" rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- <div class="form-group col-12">
+          <label for="inputDepartment"
+            >Which department(s) are you willing to join in?</label
+          >
+          <input type="text" class="form-control" id="inputDepartment" />
+        </div> -->
+        <div class="form-group col-12">
+          <label for="inputDepartment"
+            >Which department(s) are you willing to join in?</label
+          >
+          <textarea
+            class="form-control"
+            id="inputDepartment"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-row py-4">
+        <div class="form-group offset-4 col-4">
+          <button
+            type="submit"
+            class="form-control btn btn-primary text-white p-2"
+          >
+            JOIN
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>

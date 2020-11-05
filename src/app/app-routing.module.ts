@@ -17,6 +17,7 @@ import { DepartmentComponent } from './department-page/department/department.com
 import { ViewBlogComponent } from './blog-page/view-blog/view-blog.component';
 import { ViewEventComponent } from './events-page/view-event/view-event.component';
 import { AdminSendmailComponent } from './admin/admin-members/admin-sendmail/admin-sendmail.component';
+import { ViewServiceComponent } from './landing-page/view-service/view-service.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'join-us', component: JoinusPageComponent },
   { path: 'join-us/executive', component: ExecutiveMemberPageComponent },
   { path: 'join-us/regular', component: RegularMemberPageComponent },
+  {path: 'service', component: ViewServiceComponent },
   {
     path: 'admin',
     component: AdminLoginComponent,
