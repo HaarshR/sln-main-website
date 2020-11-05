@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RichTextEditorModule } from '@syncfusion/ej2-angular-richtexteditor';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ColorPickerModule } from '@syncfusion/ej2-angular-inputs';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
@@ -87,5 +88,6 @@ import { AdminWebsiteInfoComponent } from './admin/admin-website-info/admin-webs
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA],
 })
 export class AppModule {}

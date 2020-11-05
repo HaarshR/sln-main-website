@@ -4,7 +4,6 @@ const uniqueValidator = require("mongoose-unique-validator");
 const websiteInfoSchema = mongoose.Schema({
   _id: { type: mongoose.Schema.Types.ObjectId, required: false },
   landingPage: {
-    image: { type: String, required: true },
     detail: { type: String, required: true },
     helpPara: { type: String, required: true },
     joinPara: { type: String, required: true },

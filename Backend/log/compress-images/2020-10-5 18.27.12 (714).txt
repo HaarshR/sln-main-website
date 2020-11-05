@@ -1,0 +1,16 @@
+File from: [tempImg/landingPage-slider_2.jpg]
+
+File to: [public/images/landingPage-slider_2.jpg]
+
+Compression algorithm: [mozjpeg]
+
+Description: Error: Command failed: D:\WorksProjects\AngularProjects\sln-main-website\Backend\node_modules\mozjpeg\vendor\cjpeg.exe -quality 60 -outfile public/images/landingPage-slider_2.jpg tempImg/landingPage-slider_2.jpg
+Unrecognized input file format --- perhaps you need -targa
+File from: [tempImg/landingPage-slider_3.jpg]
+
+File to: [public/images/landingPage-slider_3.jpg]
+
+Compression algorithm: [mozjpeg]
+
+Description: Error: Command failed: D:\WorksProjects\AngularProjects\sln-main-website\Backend\node_modules\mozjpeg\vendor\cjpeg.exe -quality 60 -outfile public/images/landingPage-slider_3.jpg tempImg/landingPage-slider_3.jpg
+Unrecognized input file format --- perhaps you need -targa

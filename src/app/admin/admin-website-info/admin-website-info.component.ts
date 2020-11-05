@@ -242,6 +242,9 @@ export class AdminWebsiteInfoComponent implements OnInit {
       this.deletePicArray.forEach((pic) => {
         newLandingForm.append('deletePicArray', pic);
       });
+      if (this.deletePicArray.length == 1) {
+        newLandingForm.append('deletePicArray', null);
+      }
     } else {
       newLandingForm.append('deletePicArray', null);
     }
