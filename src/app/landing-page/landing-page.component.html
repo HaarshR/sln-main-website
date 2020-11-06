@@ -1,132 +1,119 @@
-<div
-  *ngIf="!isLoading"
-  class="img-container"
-  [ngStyle]="{ 'background-image': 'url(' + imgUrl + backgroundImage + ')' }"
-  style="padding: 20% 0"
->
-  <div class="container-fluid">
-    <div class="row">
-      <div class="offset-md-1 col-md-5 py-3">
-        <div class="headm text-white">
-          <h1 class="font-weight-bold" id="main-text">Climate Justice</h1>
-          <h2>In Mauritius</h2>
-        </div>
-      </div>
-      <div class="col-md-5">
-        <div class="row">
-          <div class="col-12">
-            <p
-              class="psource text-white text-justify shadow"
-              id="paragraph"
-              [innerHTML]="websiteInfo.detail"
-            ></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12 text-center">
-            <button class="btn btn-primary text-white px-4 mx-2">
-              Get Started
-            </button>
-            <button class="btn text-white px-4 mx-2 border border-white">
-              <a class="text-white" href="#footer">Contact Us</a>
-            </button>
-          </div>
-        </div>
-      </div>
+<ng-container *ngIf="isLoading">
+  <div class="text-center" style="margin-top: 45vh; margin-bottom: 45vh">
+    <div
+      class="spinner-border text-primary"
+      style="width: 4rem; height: 4rem"
+      role="status"
+    >
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
-</div>
-
-<div class="container-fluid bg-success">
-  <div class="col-12 py-5">
-    <h1 class="headm text-white text-center">How can we help you?</h1>
-  </div>
-</div>
-
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <p
-        *ngIf="!isLoading"
-        class="psource text-justify pt-5"
-        id="paragraph"
-        [innerHTML]="websiteInfo.helpPara"
-      ></p>
-    </div>
-  </div>
-
-  <div class="row mt-5">
-    <div class="col-12 col-md-6">
-      <app-service-card></app-service-card>
-    </div>
-  </div>
-</div>
-
-<div class="container-fluid mt-5 bg-success">
-  <div class="col-12 py-5">
-    <h1 class="headm text-white text-center">Join Us!</h1>
-  </div>
-</div>
-<!-- TODO: Replace image container with slider (slideshow) -->
-
-<div class="img-container" *ngIf="!isLoading">
-  <ngb-carousel
-    [keyboard]="false"
-    [interval]="5000"
-    [pauseOnFocus]="false"
-    [pauseOnHover]="false"
-    [showNavigationIndicators]="showNavigationIndicators"
+</ng-container>
+<ng-container *ngIf="!isLoading">
+  <div
+    class="img-container"
+    [ngStyle]="{ 'background-image': 'url(' + imgUrl + backgroundImage + ')' }"
+    style="padding: 20% 0"
   >
-    <ng-template ngbSlide *ngFor="let image of websiteInfo.joinParaImages">
-      <div class="picsum-img-wrapper img-container">
-        <img
-          [src]="imgUrl + image"
-          alt="Random slide"
-          style="width: 100%; resize: both"
-        />
-      </div>
-      <div class="carousel-caption">
-        <div class="container-fluid">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="offset-md-1 col-md-5 py-3">
+          <div class="headm text-white">
+            <h1 class="font-weight-bold" id="main-text">Climate Justice</h1>
+            <h2>In Mauritius</h2>
+          </div>
+        </div>
+        <div class="col-md-5">
           <div class="row">
-            <div class="offset-0 col-12 offset-md-1 col-md-10">
+            <div class="col-12">
               <p
-                class="psource text-white text-center shadow"
+                class="psource text-white text-justify shadow"
                 id="paragraph"
-                [innerHTML]="websiteInfo.joinPara"
+                [innerHTML]="websiteInfo.detail"
               ></p>
             </div>
           </div>
           <div class="row">
-            <div class="col-12 text-center py-5">
-              <button class="btn btn-primary text-white">Apply Now</button>
+            <div class="col-12 text-center">
+              <button class="btn btn-primary text-white px-4 mx-2">
+                Get Started
+              </button>
+              <button class="btn text-white px-4 mx-2 border border-white">
+                <a class="text-white" href="#footer">Contact Us</a>
+              </button>
             </div>
           </div>
         </div>
       </div>
-    </ng-template>
-  </ngb-carousel>
-</div>
-<!--
-<div
-  class="img-container"
-  [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
-  style="padding: 10% 0"
->
-  <div class="container-fluid">
+    </div>
+  </div>
+
+  <div class="container-fluid bg-success">
+    <div class="col-12 py-5">
+      <h1 class="headm text-white text-center">How can we help you?</h1>
+    </div>
+  </div>
+
+  <div class="container">
     <div class="row">
-      <div class="offset-0 col-12 offset-md-1 col-md-10">
-        <p class="psource text-white text-center shadow" id="paragraph">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-          Exercitationem blanditiis molestias, neque veritatis sit autem
-          repellendus officiis ab ullam cum corporis? Facere aliquam,
-          reprehenderit asperiores sapiente harum non optio odio!
-        </p>
+      <div class="col-12">
+        <p
+          class="psource text-justify pt-5"
+          id="paragraph"
+          [innerHTML]="websiteInfo.helpPara"
+        ></p>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12 text-center py-5">
-        <button class="btn btn-primary text-white">Apply Now</button>
+
+    <div class="row mt-5">
+      <div class="col-12 col-md-6">
+        <app-service-card></app-service-card>
       </div>
     </div>
   </div>
-</div> -->
+
+  <div class="container-fluid mt-5 bg-success">
+    <div class="col-12 py-5">
+      <h1 class="headm text-white text-center">Join Us!</h1>
+    </div>
+  </div>
+  <!-- TODO: Replace image container with slider (slideshow) -->
+
+  <div class="img-container">
+    <ngb-carousel
+      [keyboard]="false"
+      [interval]="5000"
+      [pauseOnFocus]="false"
+      [pauseOnHover]="false"
+      [showNavigationIndicators]="showNavigationIndicators"
+    >
+      <ng-template ngbSlide *ngFor="let image of websiteInfo.joinParaImages">
+        <div class="picsum-img-wrapper img-container">
+          <img
+            [src]="imgUrl + image"
+            alt="Random slide"
+            style="width: 100%; resize: both"
+          />
+        </div>
+        <div class="carousel-caption">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="offset-0 col-12 offset-md-1 col-md-10">
+                <p
+                  class="psource text-white text-center shadow"
+                  id="paragraph"
+                  [innerHTML]="websiteInfo.joinPara"
+                ></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 text-center py-5">
+                <button class="btn btn-primary text-white">Apply Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+</ng-container>

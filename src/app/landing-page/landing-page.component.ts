@@ -19,9 +19,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   showNavigationArrows = false;
   showNavigationIndicators = false;
-  // images = [1055, 194, 368].map(
-  //   (n) => `https://picsum.photos/id/${n}/1500/600`
-  // );
 
   private pageData: PageData = {
     navBackground: 'rgba(0,0,0,0.7)',
@@ -37,6 +34,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   websiteInfo: any;
   private webInfoSub: Subscription;
+
+  errorMessage;
 
   constructor(
     private navbarService: NavbarService,
@@ -78,10 +77,12 @@ export class LandingPageComponent implements OnInit, OnDestroy {
               this.backgroundImage = 'landingPage-climate.png';
             }
           }
+          this.errorMessage = null;
           this.isLoading = false;
         },
         (error) => {
-          console.log(error);
+          this.errorMessage = 'An unknown error occured with the server!';
+          this.isLoading = false;
         }
       );
   }
