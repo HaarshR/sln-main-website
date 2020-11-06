@@ -8,9 +8,10 @@
 
 .avatar {
   vertical-align: middle;
-  width: 100%;
-  height: auto;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .inside-card {
