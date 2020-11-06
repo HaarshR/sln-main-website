@@ -30,6 +30,19 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   // Dynamic content
   backgroundImage;
 
+  services: { title: string; thumbnail: string }[] = [
+    {
+      title: 'Find a home for stray animals',
+      thumbnail:
+        'https://images.unsplash.com/photo-1507146426996-ef05306b995a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80',
+    },
+    {
+      title: 'Notify about waste pollution',
+      thumbnail:
+        'https://images.unsplash.com/photo-1562077981-4d7eafd44932?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    },
+  ];
+
   isLoading = true;
 
   websiteInfo: any;
