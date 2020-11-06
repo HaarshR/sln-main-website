@@ -1,105 +1,133 @@
 <!-- Title Container -->
-<div
-  *ngIf="!isLoading"
-  class="img-container"
-  [ngStyle]="{ 'background-image': 'url(' + imgUrl + backgroundImage + ')' }"
-  style="padding: 20% 0"
->
-  <div class="container-fluid">
+<ng-container *ngIf="isLoading">
+  <div class="container h-100">
     <div class="row">
-      <div class="col-12 offset-md-2 col-md-8 text-center align-self-center">
-        <h1 class="font-weight-bold text-white shadow py-3" id="main-text">
-          About Us
-        </h1>
+      <div class="col-12 my-auto">
+        <div class="text-center" style="margin-top: 48vh; margin-bottom: 45vh">
+          <div
+            class="spinner-border text-primary"
+            style="width: 4rem; height: 4rem"
+            role="status"
+          >
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="!isLoading">
+  <div
+    *ngIf="!isLoading"
+    class="img-container"
+    [ngStyle]="{
+      'background-image':
+        'url(' + imgUrl + 'websiteInfo/' + websiteInfo.image + ')'
+    }"
+    style="padding: 20% 0"
+  >
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 offset-md-2 col-md-8 text-center align-self-center">
+          <h1 class="font-weight-bold text-white shadow py-3" id="main-text">
+            About Us
+          </h1>
+          <p
+            class="psource text-white shadow"
+            id="paragraph"
+            [innerHTML]="websiteInfo.details"
+          ></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Our mission -->
+  <div class="container py-5">
+    <div class="row py-5">
+      <div class="col-12">
+        <h1 class="headm text-success font-weight-bold">Our mission.</h1>
+      </div>
+      <div>
         <p
-          class="psource text-white shadow"
+          *ngIf="!isLoading"
+          class="psource text-black shadow"
           id="paragraph"
-          [innerHTML]="websiteInfo.details"
+          [innerHTML]="websiteInfo.mission"
         ></p>
       </div>
     </div>
   </div>
-</div>
-<!-- Our mission -->
-<div class="container py-5">
-  <div class="row py-5">
-    <div class="col-12">
-      <h1 class="headm text-success font-weight-bold">Our mission.</h1>
+  <!-- Meet the team page -->
+  <div class="container py-5">
+    <div class="row py-5">
+      <div class="col-12">
+        <h1 class="headm text-success font-weight-bold">Meet the team.</h1>
+      </div>
     </div>
-    <div>
-      <p
-        *ngIf="!isLoading"
-        class="psource text-black shadow"
-        id="paragraph"
-        [innerHTML]="websiteInfo.mission"
-      ></p>
-    </div>
-  </div>
-</div>
-<!-- Meet the team page -->
-<div class="container py-5">
-  <div class="row py-5">
-    <div class="col-12">
-      <h1 class="headm text-success font-weight-bold">Meet the team.</h1>
-    </div>
-  </div>
-  <div class="row" *ngIf="!isLoading">
-    <div
-      class="col-12 col-md-6 pb-5"
-      *ngFor="let member of websiteInfo.teamMembers"
-    >
-      <div class="row">
-        <div class="col-4">
-          <img src="{{ member.picture }}" class="avatar" />
-        </div>
-        <div class="col-8">
-          <div class="row py-2">
-            <div class="col-12">
-              <h5 class="m-0 headr">{{ member.name }}</h5>
-            </div>
+    <div class="row" *ngIf="!isLoading">
+      <div class="col-12 col-md-6 pb-5" *ngFor="let member of members">
+        <div class="row">
+          <div class="col-4">
+            <img
+              src="{{ imgUrl }}teamMembers/{{ member.picture }}"
+              class="avatar"
+            />
           </div>
-          <div class="row py-2">
-            <div class="col-12">
-              <p class="m-0 psource">{{ member.position }}</p>
+          <div class="col-8">
+            <div class="row py-2">
+              <div class="col-12">
+                <h5 class="m-0 headr">{{ member.name }}</h5>
+              </div>
             </div>
-          </div>
-          <div class="row psource">
-            <div class="col-12 col-sm-6">
-              <a
-                [href]="member.facebook"
-                style="font-size: 13px"
-                class="text-primary"
-              >
-                <fa-icon [icon]="faFacebook" size="lg" class="pr-1"></fa-icon>
-                <span>/ Facebook</span>
-              </a>
+            <div class="row py-2">
+              <div class="col-12">
+                <p class="m-0 psource">{{ member.position }}</p>
+              </div>
             </div>
-            <div class="col-12 col-sm-6">
-              <a
-                [href]="member.instagram"
-                style="font-size: 13px"
-                class="text-primary"
-              >
-                <fa-icon [icon]="faInstagram" size="lg" class="pr-1"></fa-icon>
-                <span>@Instagram</span>
-              </a>
+            <div class="row psource">
+              <div class="col-12 col-sm-6">
+                <a
+                  [href]="member.facebook"
+                  style="font-size: 13px"
+                  class="text-primary"
+                  target="_blank"
+                >
+                  <fa-icon [icon]="faFacebook" size="lg" class="pr-1"></fa-icon>
+                  <span>/ Facebook</span>
+                </a>
+              </div>
+              <div class="col-12 col-sm-6">
+                <a
+                  [href]="member.instagram"
+                  style="font-size: 13px"
+                  class="text-primary"
+                  target="_blank"
+                >
+                  <fa-icon
+                    [icon]="faInstagram"
+                    size="lg"
+                    class="pr-1"
+                  ></fa-icon>
+                  <span>/ Instagram</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Gallery -->
-<div class="container py-5">
-  <div class="row-py-5 text-center">
-    <div class="col-12">
-      <h1 class="headm text-warning font-weight-bold">Gallery.</h1>
-      <p
-        *ngIf="!isLoading"
-        class="psource py-3"
-        [innerHTML]="websiteInfo.galleryDetail"
-      ></p>
+  <!-- Gallery -->
+  <div class="container py-5">
+    <div class="row-py-5 text-center">
+      <div class="col-12">
+        <h1 class="headm text-warning font-weight-bold">Gallery.</h1>
+        <p
+          *ngIf="!isLoading"
+          class="psource py-3"
+          [innerHTML]="websiteInfo.galleryDetail"
+        ></p>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>

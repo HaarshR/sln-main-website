@@ -45,17 +45,17 @@
       ></fa-icon>
     </div>
     <div class="col-3 text-center pb-2 pt-2">
-      <span class="headers" (click)="sortProperty('title')">Title</span>
+      <span class="headers" (click)="sortProperty('name')">Title</span>
       <fa-icon
         class="hovering"
-        *ngIf="sortingWay == 'desc' && propertyName == 'title'"
+        *ngIf="sortingWay == 'desc' && propertyName == 'name'"
         [icon]="faAngleDown"
         transform="grow-13"
         (click)="sortWay('asc')"
       ></fa-icon>
       <fa-icon
         class="hovering"
-        *ngIf="sortingWay == 'asc' && propertyName == 'title'"
+        *ngIf="sortingWay == 'asc' && propertyName == 'name'"
         [icon]="faAngleUp"
         transform="grow-13"
         (click)="sortWay('desc')"
@@ -96,7 +96,7 @@
           {{ event._id }}
         </div>
         <div class="col-3 text-center">
-          {{ event.title }}
+          {{ event.name }}
         </div>
       </div>
       <ng-template #content let-modal>

@@ -1,18 +1,20 @@
 // IMPORTS THE MODELS
 const WebsiteInfo = require("../models/websiteInfo");
 
+// IMAGE COMPRESSION NEEDED VARIABLES
 const compress_images = require("compress-images");
 const fs = require("fs");
+const tempImagePath = "tempImg/*.{jpg,JPG,jpeg,JPEG,png}";
+const outputImagePath = "public/images/";
 
+// AWS S3 CONNECTION
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3({
   accessKeyId: process.env.AWS_KEYID,
   secretAccessKey: process.env.AWS_SECRETKEY,
 });
 
-const tempImagePath = "tempImg/*.{jpg,JPG,jpeg,JPEG,png}";
-const outputImagePath = "public/images/";
-
+// AWS S3 FILE DELETION FUNCTION
 const deleteFile = (fileNames) => {
   let objects = [];
   fileNames.forEach((fileName) => {
@@ -36,10 +38,12 @@ const deleteFile = (fileNames) => {
   });
 };
 
+// AWS S3 FILE UPLOAD FUNCTION
 const uploadFile = (fileName) => {
   // Read content from the file
   fs.readFile("public/images/" + fileName, (err, data) => {
     if (err) {
+      F;
       console.log("Error uploading image! Image could not be read.");
     }
     let params = {
@@ -63,6 +67,7 @@ const uploadFile = (fileName) => {
   });
 };
 
+// GET WEBSITE INFO
 exports.get = (req, res, next) => {
   WebsiteInfo.findOne()
     .then((document) => {
@@ -85,24 +90,13 @@ exports.get = (req, res, next) => {
     });
 };
 
-exports.update = (req, res, next) => {
-  let websiteInfo;
-  if (req.body.departmentPage) {
-    websiteInfo = {
-      departmentPage: {
-        details: req.body.departmentPage.detail,
-      },
-    };
-  } else if (req.body.aboutUsPage) {
-    websiteInfo = {
-      aboutUsPage: {
-        details: req.body.aboutUsPage.details,
-        mission: req.body.aboutUsPage.mission,
-        galleryDetail: req.body.aboutUsPage.galleryDetail,
-        $push: { teamMembers: null },
-      },
-    };
-  }
+// UPDATE DEPARTMENT PAGE
+exports.updateDepartmentPage = (req, res, next) => {
+  let websiteInfo = {
+    departmentPage: {
+      details: req.body.details,
+    },
+  };
 
   WebsiteInfo.updateOne({ _id: req.params.id }, websiteInfo)
     .then((result) => {
@@ -124,6 +118,79 @@ exports.update = (req, res, next) => {
     });
 };
 
+// UPDATE ABOUT US PAGE
+exports.updateAbout = (req, res, next) => {
+  websiteInfo = {
+    aboutUsPage: {
+      image: req.body.oldImage,
+      details: req.body.details,
+      mission: req.body.mission,
+      galleryDetail: req.body.galleryDetail,
+    },
+  };
+
+  if (req.file) {
+    websiteInfo.aboutUsPage.image = req.file.filename;
+  }
+
+  WebsiteInfo.updateOne({ _id: req.params.id }, websiteInfo)
+    .then((result) => {
+      if (result.n == 0) {
+        res.status(404).json({
+          error: "Update failed!",
+        });
+      } else {
+        if (req.file) {
+          compress_images(
+            tempImagePath,
+            outputImagePath,
+            { compress_force: false, statistic: true, autoupdate: true },
+            false,
+            { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
+            {
+              png: {
+                engine: "pngquant",
+                command: ["--quality=20-50", "-o"],
+              },
+            },
+            { svg: { engine: false, command: false } },
+            {
+              gif: {
+                engine: false,
+                command: false,
+              },
+            },
+            function (error, completed, statistic) {
+              try {
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+              } catch (err) {}
+              try {
+                uploadFile(req.file.filename);
+              } catch (err) {}
+            }
+          );
+        }
+        res.status(201).json({
+          message: "Update successfull!",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error,
+        errorMessage: "An unknown error occured!",
+      });
+    });
+};
+
+// UPDATE LANDING PAGE
 exports.updateLanding = (req, res, next) => {
   let websiteInfo = {
     landingPage: {
@@ -135,16 +202,24 @@ exports.updateLanding = (req, res, next) => {
   };
 
   if (req.body.oldImages) {
-    req.body.oldImages.forEach((image) => {
-      websiteInfo.landingPage.joinParaImages.push(image);
-    });
+    if (Array.isArray(req.body.oldImages)) {
+      req.body.oldImages.forEach((image) => {
+        websiteInfo.landingPage.joinParaImages.push(image);
+      });
+    } else {
+      websiteInfo.landingPage.joinParaImages.push(req.body.oldImages);
+    }
   }
 
-  let deteleArray = [];
+  let deleteArray = [];
   if (req.body.deletePicArray) {
-    req.body.deletePicArray.forEach((pic) => {
-      deteleArray.push(pic);
-    });
+    if (Array.isArray(req.body.deletePicArray)) {
+      req.body.deletePicArray.forEach((pic) => {
+        deleteArray.push(pic);
+      });
+    } else {
+      deleteArray.push(req.body.deletePicArray);
+    }
   }
 
   if (req.files) {
@@ -152,6 +227,8 @@ exports.updateLanding = (req, res, next) => {
       websiteInfo.landingPage.joinParaImages.push(image.filename);
     });
   }
+
+  console.log(websiteInfo, deleteArray);
 
   WebsiteInfo.updateOne({ _id: req.params.id }, websiteInfo)
     .then((result) => {
@@ -202,8 +279,8 @@ exports.updateLanding = (req, res, next) => {
             }
           );
         }
-        if (deteleArray.length > 0) {
-          deleteFile(deteleArray);
+        if (req.body.deletePicArray) {
+          deleteFile(deleteArray);
         }
         res.status(201).json({
           message: "Update successfull!",
@@ -218,101 +295,3 @@ exports.updateLanding = (req, res, next) => {
       });
     });
 };
-
-// exports.edit = (req, res, next) => {
-//   let imageDelete = [];
-//   if (req.body.imageDelete != null && req.body.imageDelete != "null") {
-//     req.body.imageDelete.forEach((image) => {
-//       if (image != "null") {
-//         imageDelete.push(image);
-//       }
-//     });
-//   }
-
-//   const department = {
-//     images: [],
-//     title: req.body.title,
-//     about: req.body.about,
-//     colors: {
-//       primary: req.body.primary,
-//       secondary: req.body.secondary,
-//       tertiary: req.body.tertiary,
-//     },
-//   };
-
-//   req.body.oldImages.forEach((oldImage) => {
-//     if (oldImage != "null") {
-//       let inDelete = false;
-//       imageDelete.forEach((image) => {
-//         if (image == oldImage) {
-//           inDelete = true;
-//         }
-//       });
-//       if (!inDelete) {
-//         department.images.push(oldImage);
-//       }
-//     }
-//   });
-
-//   if (req.files) {
-//     req.files.forEach((image) => {
-//       department.images.push(image.filename);
-//     });
-//     compress_images(
-//       tempImagePath,
-//       outputImagePath,
-//       { compress_force: false, statistic: true, autoupdate: true },
-//       false,
-//       { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
-//       {
-//         png: {
-//           engine: "pngquant",
-//           command: ["--quality=20-50", "-o"],
-//         },
-//       },
-//       { svg: { engine: false, command: false } },
-//       {
-//         gif: {
-//           engine: false,
-//           command: false,
-//         },
-//       },
-//       function (error, completed, statistic) {
-//         if (completed) {
-//           let i = 1;
-//           req.files.forEach((image) => {
-//             try {
-//               fs.unlinkSync("tempImg/" + image.filename);
-//               fs.unlinkSync("tempImg/" + image.filename);
-//               fs.unlinkSync("tempImg/" + image.filename);
-//               fs.unlinkSync("tempImg/" + image.filename);
-//             } catch (err) {}
-//             try {
-//               uploadFile(image.filename, req.body.imageFolder);
-//               i++;
-//             } catch (err) {}
-//           });
-//         }
-//       }
-//     );
-//   }
-
-//   Department.updateOne({ _id: req.params.id }, department)
-//     .then((result) => {
-//       if (result.n == 0) {
-//         res.status(404).json({
-//           error: "Update failed!",
-//         });
-//       } else {
-//         res.status(201).json({
-//           message: "Update successfull!",
-//         });
-//       }
-//     })
-//     .catch((error) => {
-//       res.status(500).json({
-//         error: error,
-//         errorMessage: "An unknown error occured!",
-//       });
-//     });
-// };

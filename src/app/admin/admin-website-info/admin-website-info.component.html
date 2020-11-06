@@ -12,43 +12,49 @@
         </div>
       </div>
       <div class="row" *ngIf="!isLoading">
-        <div class="col mb-3">
+        <div class="col mb-3 text-center">
+          <img
+            class="img-thumbnail mb-2"
+            style="width: 40%"
+            src="{{ climatePic }}"
+            alt="climateChange"
+          />
           <div class="custom-file">
             <input
               type="file"
               class="custom-file-input"
               id="validatedCustomFile"
               accept=".png, .jpg"
-              (change)="onClimateImagePicked($event)"
+              (change)="onClimateImagePicked($event, 'home')"
             />
             <label class="custom-file-label" for="validatedCustomFile"
               >Choose an image for Climate Change!</label
             >
           </div>
-          <ng-container *ngFor="let image of imagesPreview2">
-            <div class="d-flex flex-row oldImageFlex p-2">
-              <img
-                class="img-fluid oldImage"
-                src="{{ imgUrl }}{{ image }}"
-                [alt]="image.substring(0, image.length - 3)"
-              />
-              <button
-                class="btn btn-warning mt-2"
-                type="button"
-                [disabled]="isEditedLanding"
-                (click)="deletePic(image)"
-              >
-                Remove Picture
-              </button>
-            </div>
-          </ng-container>
+          <div class="d-flex flex-wrap flexOldImageBox mt-3">
+            <ng-container *ngFor="let obj of joinUsPic; index as i">
+              <div class="d-flex flex-column oldImageFlex p-2">
+                <img
+                  class="img-fluid img-thumbnail oldImage"
+                  src="{{ obj.image }}"
+                  [alt]="'image_' + i"
+                />
+                <button
+                  class="btn btn-warning mt-2"
+                  type="button"
+                  (click)="deletePic(obj)"
+                >
+                  Remove Picture
+                </button>
+              </div>
+            </ng-container>
+          </div>
           <div class="custom-file mt-2">
             <input
               type="file"
               class="custom-file-input"
               id="validatedCustomFile"
               accept=".png, .jpg"
-              [disabled]="isEditedLanding"
               multiple
               (change)="onImagesPicked($event)"
             />
@@ -101,8 +107,9 @@
                   websiteInfo.landingPage.helpPara &&
                 landingForm.value.joinPara ==
                   websiteInfo.landingPage.joinPara &&
-                !image &&
-                !images
+                !climatePicData &&
+                joinUsPicData.length == 0 &&
+                deletePicArray.length == 0
               "
             >
               Save Landing Page</button
@@ -113,9 +120,9 @@
                   websiteInfo.landingPage.helpPara &&
                 landingForm.value.joinPara ==
                   websiteInfo.landingPage.joinPara &&
-                !image &&
-                !images &&
-                !isEditedLanding
+                !climatePicData &&
+                joinUsPicData.length == 0 &&
+                deletePicArray.length == 0
               "
               ><small>&nbsp;* No changes made yet!</small></span
             >
@@ -149,33 +156,38 @@
           floatingToolbarOffset="1"
           formControlName="details"
           [toolbarSettings]="rteTools"
-          height="480"
+          height="448"
         >
         </ejs-richtexteditor>
 
+        <div
+          class="alert alert-danger mt-3"
+          role="alert"
+          *ngIf="departmentMessageError"
+        >
+          {{ departmentMessageError }}
+        </div>
+        <div
+          class="alert alert-success mt-3"
+          role="alert"
+          *ngIf="departmentMessage"
+        >
+          {{ departmentMessage }}
+        </div>
+
         <button
-          class="btn btn-success mt-3 mb-3"
+          class="btn btn-success mt-3"
           (click)="saveDepartmentPage()"
           [disabled]="
-            departmentForm.value.detail == websiteInfo.departmentPage.details ||
-            isEditedDepartment
+            departmentForm.value.details == websiteInfo.departmentPage.details
           "
         >
           Save detail</button
         ><span
           *ngIf="
-            departmentForm.value.detail == websiteInfo.departmentPage.details &&
-            !isEditedDepartment
+            departmentForm.value.details == websiteInfo.departmentPage.details
           "
           ><small>&nbsp;* No changes made yet!</small></span
-        >
-        <span *ngIf="isEditedDepartment"
-          ><small style="color: red" *ngIf="departmentMessageError">
-            {{ departmentMessageError }}
-          </small>
-          <small style="color: green" *ngIf="departmentMessage">
-            {{ departmentMessage }}
-          </small></span
         >
       </form>
     </div>
@@ -184,40 +196,75 @@
     <div class="card p-3 overflow-auto" style="height: 600px">
       <h5 class="text-center">About US page</h5>
       <form [formGroup]="aboutUsForm" *ngIf="!isLoading">
-        <label>About us details:</label>
+        <div class="text-center">
+          <img
+            class="img-thumbnail mb-2"
+            style="width: 50%"
+            src="{{ aboutPic }}"
+            alt="climateChange"
+          />
+        </div>
+        <div class="custom-file">
+          <input
+            type="file"
+            class="custom-file-input"
+            id="validatedCustomFile"
+            accept=".png, .jpg"
+            (change)="onClimateImagePicked($event, 'about')"
+          />
+          <label class="custom-file-label" for="validatedCustomFile"
+            >Choose an image for About Us background!</label
+          >
+        </div>
+        <label class="mt-2">About us details:</label>
         <ejs-richtexteditor
           floatingToolbarOffset="1"
           formControlName="details"
           [toolbarSettings]="rteTools"
-          height="480"
+          height="400"
         >
         </ejs-richtexteditor>
-        <label>About us mission paragraph:</label>
+        <label class="mt-2">About us mission paragraph:</label>
         <ejs-richtexteditor
           floatingToolbarOffset="1"
           formControlName="mission"
           [toolbarSettings]="rteTools"
-          height="480"
+          height="400"
         >
         </ejs-richtexteditor>
-        <label>Gallery small paragraph:</label>
+        <label class="mt-2">Gallery small paragraph:</label>
         <ejs-richtexteditor
           floatingToolbarOffset="1"
           formControlName="galleryDetail"
           [toolbarSettings]="rteTools"
-          height="480"
+          height="400"
         >
         </ejs-richtexteditor>
+
+        <div
+          class="alert alert-danger mt-3"
+          role="alert"
+          *ngIf="aboutUsMessageError"
+        >
+          {{ aboutUsMessageError }}
+        </div>
+        <div
+          class="alert alert-success mt-3"
+          role="alert"
+          *ngIf="aboutUsMessage"
+        >
+          {{ aboutUsMessage }}
+        </div>
 
         <button
           class="btn btn-success mt-3 mb-3"
           (click)="saveAboutUsPage()"
           [disabled]="
-            (aboutUsForm.value.details == websiteInfo.aboutUsPage.details &&
-              aboutUsForm.value.mission == websiteInfo.aboutUsPage.mission &&
-              aboutUsForm.value.galleryDetail ==
-                websiteInfo.aboutUsPage.galleryDetail) ||
-            isEditedAboutUs
+            aboutUsForm.value.details == websiteInfo.aboutUsPage.details &&
+            aboutUsForm.value.mission == websiteInfo.aboutUsPage.mission &&
+            aboutUsForm.value.galleryDetail ==
+              websiteInfo.aboutUsPage.galleryDetail &&
+            !this.aboutPicData
           "
         >
           Save detail</button
@@ -227,17 +274,9 @@
             aboutUsForm.value.mission == websiteInfo.aboutUsPage.mission &&
             aboutUsForm.value.galleryDetail ==
               websiteInfo.aboutUsPage.galleryDetail &&
-            !isEditedAboutUs
+            !this.aboutPicData
           "
           ><small>&nbsp;* No changes made yet!</small></span
-        >
-        <span *ngIf="isEditedDepartment"
-          ><small style="color: red" *ngIf="aboutUsMessageError">
-            {{ aboutUsMessageError }}
-          </small>
-          <small style="color: green" *ngIf="aboutUsMessage">
-            {{ aboutUsMessage }}
-          </small></span
         >
       </form>
     </div>

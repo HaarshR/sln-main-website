@@ -42,11 +42,19 @@ const fileFilter = (req, file, cb) => {
 router.get("/get", WebsiteInfoController.get);
 
 // UPDATE REQUEST
-router.put("/update/:id", WebsiteInfoController.update);
+router.put(
+  "/updateDepartmentPage/:id",
+  WebsiteInfoController.updateDepartmentPage
+);
 router.put(
   "/updateLanding/:id",
   multer({ storage: fileStorage, fileFilter: fileFilter }).array("images", 200),
   WebsiteInfoController.updateLanding
+);
+router.put(
+  "/updateAboutUs/:id",
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
+  WebsiteInfoController.updateAbout
 );
 
 module.exports = router;
