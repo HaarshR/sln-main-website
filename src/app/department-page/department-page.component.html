@@ -11,11 +11,9 @@
       <div class="row">
         <div class="offset-2 col-8 py-4">
           <p class="psource">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
-            accusamus fugit similique nam. Exercitationem veritatis corporis
-            neque doloremque deleniti, sint, quam amet culpa eos ex commodi
-            autem saepe, est possimus. Veniam pariatur dignissimos quas, odio
-            voluptate libero officia cupiditate! Illum.
+            At Sov Lanatir, we have many departments that cater for the
+            different aspects of the organisation. Take a look at these
+            different departments, they might pique your interest.
           </p>
         </div>
       </div>
@@ -26,7 +24,7 @@
 <div class="container" style="padding: 0 0 5% 0">
   <div class="row justify-content-center">
     <div class="col-auto mb-3" *ngFor="let department of departments">
-      <app-department-card></app-department-card>
+      <app-department-card [department]="department"></app-department-card>
     </div>
   </div>
 </div>
