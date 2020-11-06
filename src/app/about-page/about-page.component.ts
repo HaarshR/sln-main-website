@@ -41,6 +41,16 @@ export class AboutPageComponent implements OnInit, OnDestroy {
   websiteInfo: any;
   private webInfoSub: Subscription;
 
+  gallery: string[] = [
+    'https://images.unsplash.com/photo-1500964757637-c85e8a162699?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    'https://images.unsplash.com/photo-1511576661531-b34d7da5d0bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    'https://images.unsplash.com/photo-1434725039720-aaad6dd32dfe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    'https://images.unsplash.com/photo-1433838552652-f9a46b332c40?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    'https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    'https://images.unsplash.com/photo-1518098268026-4e89f1a2cd8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+  ];
+
   constructor(
     private navbarService: NavbarService,
     private websiteInformationService: WebsiteInformationService
@@ -56,7 +66,7 @@ export class AboutPageComponent implements OnInit, OnDestroy {
           if (next.websiteInfo) {
             this.websiteInfo = next.websiteInfo.aboutUsPage;
             this.members = next.websiteInfo.teamMembers;
-            console.log(this.members)
+            console.log(this.members);
           }
           this.isLoading = false;
         },
