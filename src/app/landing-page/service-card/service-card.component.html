@@ -1,7 +1,7 @@
-<div class="row p-3">
+<div class="row mb-3 service-card" (click)="onClick()">
   <div
-    class="col-6 rounded-left"
-    [ngStyle]="{ 'background-image': 'url(' + backgroundImage + ')' }"
+    class="col-6 rounded-left service-thumbnail"
+    [ngStyle]="{ 'background-image': 'url(' + service.thumbnail + ')' }"
     style="
       width: 100%;
       height: auto;
@@ -17,7 +17,7 @@
   >
     <div class="row pt-5 pb-3">
       <div class="col-12">
-        <h5 class="m-0 psource text-white">Find a home for stray animals</h5>
+        <h5 class="m-0 psource text-white">{{ service.title }}</h5>
       </div>
     </div>
     <div class="row pb-5 pt-3">
