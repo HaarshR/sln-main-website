@@ -62,7 +62,6 @@ export class AdminWebsiteInfoComponent implements OnInit {
 
   departmentMessage;
   departmentMessageError;
-  isEditedDepartment = false;
 
   aboutUsForm = new FormGroup({
     details: new FormControl('', {
@@ -78,7 +77,8 @@ export class AdminWebsiteInfoComponent implements OnInit {
 
   aboutUsMessage;
   aboutUsMessageError;
-  isEditedAboutUs = false;
+  aboutPicData;
+  aboutPic;
 
   landingForm = new FormGroup({
     detail: new FormControl('', {
@@ -94,12 +94,10 @@ export class AdminWebsiteInfoComponent implements OnInit {
 
   landingMessage;
   landingMessageError;
-  isEditedLanding = false;
-  image;
-  imagePreview;
-  images;
-  imagesPreview;
-  imagesPreview2;
+  climatePicData;
+  climatePic;
+  joinUsPicData = [];
+  joinUsPic = [];
   deletePicArray = [];
 
   isLoading = true;
@@ -126,7 +124,17 @@ export class AdminWebsiteInfoComponent implements OnInit {
           helpPara: next.websiteInfo.landingPage.helpPara,
           joinPara: next.websiteInfo.landingPage.joinPara,
         });
-        this.imagesPreview2 = next.websiteInfo.landingPage.joinParaImages;
+        let temp = next.websiteInfo.landingPage.joinParaImages;
+        temp.forEach((image) => {
+          if (image == 'landingPage-climate.png') {
+            this.climatePic = this.imgUrl + 'landingPage-climate.png';
+          } else if (image == 'landingPage-climate.jpg') {
+            this.climatePic = this.imgUrl + 'landingPage-climate.jpg';
+          } else {
+            this.joinUsPic.push({ image: this.imgUrl + image, data: null });
+          }
+        });
+        this.aboutPic = this.imgUrl + next.websiteInfo.aboutUsPage.image;
         this.isLoading = false;
       },
       (error) => {
@@ -135,42 +143,58 @@ export class AdminWebsiteInfoComponent implements OnInit {
     );
   }
 
-  onClimateImagePicked(event: Event) {
+  onClimateImagePicked(event: Event, page: string) {
     if ((event.target as HTMLInputElement).files[0]) {
       const file = (event.target as HTMLInputElement).files[0];
-      this.image = file;
+      if (page == 'home') {
+        this.climatePicData = file;
+      } else if (page == 'about') {
+        this.aboutPicData = file;
+      }
       const reader = new FileReader();
       reader.onload = (e) => {
-        this.imagePreview = reader.result;
+        if (page == 'home') {
+          this.climatePic = reader.result;
+        } else if (page == 'about') {
+          this.aboutPic = reader.result;
+        }
       };
       reader.readAsDataURL(file);
     } else {
-      this.image = null;
-      this.imagePreview = null;
+      if (page == 'home') {
+        this.climatePicData = null;
+      } else if (page == 'about') {
+        this.aboutPicData = null;
+      }
     }
   }
 
   onImagesPicked(event: Event) {
-    let imagesPreview = [];
     let imagesData = [];
     Array.prototype.forEach.call(
       (event.target as HTMLInputElement).files,
       (file) => {
-        imagesData.push(file);
+        this.joinUsPicData.push(file);
         const reader = new FileReader();
         reader.onload = () => {
-          imagesPreview.push(reader.result);
+          this.joinUsPic.push({ image: reader.result, data: file });
         };
         reader.readAsDataURL(file);
       }
     );
-    this.imagesPreview = imagesPreview;
-    this.images = imagesData;
   }
 
-  deletePic(image: string) {
-    this.deletePicArray.push(image);
-    this.imagesPreview2.splice(this.imagesPreview2.indexOf(image), 1);
+  deletePic(obj: any) {
+    console.log(obj.image.substring(0, 4));
+    if (obj.image.substring(0, 4) == 'data') {
+      this.joinUsPic.splice(this.joinUsPic.indexOf(obj), 1);
+      this.joinUsPicData.splice(this.joinUsPicData.indexOf(obj.data), 1);
+    } else {
+      this.joinUsPic.splice(this.joinUsPic.indexOf(obj), 1);
+      this.deletePicArray.push(
+        obj.image.split('/')[obj.image.split('/').length - 1]
+      );
+    }
   }
 
   saveDepartmentPage() {
@@ -180,22 +204,19 @@ export class AdminWebsiteInfoComponent implements OnInit {
     ) {
       return;
     }
-    this.isEditedDepartment = true;
-    this.departmentForm.controls['detail'].disable();
     this.websiteInfoService
       .updateDepartmentPage(
         this.websiteInfo._id,
-        this.departmentForm.value.detail
+        this.departmentForm.value.details
       )
       .subscribe(
         (next) => {
           this.departmentMessageError = null;
           this.departmentMessage = 'Successfully Edited!';
-
+          this.websiteInfo.departmentPage.details = this.departmentForm.value.details;
           setTimeout(() => {
             this.departmentMessage = null;
-          }, 3000);
-          this.websiteInfo.departmentPage.details = this.departmentForm.value.detail;
+          }, 6000);
         },
         (error) => {
           if (error.status == 404) {
@@ -205,6 +226,9 @@ export class AdminWebsiteInfoComponent implements OnInit {
             this.departmentMessage = null;
             this.departmentMessageError = 'An unknown error occured!';
           }
+          setTimeout(() => {
+            this.departmentMessageError = null;
+          }, 6000);
         }
       );
   }
@@ -216,51 +240,80 @@ export class AdminWebsiteInfoComponent implements OnInit {
         this.websiteInfo.landingPage.helpPara &&
       this.landingForm.value.joinPara ==
         this.websiteInfo.landingPage.joinPara &&
-      !this.image &&
-      !this.images
+      !this.climatePicData &&
+      this.joinUsPicData.length == 0 &&
+      this.deletePicArray.length == 0
     ) {
       return;
     }
-
-    this.isEditedLanding = true;
-    this.landingForm.controls['detail'].disable();
-    this.landingForm.controls['helpPara'].disable();
-    this.landingForm.controls['joinPara'].disable();
-
     const newLandingForm = new FormData();
     newLandingForm.append('detail', this.landingForm.value.detail);
     newLandingForm.append('helpPara', this.landingForm.value.helpPara);
     newLandingForm.append('joinPara', this.landingForm.value.joinPara);
 
-    if (this.imagesPreview2) {
-      this.imagesPreview2.forEach((image) => {
-        newLandingForm.append('oldImages', image);
+    let indexes = [];
+    if (this.joinUsPic.length != 0) {
+      this.joinUsPic.forEach((obj) => {
+        if (!obj.data) {
+          newLandingForm.append(
+            'oldImages',
+            obj.image.split('/')[obj.image.split('/').length - 1]
+          );
+          indexes.push(
+            obj.image
+              .split('/')
+              [obj.image.split('/').length - 1].split('_')[1]
+              .split('.')[0]
+          );
+        }
       });
     }
 
-    if (this.deletePicArray) {
+    if (this.deletePicArray.length != 0) {
       this.deletePicArray.forEach((pic) => {
         newLandingForm.append('deletePicArray', pic);
       });
-      if (this.deletePicArray.length == 1) {
-        newLandingForm.append('deletePicArray', null);
-      }
-    } else {
-      newLandingForm.append('deletePicArray', null);
     }
 
-    if (this.image) {
-      newLandingForm.append('images', this.image, 'landingPage-climate');
+    if (this.climatePicData) {
+      newLandingForm.append(
+        'images',
+        this.climatePicData,
+        'landingPage-climate'
+      );
+    } else {
+      if (
+        this.websiteInfo.landingPage.joinParaImages.indexOf(
+          'landingPage-climate.png'
+        ) != -1
+      ) {
+        newLandingForm.append('oldImages', 'landingPage-climate.png');
+      } else {
+        newLandingForm.append('oldImages', 'landingPage-climate.jpg');
+      }
     }
-    if (this.images) {
+
+    if (this.joinUsPicData.length != 0) {
       let i = 1;
-      this.images.forEach((data) => {
-        newLandingForm.append('images', data, 'landingPage-slider_' + i);
-        i++;
+
+      this.joinUsPicData.forEach((data) => {
+        let added = false;
+        console.log(indexes);
+        while (!added) {
+          console.log(i.toString(), indexes.indexOf(i.toString()));
+          if (indexes.indexOf(i.toString()) == -1) {
+            newLandingForm.append('images', data, 'landingPage-slider_' + i);
+            i++;
+            added = true;
+          } else {
+            i++;
+          }
+        }
       });
     } else {
       newLandingForm.append('images', null);
     }
+
     this.websiteInfoService
       .updateLandingPage(this.websiteInfo._id, newLandingForm)
       .subscribe(
@@ -270,7 +323,7 @@ export class AdminWebsiteInfoComponent implements OnInit {
 
           setTimeout(() => {
             this.landingMessage = null;
-          }, 5000);
+          }, 6000);
         },
         (error) => {
           if (error.status == 404) {
@@ -280,6 +333,9 @@ export class AdminWebsiteInfoComponent implements OnInit {
             this.landingMessage = null;
             this.landingMessageError = 'An unknown error occured!';
           }
+          setTimeout(() => {
+            this.landingMessageError = null;
+          }, 6000);
         }
       );
   }
@@ -289,33 +345,39 @@ export class AdminWebsiteInfoComponent implements OnInit {
       this.aboutUsForm.value.details == this.websiteInfo.aboutUsPage.details &&
       this.aboutUsForm.value.mission == this.websiteInfo.aboutUsPage.mission &&
       this.aboutUsForm.value.galleryDetail ==
-        this.websiteInfo.aboutUsPage.galleryDetail
+        this.websiteInfo.aboutUsPage.galleryDetail &&
+      !this.aboutPicData
     ) {
-      console.log('dddddddddddcsdc');
-
       return;
     }
-    console.log('djcnsdcsdc');
-    this.isEditedAboutUs = true;
-    this.aboutUsForm.controls['details'].disable();
-    this.aboutUsForm.controls['mission'].disable();
-    this.aboutUsForm.controls['galleryDetail'].disable();
+    const newAboutUsForm = new FormData();
+    newAboutUsForm.append('details', this.aboutUsForm.value.details);
+    newAboutUsForm.append('mission', this.aboutUsForm.value.mission);
+    newAboutUsForm.append(
+      'galleryDetail',
+      this.aboutUsForm.value.galleryDetail
+    );
+
+    if (this.aboutPicData) {
+      newAboutUsForm.append('image', this.aboutPicData, 'aboutUs');
+    } else {
+      newAboutUsForm.append('image', null);
+    }
+
+    newAboutUsForm.append('oldImage', this.websiteInfo.aboutUsPage.image);
+
     this.websiteInfoService
-      .updateAboutUs(this.websiteInfo._id, {
-        details: this.aboutUsForm.value.details,
-        mission: this.aboutUsForm.value.mission,
-        galleryDetail: this.aboutUsForm.value.galleryDetail,
-      })
+      .updateAboutUs(this.websiteInfo._id, newAboutUsForm)
       .subscribe(
         (next) => {
           this.aboutUsMessageError = null;
           this.aboutUsMessage = 'Successfully Edited!';
-          setTimeout(() => {
-            this.aboutUsMessage = null;
-          }, 3000);
           this.websiteInfo.aboutUsPage.details = this.aboutUsForm.value.details;
           this.websiteInfo.aboutUsPage.mission = this.aboutUsForm.value.mission;
           this.websiteInfo.aboutUsPage.galleryDetail = this.aboutUsForm.value.galleryDetail;
+          setTimeout(() => {
+            this.aboutUsMessage = null;
+          }, 6000);
         },
         (error) => {
           if (error.status == 404) {
@@ -325,6 +387,9 @@ export class AdminWebsiteInfoComponent implements OnInit {
             this.aboutUsMessage = null;
             this.aboutUsMessageError = 'An unknown error occured!';
           }
+          setTimeout(() => {
+            this.aboutUsMessageError = null;
+          }, 6000);
         }
       );
   }

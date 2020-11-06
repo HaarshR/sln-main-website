@@ -17,14 +17,10 @@ export class WebsiteInfoService {
     }>(BACKEND_URL + 'get');
   }
 
-  updateDepartmentPage(id: string, detail: string) {
+  updateDepartmentPage(id: string, details: string) {
     return this.http.put<{
       message: string;
-    }>(BACKEND_URL + 'update/' + id, {
-      departmentPage: {
-        detail: detail,
-      },
-    });
+    }>(BACKEND_URL + 'updateDepartmentPage/' + id, { details: details });
   }
 
   updateLandingPage(id: string, landingPage: any) {
@@ -36,12 +32,6 @@ export class WebsiteInfoService {
   updateAboutUs(id: string, aboutUsPage: any) {
     return this.http.put<{
       message: string;
-    }>(BACKEND_URL + 'update/' + id, {
-      aboutUsPage: {
-        details: aboutUsPage.details,
-        mission: aboutUsPage.mission,
-        galleryDetail: aboutUsPage.galleryDetail,
-      },
-    });
+    }>(BACKEND_URL + 'updateAboutUs/' + id, aboutUsPage);
   }
 }

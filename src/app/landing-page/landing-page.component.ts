@@ -35,8 +35,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   websiteInfo: any;
   private webInfoSub: Subscription;
 
-  errorMessage;
-
   constructor(
     private navbarService: NavbarService,
     config: NgbCarouselConfig,
@@ -52,9 +50,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.webInfoSub = this.websiteInformationService
       .getWebsiteInfoStatusListener()
       .subscribe(
-        (websiteInfo) => {
-          if (websiteInfo.websiteInfo) {
-            this.websiteInfo = websiteInfo.websiteInfo.landingPage;
+        (next) => {
+          if (next.websiteInfo) {
+            this.websiteInfo = next.websiteInfo.landingPage;
             if (
               this.websiteInfo.joinParaImages.indexOf(
                 'landingPage-climate.jpg'
@@ -77,17 +75,15 @@ export class LandingPageComponent implements OnInit, OnDestroy {
               this.backgroundImage = 'landingPage-climate.png';
             }
           }
-          this.errorMessage = null;
           this.isLoading = false;
         },
         (error) => {
-          this.errorMessage = 'An unknown error occured with the server!';
           this.isLoading = false;
         }
       );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.webInfoSub.unsubscribe();
   }
 }

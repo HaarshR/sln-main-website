@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { faCommentAlt, faEye } from '@fortawesome/free-regular-svg-icons';
-import { Blog } from 'src/models/Blogs/Blog';
 
 @Component({
   selector: 'app-blog-card',

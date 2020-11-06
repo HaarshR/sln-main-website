@@ -3,5 +3,5 @@ export interface TeamMember {
   name: string;
   position: string;
   facebook: string;
-  instragram: string;
+  instagram: string;
 }

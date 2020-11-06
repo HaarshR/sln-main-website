@@ -13,11 +13,12 @@ const websiteInfoSchema = mongoose.Schema({
     details: { type: String, required: true },
   },
   aboutUsPage: {
+    image: { type: String, required: true },
     details: { type: String, required: true },
     mission: { type: String, required: true },
-    teamMembers: { type: Array, required: true }, // Name, Position, facebookLink, instagramLink
     galleryDetail: { type: String, required: true },
   },
+  teamMembers: { type: Array, required: true },
 });
 
 websiteInfoSchema.plugin(uniqueValidator);

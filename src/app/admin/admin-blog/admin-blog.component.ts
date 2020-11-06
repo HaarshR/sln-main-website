@@ -15,8 +15,8 @@ import {
 
 import { environment } from '../../../environments/environment';
 
-import { Blog } from '../../../models/Blogs/Blog';
 import { BlogService } from './admin-blog.service';
+import { Blog } from 'src/models/Blogs/Blog';
 
 const IMAGE_URL = environment.fileUrl;
 
