@@ -1,29 +1,14 @@
-<div class="container">
+<div class="container mt-5" style="padding-top: 5%">
     <form [formGroup]="serviceForm">
       <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputLastName">Last Name</label>
-          <input type="text" class="form-control" id="inputLastName" />
-        </div>
-        <div class="form-group col-md-6">
-          <label for="inputFirstName">First Name</label>
-          <input type="text" class="form-control" id="inputFirstName" />
+        <div class="form-group col-md-12">
+          <label for="inputFullName">Full Name</label>
+          <input type="text" class="form-control" id="inputFullName" />
         </div>
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputDOB">Date of Birth</label>
-          <input type="text" class="form-control" id="inputDOB" />
-        </div>
-        <div class="form-group col-md-6">
-          <label for="inputEmail">Email Address</label>
-          <input type="text" class="form-control" id="inputEmail" />
-        </div>
-      </div>
-
-      <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-12">
           <label for="inputPhone">Phone number</label>
           <div class="input-group">
             <div class="input-group-prepend">
@@ -37,111 +22,37 @@
             <input type="text" class="form-control" id="inputPhone" />
           </div>
         </div>
-        <div class="form-group col-md-6">
-          <label for="inputSocialAccount"
-            >Social Account <b>(Optional)</b></label
-          >
-          <input type="text" class="form-control" id="inputSocialAccount" />
-        </div>
-      </div>
 
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="inputEducationInstitution">Education Institution</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputEducationInstitution"
-          />
+        <div class="form-group col-12">
+          <label for="inputAddress"
+            >Address</label
+          >
+          <input type="text" class="form-control" id="inputAddress" />
         </div>
-        <div class="form-group col-md-6">
-          <label for="inputFieldOfStudy">Field of Study</label>
-          <input type="text" class="form-control" id="inputFieldOfStudy" />
-        </div>
+
       </div>
 
       <div class="form-row">
         <div class="form-group col-12">
-          <label for="inputAboutSovLanatir"
-            >How did you get to know about Sov Lanatir?</label
+          <label for="inputMessageIssue"
+            >Message Issue</label
           >
-          <input type="text" class="form-control" id="inputAboutSovLanatir" />
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-12">
-          <label for="inputWhyJoinUs">Why do you want to join us?</label>
           <textarea
             class="form-control"
-            id="inputWhyJoinUs"
+            id="inputMessageIssue"
             rows="3"
           ></textarea>
         </div>
       </div>
 
       <div class="form-row">
-        <div class="form-group col-12">
-          <label for="inputBiggestAchievement"
-            >What is your biggest achievement?</label
-          >
-          <textarea
-            class="form-control"
-            id="inputBiggestAchievement"
-            rows="3"
-          ></textarea>
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group col-12">
-          <label for="inputRole"
-            >Have you been in any other organisations? If yes, what was your
-            role?</label
-          >
-          <input type="text" class="form-control" id="inputRole" />
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="checkExactLocation">
+          <label class="form-check-label" for="checkExactLocation">Exact Location</label>
         </div>
       </div>
 
-      <div class="form-row">
-        <div class="form-group col-12">
-          <label for="inputIndividual"
-            >What are you already doing as an individual, to save Nature?</label
-          >
-          <textarea
-            class="form-control"
-            id="inputIndividual"
-            rows="3"
-          ></textarea>
-        </div>
-      </div>
 
-      <div class="form-row">
-        <div class="form-group col-12">
-          <label for="inputNature"
-            >If nature contained all answers of the universe, what would you ask
-            her?</label
-          >
-          <textarea class="form-control" id="inputNature" rows="3"></textarea>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <!-- <div class="form-group col-12">
-          <label for="inputDepartment"
-            >Which department(s) are you willing to join in?</label
-          >
-          <input type="text" class="form-control" id="inputDepartment" />
-        </div> -->
-        <div class="form-group col-12">
-          <label for="inputDepartment"
-            >Which department(s) are you willing to join in?</label
-          >
-          <textarea
-            class="form-control"
-            id="inputDepartment"
-            rows="3"
-          ></textarea>
-        </div>
-      </div>
 
       <div class="form-row py-4">
         <div class="form-group offset-4 col-4">
@@ -149,7 +60,7 @@
             type="submit"
             class="form-control btn btn-primary text-white p-2"
           >
-            JOIN
+            SUBMIT
           </button>
         </div>
       </div>
