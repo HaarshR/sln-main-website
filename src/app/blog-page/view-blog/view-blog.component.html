@@ -105,29 +105,10 @@
       class="offset-1 col-10 offset-md-2 col-md-8 border p-3"
       style="height: 300px; overflow-y: scroll"
     >
-      <div
-        class="container-fluid p-2 mb-2 rounded"
-        style="background-color: #f0f0f0"
+      <app-comment
         *ngFor="let comment of comments"
-      >
-        <div class="row">
-          <div class="col-12">
-            <span class="headr" style="font-weight: 700; font-size: medium"
-              >Person's Name</span
-            >
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <span class="psource" style="font-size: small">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque,
-              quibusdam! Similique quae nihil ea aliquid consequatur, expedita
-              autem magnam reiciendis temporibus excepturi iure tempora modi
-              tempore molestiae corrupti in error?
-            </span>
-          </div>
-        </div>
-      </div>
+        [comment]="comment"
+      ></app-comment>
     </div>
   </div>
 </div>

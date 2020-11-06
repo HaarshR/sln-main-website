@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { NavbarService } from 'src/app/shared/navbar/navbar.service';
+import { Comment } from 'src/models/Blogs/Comment';
 import { PageData } from 'src/models/PageData';
 
 @Component({
@@ -20,8 +21,6 @@ export class ViewBlogComponent implements OnInit {
 
   faArrowLeft = faArrowLeft;
 
-  comments = [1, 2, 3];
-
   title = 'An Awesome Title';
   author = 'someone awesome'.toUpperCase();
   date = '32 December 2020';
@@ -30,6 +29,37 @@ export class ViewBlogComponent implements OnInit {
 
   body =
     'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quia eligendi dolores soluta. Officia in culpa sequi facilis natus modi eligendi doloribus vitae veritatis iure at quos consequuntur quia, harum sint beatae totam fugit nemo sed expedita aut! Accusantium, sapiente ipsa voluptatem officia nihil amet, aliquid magni placeat optio ipsum,impedit unde! Repellat porro, quibusdam iste nam fuga dolorem iusto minus ullam accusamus aperiam quia facere quidem! Sequi, nam? Fugiat, repellendus. Veritatis labore reprehenderit iure at iusto accusamus mollitia fugit earum impedit exercitationem debitis fuga omnis laborum obcaecati et, quisquam porro ullam blanditiis dolore eaque! Tempora saepe enim facilis hic consequuntur.';
+
+  comments: Comment[] = [
+    {
+      anonymous: true,
+      id: '1234',
+      comment: 'Wow',
+      date: new Date('12/12/12'),
+      name: 'Pravin',
+    },
+    {
+      anonymous: true,
+      id: '1234',
+      comment: 'Wow',
+      date: new Date('12/12/12'),
+      name: 'Pravin',
+    },
+    {
+      anonymous: true,
+      id: '1234',
+      comment: 'Wow',
+      date: new Date('12/12/12'),
+      name: 'Pravin',
+    },
+    {
+      anonymous: true,
+      id: '1234',
+      comment: 'Wow',
+      date: new Date('12/12/12'),
+      name: 'Pravin',
+    },
+  ];
 
   constructor(private navbarService: NavbarService) {}
 

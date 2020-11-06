@@ -43,6 +43,7 @@ import { AdminMembersComponent } from './admin/admin-members/admin-members.compo
 import { AdminSendmailComponent } from './admin/admin-members/admin-sendmail/admin-sendmail.component';
 import { ViewServiceComponent } from './landing-page/view-service/view-service.component';
 import { AdminWebsiteInfoComponent } from './admin/admin-website-info/admin-website-info.component';
+import { CommentComponent } from './blog-page/view-blog/comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { AdminWebsiteInfoComponent } from './admin/admin-website-info/admin-webs
     AdminSendmailComponent,
     ViewServiceComponent,
     AdminWebsiteInfoComponent,
+    CommentComponent,
   ],
   imports: [
     BrowserModule,
