@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   // Dynamic Content
+  donationPage =
+    'https://www.crowdfund.mu/sov-lanatir-wakashio-2020-oil-spill-scientific-research-long-term-restoration-358.html';
   facebookPage = 'https://www.fb.com/SovLanatir';
   instagramPage = 'https://www.instagram.com/sovlanatir/';
 
@@ -24,8 +26,7 @@ export class NavbarComponent implements OnInit {
 
   pageData: PageData;
 
-  constructor(private navbarService: NavbarService, public router: Router) {
-  }
+  constructor(private navbarService: NavbarService, public router: Router) {}
 
   ngOnInit(): void {
     this.navbarService.currentPageData.subscribe(
@@ -34,7 +35,7 @@ export class NavbarComponent implements OnInit {
   }
 
   changePage(name) {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     this.routeUrl = name;
   }
 
