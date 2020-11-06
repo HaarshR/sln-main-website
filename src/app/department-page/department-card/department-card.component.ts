@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-department-card',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./department-card.component.scss'],
 })
 export class DepartmentCardComponent implements OnInit {
+  @Input() department: { title: string; thumbnail: string };
   constructor() {}
 
   ngOnInit(): void {}

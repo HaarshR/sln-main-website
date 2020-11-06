@@ -1,7 +1,7 @@
 <div
-  class="card"
-  style="
-    background-image: url('https://images.unsplash.com/photo-1484820986637-7ec3e85b394f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1060&q=80');
-  "
+  class="card text-center"
+  [ngStyle]="{ 'background-image': 'url(' + department.thumbnail + ')' }"
   (click)="onCardClick()"
-></div>
+>
+  <h2 class="my-auto headm text-white dept-title">{{ department.title }}</h2>
+</div>
