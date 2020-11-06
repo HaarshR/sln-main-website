@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
@@ -6,6 +6,7 @@ import {
   faMapMarkerAlt,
   faPlay,
 } from '@fortawesome/free-solid-svg-icons';
+import { EventModel } from 'src/models/EventModel';
 
 @Component({
   selector: 'app-events-card',
@@ -13,17 +14,11 @@ import {
   styleUrls: ['./events-card.component.scss'],
 })
 export class EventsCardComponent implements OnInit {
+  @Input() event: EventModel;
+
   faCalendarAlt = faCalendarAlt;
   faMapMarkerAlt = faMapMarkerAlt;
   faPlay = faPlay;
-
-  thumbnail =
-    'https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light';
-
-  title = 'Event Title';
-  department = 'IT Department';
-  date = '32 December 2020';
-  location = 'Trou Kanaka';
 
   constructor(private router: Router) {}
 

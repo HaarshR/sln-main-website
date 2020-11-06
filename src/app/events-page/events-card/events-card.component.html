@@ -1,32 +1,47 @@
 <div class="row m-3 inside-card" style="cursor: pointer" (click)="onClick()">
-  <div class="offset-1 col-10 offset-md-1 col-md-5 py-3">
+  <div class="offset-1 col-10 offset-lg-1 col-lg-5 py-3">
     <div class="row align-items-center h-100">
       <div class="col-4">
-        <img [src]="thumbnail" class="avatar" />
+        <img [src]="event.logo" class="avatar" />
       </div>
-      <div class="col-8 mx-auto text-center">
-        <span class="headr m-0 card-event-title">{{ title }}</span>
+      <div class="col-8 mx-auto text-left">
+        <div class="row">
+          <div class="col-12">
+            <span class="headr m-0 card-event-title">{{ event.name }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-truncate">
+            <span class="psource"
+              >{{ event.description }} Lorem ipsum dolor sit amet consectetur
+              adipisicing elit. Aperiam modi natus rerum magni non mollitia quas
+              aliquam expedita esse neque.</span
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <div class="offset-1 col-10 offset-md-1 col-md-3 py-3">
+  <div class="offset-1 col-10 offset-lg-1 col-lg-3 py-3">
     <div class="row align-items-center h-100">
-      <div class="offset-1 col-11">
+      <div class="col-12">
         <div class="row my-2">
           <div class="col-12">
-            <span class="headr card-dept-title">{{ department }}</span>
+            <span class="headr card-dept-title">
+              {{ event.departmentName }}
+            </span>
           </div>
         </div>
         <div class="row my-2">
           <div class="col-12 card-info">
             <fa-icon [icon]="faCalendarAlt"></fa-icon>
-            <span class="headr ml-3">{{ date }}</span>
+            <span class="headr ml-3">{{ event.date | date: "longDate" }}</span>
           </div>
         </div>
         <div class="row my-2">
           <div class="col-12 card-info">
             <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
-            <span class="headr ml-3">{{ location }}</span>
+            <span class="headr ml-3">{{ event.location }}</span>
           </div>
         </div>
       </div>
