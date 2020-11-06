@@ -77,7 +77,6 @@
       <h1 class="headm text-white text-center">Join Us!</h1>
     </div>
   </div>
-  <!-- TODO: Replace image container with slider (slideshow) -->
 
   <div class="img-container">
     <ngb-carousel
@@ -88,11 +87,11 @@
       [showNavigationIndicators]="showNavigationIndicators"
     >
       <ng-template ngbSlide *ngFor="let image of websiteInfo.joinParaImages">
-        <div class="picsum-img-wrapper img-container">
+        <div class="picsum-img-wrapper" style="height: 500px">
           <img
             [src]="imgUrl + image"
             alt="Random slide"
-            style="width: 100%; resize: both"
+            style="width: 100%; object-fit: cover; filter: blur(1px)"
           />
         </div>
         <div class="carousel-caption">
