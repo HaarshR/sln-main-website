@@ -29,11 +29,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-12 offset-md-2 col-md-8 text-center align-self-center">
-          <h1 class="font-weight-bold text-white shadow py-3" id="main-text">
+          <h1 class="font-weight-bold text-white py-3" id="main-text">
             About Us
           </h1>
           <p
-            class="psource text-white shadow"
+            class="psource text-white"
             id="paragraph"
             [innerHTML]="websiteInfo.details"
           ></p>
@@ -47,10 +47,12 @@
       <div class="col-12">
         <h1 class="headm text-success font-weight-bold">Our mission.</h1>
       </div>
-      <div>
+    </div>
+    <div class="row">
+      <div class="col-12">
         <p
           *ngIf="!isLoading"
-          class="psource text-black shadow"
+          class="psource text-black"
           id="paragraph"
           [innerHTML]="websiteInfo.mission"
         ></p>
@@ -119,7 +121,7 @@
   </div>
   <!-- Gallery -->
   <div class="container py-5">
-    <div class="row-py-5 text-center">
+    <div class="row py-5 text-center">
       <div class="col-12">
         <h1 class="headm text-warning font-weight-bold">Gallery.</h1>
         <p
@@ -127,6 +129,11 @@
           class="psource py-3"
           [innerHTML]="websiteInfo.galleryDetail"
         ></p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-auto mb-3" *ngFor="let image of gallery">
+        <img [src]="image" width="200" height="200" style="object-fit: cover" />
       </div>
     </div>
   </div>
