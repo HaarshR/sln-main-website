@@ -7,26 +7,46 @@
   </div>
 
   <div class="container">
-    <form [formGroup]="executiveMemberForm">
+    <form [formGroup]="executiveMemberForm" (click)="submitApplication()">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputLastName">Last Name</label>
-          <input type="text" class="form-control" id="inputLastName" />
+          <input
+            type="text"
+            class="form-control"
+            id="inputLastName"
+            formControlName="lastName"
+          />
         </div>
         <div class="form-group col-md-6">
           <label for="inputFirstName">First Name</label>
-          <input type="text" class="form-control" id="inputFirstName" />
+          <input
+            type="text"
+            class="form-control"
+            id="inputFirstName"
+            formControlName="firstName"
+          />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputDOB">Date of Birth</label>
-          <input type="text" class="form-control" id="inputDOB" />
+          <input
+            type="text"
+            class="form-control"
+            id="inputDOB"
+            formControlName="dob"
+          />
         </div>
         <div class="form-group col-md-6">
           <label for="inputEmail">Email Address</label>
-          <input type="text" class="form-control" id="inputEmail" />
+          <input
+            type="text"
+            class="form-control"
+            id="inputEmail"
+            formControlName="email"
+          />
         </div>
       </div>
 
@@ -49,7 +69,12 @@
           <label for="inputSocialAccount"
             >Social Account <b>(Optional)</b></label
           >
-          <input type="text" class="form-control" id="inputSocialAccount" />
+          <input
+            type="text"
+            class="form-control"
+            id="inputSocialAccount"
+            formControlName="social"
+          />
         </div>
       </div>
 
@@ -60,11 +85,17 @@
             type="text"
             class="form-control"
             id="inputEducationInstitution"
+            formControlName="educationInst"
           />
         </div>
         <div class="form-group col-md-6">
           <label for="inputFieldOfStudy">Field of Study</label>
-          <input type="text" class="form-control" id="inputFieldOfStudy" />
+          <input
+            type="text"
+            class="form-control"
+            id="inputFieldOfStudy"
+            formControlName="fieldOfStudy"
+          />
         </div>
       </div>
 
@@ -73,7 +104,12 @@
           <label for="inputAboutSovLanatir"
             >How did you get to know about Sov Lanatir?</label
           >
-          <input type="text" class="form-control" id="inputAboutSovLanatir" />
+          <input
+            type="text"
+            class="form-control"
+            id="inputAboutSovLanatir"
+            formControlName="question1"
+          />
         </div>
       </div>
       <div class="form-row">
@@ -83,6 +119,7 @@
             class="form-control"
             id="inputWhyJoinUs"
             rows="3"
+            formControlName="question2"
           ></textarea>
         </div>
       </div>
@@ -96,6 +133,7 @@
             class="form-control"
             id="inputBiggestAchievement"
             rows="3"
+            formControlName="question3"
           ></textarea>
         </div>
       </div>
@@ -105,7 +143,12 @@
             >Have you been in any other organisations? If yes, what was your
             role?</label
           >
-          <input type="text" class="form-control" id="inputRole" />
+          <input
+            type="text"
+            class="form-control"
+            id="inputRole"
+            formControlName="question4"
+          />
         </div>
       </div>
 
@@ -118,6 +161,7 @@
             class="form-control"
             id="inputIndividual"
             rows="3"
+            formControlName="question5"
           ></textarea>
         </div>
       </div>
@@ -128,7 +172,12 @@
             >If nature contained all answers of the universe, what would you ask
             her?</label
           >
-          <textarea class="form-control" id="inputNature" rows="3"></textarea>
+          <textarea
+            class="form-control"
+            id="inputNature"
+            rows="3"
+            formControlName="question6"
+          ></textarea>
         </div>
       </div>
 
@@ -147,6 +196,7 @@
             class="form-control"
             id="inputDepartment"
             rows="3"
+            formControlName="departments"
           ></textarea>
         </div>
       </div>

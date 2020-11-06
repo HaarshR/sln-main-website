@@ -22,6 +22,7 @@ export class RegularMemberPageComponent implements OnInit {
   constructor(private navbarService: NavbarService) {}
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.navbarService.setPageData(this.pageData);
   }
 }
