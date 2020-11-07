@@ -26,13 +26,12 @@ export class WebsiteInformationService {
   }
 
   get() {
-    return this.http
+     this.http
       .get<{
         websiteInfo: WebsiteInfo;
       }>(BACKEND_URL + 'get')
       .subscribe(
         (next) => {
-          console.log('FETCH');
           this.websiteInfo = next.websiteInfo;
           this.websiteInfoStatusListener.next({
             websiteInfo: next.websiteInfo,

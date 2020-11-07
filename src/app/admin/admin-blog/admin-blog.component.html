@@ -173,6 +173,22 @@
           </div>
           <div class="row">
             <div class="col mb-2">
+              <b style="font-size: 20">Color Palet:</b><br />
+              <ul>
+                <li [ngStyle]="{ color: blog.style.backgroundColor }">
+                  <b>Background Color</b>
+                </li>
+                <li [ngStyle]="{ color: blog.style.primary }">
+                  <b>Primary Color</b>
+                </li>
+                <li [ngStyle]="{ color: blog.style.secondary }">
+                  <b>Secondary Color</b>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col mb-2">
               <b>ALL COMMENTS</b><br />
               <ng-container *ngFor="let comment of blog.comments">
                 <div class="row">
@@ -327,6 +343,16 @@
           formControlName="title"
         />
       </div>
+      <div>
+        <label for="inputSubtitle"><b>Subtitle</b></label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputSubtitle"
+          placeholder="Enter the subtitle of the blog"
+          formControlName="subtitle"
+        />
+      </div>
       <label for="defaultRTE"><b>Details</b></label>
       <!-- [maxLength]="maxLength" -->
       <ejs-richtexteditor
@@ -336,6 +362,34 @@
         height="400"
       >
       </ejs-richtexteditor>
+      <label for="colorpicker"><b>Color Pickers</b></label>
+      <div>
+        <label for="colorpicker3">Background color</label>
+        <input
+          ejs-colorpicker
+          type="color"
+          id="colorpicker3"
+          formControlName="backgroundColor"
+        />
+      </div>
+      <div>
+        <label for="colorpicker1">Primary color</label>
+        <input
+          ejs-colorpicker
+          type="color"
+          id="colorpicker1"
+          formControlName="primary"
+        />
+      </div>
+      <div>
+        <label for="colorpicker2">Secondary color</label>
+        <input
+          ejs-colorpicker
+          type="color"
+          id="colorpicker2"
+          formControlName="secondary"
+        />
+      </div>
     </form>
   </div>
 

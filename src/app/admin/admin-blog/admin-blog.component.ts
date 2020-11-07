@@ -15,7 +15,7 @@ import {
 
 import { environment } from '../../../environments/environment';
 
-import { BlogService } from './admin-blog.service';
+import { AdminBlogService } from './admin-blog.service';
 import { Blog } from 'src/models/Blogs/Blog';
 
 const IMAGE_URL = environment.fileUrl;
@@ -94,7 +94,19 @@ export class AdminBlogComponent implements OnInit {
     title: new FormControl('', {
       validators: [Validators.required],
     }),
+    subtitle: new FormControl('', {
+      validators: [Validators.required],
+    }),
     detail: new FormControl('', {
+      validators: [Validators.required],
+    }),
+    backgroundColor: new FormControl('#000', {
+      validators: [Validators.required],
+    }),
+    primary: new FormControl('#000', {
+      validators: [Validators.required],
+    }),
+    secondary: new FormControl('#000', {
       validators: [Validators.required],
     }),
   });
@@ -107,7 +119,7 @@ export class AdminBlogComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private blogService: BlogService
+    private blogService: AdminBlogService
   ) {}
 
   ngOnInit(): void {
@@ -158,7 +170,11 @@ export class AdminBlogComponent implements OnInit {
     this.blogForm.setValue({
       name: blog.name,
       title: blog.title,
+      subtitle: blog.subtitle,
       detail: blog.detail,
+      backgroundColor: blog.style.backgroundColor,
+      primary: blog.style.primary,
+      secondary: blog.style.secondary,
     });
     this.blog = blog;
     this.imagePreview = this.blog.image;
@@ -176,7 +192,11 @@ export class AdminBlogComponent implements OnInit {
     this.blogForm.setValue({
       name: '',
       title: '',
+      subtitle: '',
       detail: '',
+      backgroundColor: '#000',
+      primary: '#000',
+      secondary: '#000',
     });
     this.deleteForm.setValue({
       password: '',
@@ -212,7 +232,11 @@ export class AdminBlogComponent implements OnInit {
     if (
       !this.blogForm.value.name ||
       !this.blogForm.value.title ||
+      !this.blogForm.value.subtitle ||
       !this.blogForm.value.detail ||
+      !this.blogForm.value.backgroundColor ||
+      !this.blogForm.value.primary ||
+      !this.blogForm.value.secondary ||
       !this.imagePreviewNew
     ) {
       return;
@@ -221,8 +245,12 @@ export class AdminBlogComponent implements OnInit {
     const newBlogForm = new FormData();
     newBlogForm.append('name', this.blogForm.value.name);
     newBlogForm.append('title', this.blogForm.value.title);
+    newBlogForm.append('subtitle', this.blogForm.value.subtitle);
     newBlogForm.append('detail', this.blogForm.value.detail);
     newBlogForm.append('image', this.image, 'blg' + this.blogForm.value.title);
+    newBlogForm.append('backgroundColor', this.blogForm.value.backgroundColor);
+    newBlogForm.append('primary', this.blogForm.value.primary);
+    newBlogForm.append('secondary', this.blogForm.value.secondary);
     this.blogService.addBlog(newBlogForm).subscribe(
       (next) => {
         if (next.message) {
@@ -237,9 +265,15 @@ export class AdminBlogComponent implements OnInit {
           image: next.image,
           name: this.blogForm.value.name,
           title: this.blogForm.value.title,
+          subtitle: this.blogForm.value.subtitle,
           detail: this.blogForm.value.detail,
-          viewCount: this.blogForm.value.detail,
+          viewCount: '0',
           comments: [],
+          style: {
+            backgroundColor: this.blogForm.value.backgroundColor,
+            primary: this.blogForm.value.backgroundColor,
+            secondary: this.blogForm.value.backgroundColor,
+          },
         };
         this.blogs.push(obj);
         this.isAdded = true;
@@ -262,7 +296,11 @@ export class AdminBlogComponent implements OnInit {
     if (
       !this.blogForm.value.name ||
       !this.blogForm.value.title ||
+      !this.blogForm.value.subtitle ||
       !this.blogForm.value.detail ||
+      !this.blogForm.value.backgroundColor ||
+      !this.blogForm.value.primary ||
+      !this.blogForm.value.secondary ||
       (!this.imagePreview && !this.imagePreviewNew)
     ) {
       return;
@@ -281,7 +319,11 @@ export class AdminBlogComponent implements OnInit {
     newBlogForm.append('name', this.blogForm.value.name);
     newBlogForm.append('oldFileName', this.blog.image);
     newBlogForm.append('title', this.blogForm.value.title);
+    newBlogForm.append('subtitle', this.blogForm.value.subtitle);
     newBlogForm.append('detail', this.blogForm.value.detail);
+    newBlogForm.append('backgroundColor', this.blogForm.value.backgroundColor);
+    newBlogForm.append('primary', this.blogForm.value.primary);
+    newBlogForm.append('secondary', this.blogForm.value.secondary);
     this.blogService.updateBlog(newBlogForm, this.blog._id).subscribe(
       (next) => {
         this.isEdited = true;

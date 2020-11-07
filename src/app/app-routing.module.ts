@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'about-us', component: AboutPageComponent },
   { path: 'blog', component: BlogPageComponent },
-  { path: 'blog/vb', component: ViewBlogComponent },
+  { path: 'blog/vb/:id', component: ViewBlogComponent },
   { path: 'departments', component: DepartmentPageComponent },
   { path: 'departments/d', component: DepartmentComponent },
   { path: 'events', component: EventsPageComponent },
@@ -58,9 +58,9 @@ const routes: Routes = [
   providers: [AuthGuard],
 })
 export class AppRoutingModule {
-  // constructor(private router: Router) {
-  //   this.router.errorHandler = (error: any) => {
-  //     this.router.navigate(['']); // or redirect to default route
-  //   };
-  // }
+  constructor(private router: Router) {
+    this.router.errorHandler = (error: any) => {
+      this.router.navigate(['']); // or redirect to default route
+    };
+  }
 }

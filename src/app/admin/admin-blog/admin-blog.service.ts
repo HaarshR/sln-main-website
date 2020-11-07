@@ -7,7 +7,7 @@ import { Blog } from 'src/models/Blogs/Blog';
 const BACKEND_URL = environment.apiUrl + 'api/blogs/';
 
 @Injectable({ providedIn: 'root' })
-export class BlogService {
+export class AdminBlogService {
   constructor(private http: HttpClient) {}
 
   getBlogs() {

@@ -6,7 +6,13 @@ export interface Blog {
   name: string;
   date: Date;
   title: string;
+  subtitle: string;
   detail: string;
   viewCount: string;
   comments: Comment[];
+  style: {
+    backgroundColor: string;
+    primary: string;
+    secondary: string;
+  };
 }

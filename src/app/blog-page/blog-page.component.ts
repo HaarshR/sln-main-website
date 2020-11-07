@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PageData } from 'src/models/PageData';
 import { NavbarService } from '../shared/navbar/navbar.service';
+import { BlogService } from './blog.service';
 
 @Component({
   selector: 'app-blog-page',
@@ -16,11 +17,22 @@ export class BlogPageComponent implements OnInit {
     visible: true,
   };
 
-  blogs = [1, 2, 3];
+  isLoading = true;
 
-  constructor(private navbarService: NavbarService) {}
+  blogs;
+
+  constructor(
+    private navbarService: NavbarService,
+    private blogService: BlogService
+  ) {}
 
   ngOnInit(): void {
     this.navbarService.setPageData(this.pageData);
+    this.blogService.getBlogs();
+    this.blogService.getWebsiteInfoStatusListener().subscribe((next) => {
+      this.blogs = next.blogs;
+      console.log(this.blogs);
+      this.isLoading = false;
+    });
   }
 }

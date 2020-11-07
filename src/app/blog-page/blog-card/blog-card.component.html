@@ -1,7 +1,7 @@
 <div
   class="card inside-card border-0 m-3"
   style="cursor: pointer"
-  (click)="onClick()"
+  (click)="onClick(blog._id)"
 >
   <div
     class="card-header border-0"
@@ -10,20 +10,17 @@
     <div class="container-fluid">
       <div class="row h-100">
         <div class="col-2 p-0 pr-3 my-auto">
-          <img
-            [src]="authorImg"
-            class="avatar shadow"
-          />
+          <img [src]="imgUrl + blog.image" class="avatar shadow" />
         </div>
         <div
           class="col-10 my-auto"
           [ngStyle]="{ color: cardStyle.primaryText }"
         >
           <div class="row">
-            <div class="col-12 blog-author headr">{{ author }}</div>
+            <div class="col-12 blog-author headr">{{ blog.name }}</div>
           </div>
           <div class="row">
-            <div class="col-12 blog-date psource">{{ date }}</div>
+            <div class="col-12 blog-date psource">{{ blog.date }}</div>
           </div>
         </div>
       </div>
@@ -35,13 +32,13 @@
   >
     <div class="py-2">
       <h5 class="card-title headr" [ngStyle]="{ color: cardStyle.primaryText }">
-        {{ title }}
+        {{ blog.title }}
       </h5>
       <p
         class="card-text psource"
         [ngStyle]="{ color: cardStyle.secondaryText }"
       >
-        {{ subtitle }}
+        {{ blog.subtitle }}
       </p>
     </div>
     <hr />
@@ -49,11 +46,11 @@
       <div class="row" [ngStyle]="{ color: cardStyle.primaryText }">
         <div class="col-6 text-center">
           <fa-icon [icon]="faEye"></fa-icon>
-          <span class="px-3"> {{ views }} Views </span>
+          <span class="px-3"> {{ blog.viewCount }} Views </span>
         </div>
         <div class="col-6 text-center">
           <fa-icon [icon]="faCommentAlt"></fa-icon>
-          <span class="px-3"> {{ comments }} Comments </span>
+          <span class="px-3"> {{ blog.comments.length }} Comments </span>
         </div>
       </div>
     </div>

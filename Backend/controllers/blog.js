@@ -75,6 +75,27 @@ exports.getAll = (req, res, next) => {
     });
 };
 
+exports.getOne = (req, res, next) => {
+  Blog.findOne({ _id: req.params.id })
+    .then((document) => {
+      if (document) {
+        res.status(200).json({
+          blog: document,
+        });
+      } else {
+        res.status(404).json({
+          error: "Nothing was found!",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error,
+        errorMessage: "An unknown error occured!",
+      });
+    });
+};
+
 exports.addOne = (req, res, next) => {
   const blog = new Blog({
     _id: null,
@@ -82,10 +103,17 @@ exports.addOne = (req, res, next) => {
     image: req.file.filename,
     name: req.body.name,
     title: req.body.title,
+    subtitle: req.body.subtitle,
     detail: req.body.detail,
     viewCount: +0,
     comments: [],
+    style: {
+      backgroundColor: req.body.backgroundColor,
+      primary: req.body.primary,
+      secondary: req.body.secondary,
+    },
   });
+  console.log(blog);
 
   blog
     .save()
@@ -151,12 +179,72 @@ exports.addOne = (req, res, next) => {
     });
 };
 
+exports.addComment = (req, res, next) => {
+  let blog;
+  if (req.body.anonymous == "true") {
+    blog = {
+      $push: {
+        comments: {
+          $each: [
+            {
+              name: "Anonymous User",
+              comment: req.body.comment,
+              anonymous: req.body.anonymous,
+              date: new Date(),
+            },
+          ],
+        },
+      },
+    };
+  } else {
+    blog = {
+      $push: {
+        comments: {
+          $each: [
+            {
+              name: req.body.name,
+              comment: req.body.comment,
+              anonymous: req.body.anonymous,
+              date: new Date(),
+            },
+          ],
+        },
+      },
+    };
+  }
+
+  Blog.updateOne({ _id: req.params.id }, blog)
+    .then((result) => {
+      if (result.n == 0) {
+        res.status(404).json({
+          error: "Nothing updated!",
+        });
+      } else {
+        res.status(201).json({
+          message: "Update successfull!",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error,
+        errorMessage: "An unknown error occured!",
+      });
+    });
+};
+
 exports.edit = (req, res, next) => {
   const blog = {
     image: req.body.oldFileName,
     name: req.body.name,
     title: req.body.title,
+    subtitle: req.body.subtitle,
     detail: req.body.detail,
+    style: {
+      backgroundColor: req.body.backgroundColor,
+      primary: req.body.primary,
+      secondary: req.body.secondary,
+    },
   };
 
   if (req.file) {

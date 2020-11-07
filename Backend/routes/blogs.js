@@ -47,6 +47,7 @@ router.post(
 
 // GET REQUEST
 router.get("/getAll", BlogController.getAll);
+router.get("/getOne/:id", BlogController.getOne);
 
 // UPDATE REQUEST
 router.put(
@@ -54,6 +55,7 @@ router.put(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
   BlogController.edit
 );
+router.put("/addComment/:id", BlogController.addComment);
 
 // DELETE REQUEST
 router.delete("/deleteOne/:id&:image", BlogController.deleteOne);

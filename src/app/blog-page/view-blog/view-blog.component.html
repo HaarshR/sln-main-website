@@ -1,114 +1,150 @@
-<div class="container" style="padding: 125px 0 40px 0">
-  <div class="row">
-    <div class="offset-1 col-10 offset-md-2 col-md-5">
-      <h5 class="headr">
-        <a
-          routerLink="../../blog"
-          style="font-weight: 700"
-          class="text-primary"
-        >
-          <fa-icon [icon]="faArrowLeft" class="mr-2"></fa-icon>
-          Sov Lanatir Blogs
-        </a>
-      </h5>
+<ng-container *ngIf="isLoading">
+  <div class="text-center" style="margin-top: 45vh; margin-bottom: 45vh">
+    <div
+      class="spinner-border text-primary"
+      style="width: 4rem; height: 4rem"
+      role="status"
+    >
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
-</div>
-<div class="container pb-5">
-  <div class="row">
-    <div class="offset-1 col-10 offset-md-2 col-md-6">
-      <h1 class="headm" style="font-size: 70px; font-weight: 700">
-        {{ title }}
-      </h1>
-    </div>
-  </div>
-  <div class="row py-4">
-    <div class="offset-1 col-10 offset-md-2 col-md-5">
-      <span class="headr" style="font-weight: 900">BY {{ author }}</span>
-      <br />
-      <span class="headr" style="font-weight: 300">{{ date }}</span>
-    </div>
-  </div>
-  <div class="row mb-4">
-    <div class="offset-1 col-10 offset-md-2 col-md-3 bg-primary p-1"></div>
-  </div>
-  <div class="row mb-4">
-    <div class="offset-1 col-10 offset-md-2 col-md-8">
-      <p
-        class="psource text-justify m-0"
-        style="font-weight: 300; font-style: italic"
-      >
-        {{ subtitle }}
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="offset-1 col-10 offset-md-2 col-md-8">
-      <p class="psource text-justify" style="font-weight: 400">
-        {{ body }}
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="offset-1 col-10 offset-md-2 col-md-8 border-bottom p-2"></div>
-  </div>
-</div>
+</ng-container>
 
-<div class="container pb-5">
-  <div class="row">
-    <div class="offset-1 col-10 offset-md-2 col-md-8">
-      <h5 class="py-2">Comments ({{ comments.length }})</h5>
+<ng-container *ngIf="!isLoading">
+  <div class="container" style="padding: 125px 0 40px 0">
+    <div class="row">
+      <div class="offset-1 col-10 offset-md-2 col-md-5">
+        <h5 class="headr">
+          <a
+            routerLink="../../../blog"
+            style="font-weight: 700"
+            class="text-primary"
+          >
+            <fa-icon [icon]="faArrowLeft" class="mr-2"></fa-icon>
+            Sov Lanatir Blogs
+          </a>
+        </h5>
+      </div>
     </div>
   </div>
-  <div class="row h-100">
-    <div class="offset-1 col-10 offset-md-2 col-md-8 border p-3 my-auto">
-      <div class="row">
-        <div class="col-12">
-          <div class="form-check form-check-inline">
-            <input
-              type="text"
-              class="form-control form-control-sm"
-              placeholder="Name"
-            />
-            <input
-              class="form-check-input mx-2"
-              type="checkbox"
-              id="anonymous"
-            />
-            <label class="form-check-label">
-              <span class="psource text-info" style="font-size: 13px"
-                >Anonymous</span
-              >
-            </label>
+  <div class="container pb-5">
+    <div class="row">
+      <div class="offset-1 col-10 offset-md-2 col-md-6">
+        <h1
+          class="headm"
+          style="font-size: 70px; font-weight: 700"
+          *ngIf="this.blog.title"
+        >
+          {{ blog.title }}
+        </h1>
+      </div>
+    </div>
+    <div class="row py-4">
+      <div class="offset-1 col-10 offset-md-2 col-md-5">
+        <span class="headr" style="font-weight: 900">BY {{ blog.name }}</span>
+        <br />
+        <span class="headr" style="font-weight: 300">{{
+          blog.date | date: "MMM d, y"
+        }}</span>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="offset-1 col-10 offset-md-2 col-md-3 bg-primary p-1"></div>
+    </div>
+    <div class="row mb-4">
+      <div class="offset-1 col-10 offset-md-2 col-md-8">
+        <p
+          class="psource text-justify m-0"
+          style="font-weight: 300; font-style: italic"
+        >
+          {{ blog.subtitle }}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="offset-1 col-10 offset-md-2 col-md-8">
+        <p
+          class="psource text-justify"
+          style="font-weight: 400"
+          [innerHTML]="blog.detail"
+        ></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="offset-1 col-10 offset-md-2 col-md-8 border-bottom p-2"></div>
+    </div>
+  </div>
+
+  <div class="container pb-5">
+    <div class="row">
+      <div class="offset-1 col-10 offset-md-2 col-md-8">
+        <h5 class="py-2">Comments ({{ blog.comments.length }})</h5>
+      </div>
+    </div>
+    <div class="row h-100">
+      <div class="offset-1 col-10 offset-md-2 col-md-8 border p-3 my-auto">
+        <form [formGroup]="commentForm" (submit)="commentPost()">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-check form-check-inline">
+                <input
+                  type="text"
+                  class="form-control form-control-sm"
+                  placeholder="Name"
+                  formControlName="name"
+                />
+                <input
+                  class="form-check-input mx-2"
+                  type="checkbox"
+                  id="anonymous"
+                  formControlName="anonymous"
+                />
+                <label class="form-check-label">
+                  <span class="psource text-info" style="font-size: 13px"
+                    >Anonymous</span
+                  >
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-12">
+              <textarea
+                class="form-control"
+                id="comment"
+                rows="3"
+                placeholder="Leave a comment"
+                formControlName="comment"
+              ></textarea>
+            </div>
+          </div>
+          <div class="row my-3">
+            <div class="col-12 text-right">
+              <button class="btn btn-success px-3">Post</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div
+        class="offset-1 col-10 offset-md-2 col-md-8 border p-3"
+        style="height: 300px; overflow-y: scroll"
+      >
+        <app-comment
+          *ngFor="let comment of blog.comments"
+          [comment]="comment"
+        ></app-comment>
+        <div
+          *ngIf="blog.comments.length == 0"
+          class="container p-3 mb-2 rounded"
+          style="background-color: #f5f5f5"
+        >
+          <div class="row">
+            <div class="col-6">NO COMMENTS YET!</div>
           </div>
         </div>
       </div>
-      <div class="row mt-3">
-        <div class="col-12">
-          <textarea
-            class="form-control"
-            id="comment"
-            rows="3"
-            placeholder="Leave a comment"
-          ></textarea>
-        </div>
-      </div>
-      <div class="row my-3">
-        <div class="col-12 text-right">
-          <button class="btn btn-success px-3">Post</button>
-        </div>
-      </div>
     </div>
   </div>
-  <div class="row mt-3">
-    <div
-      class="offset-1 col-10 offset-md-2 col-md-8 border p-3"
-      style="height: 300px; overflow-y: scroll"
-    >
-      <app-comment
-        *ngFor="let comment of comments"
-        [comment]="comment"
-      ></app-comment>
-    </div>
-  </div>
-</div>
+</ng-container>
