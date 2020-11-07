@@ -7,8 +7,8 @@
 export const environment = {
   production: false,
   fileUrl: 'https://sovlanatir.s3.eu-west-2.amazonaws.com/',
-  apiUrl: 'http://localhost:3000/',
-  // apiUrl: 'https://sovlanatir.herokuapp.com/',
+  // apiUrl: 'http://localhost:3000/',
+  apiUrl: 'https://sovlanatir.herokuapp.com/',
 };
 
 /*
