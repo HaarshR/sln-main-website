@@ -190,6 +190,75 @@ exports.updateAbout = (req, res, next) => {
     });
 };
 
+// UPDATE JOIN US PAGE
+exports.updateJoin = (req, res, next) => {
+  websiteInfo = {
+    joinUsPage: {
+      image: req.body.oldImage,
+    },
+  };
+
+  if (req.file) {
+    websiteInfo.joinUsPage.image = req.file.filename;
+  }
+
+  WebsiteInfo.updateOne({ _id: req.params.id }, websiteInfo)
+    .then((result) => {
+      if (result.n == 0) {
+        res.status(404).json({
+          error: "Update failed!",
+        });
+      } else {
+        if (req.file) {
+          compress_images(
+            tempImagePath,
+            outputImagePath,
+            { compress_force: false, statistic: true, autoupdate: true },
+            false,
+            { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
+            {
+              png: {
+                engine: "pngquant",
+                command: ["--quality=20-50", "-o"],
+              },
+            },
+            { svg: { engine: false, command: false } },
+            {
+              gif: {
+                engine: false,
+                command: false,
+              },
+            },
+            function (error, completed, statistic) {
+              try {
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+                fs.unlinkSync("tempImg/" + req.file.filename);
+              } catch (err) {}
+              try {
+                uploadFile(req.file.filename);
+              } catch (err) {}
+            }
+          );
+        }
+        res.status(201).json({
+          message: "Update successfull!",
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: error,
+        errorMessage: "An unknown error occured!",
+      });
+    });
+};
+
 // UPDATE LANDING PAGE
 exports.updateLanding = (req, res, next) => {
   let websiteInfo = {

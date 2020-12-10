@@ -56,5 +56,10 @@ router.put(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
   WebsiteInfoController.updateAbout
 );
+router.put(
+  "/updateJoinUs/:id",
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single("image"),
+  WebsiteInfoController.updateJoin
+);
 
 module.exports = router;

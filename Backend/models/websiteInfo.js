@@ -19,6 +19,9 @@ const websiteInfoSchema = mongoose.Schema({
     galleryDetail: { type: String, required: true },
   },
   teamMembers: { type: Array, required: true },
+  joinUsPage: {
+    image: { type: String, required: true },
+  },
 });
 
 websiteInfoSchema.plugin(uniqueValidator);

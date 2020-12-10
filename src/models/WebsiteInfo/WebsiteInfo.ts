@@ -9,4 +9,7 @@ export interface WebsiteInfo {
   departmentPage: DepartmentPage;
   aboutUsPage: AboutUsPage;
   teamMembers: TeamMember[];
+  joinUsPage: {
+    image: string;
+  };
 }

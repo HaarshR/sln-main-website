@@ -75,6 +75,11 @@ export class AdminWebsiteInfoComponent implements OnInit {
     }),
   });
 
+  joinPageMessage;
+  joinPageMessageError;
+  joinPagePicData;
+  joinPagePic;
+
   aboutUsMessage;
   aboutUsMessageError;
   aboutPicData;
@@ -135,6 +140,7 @@ export class AdminWebsiteInfoComponent implements OnInit {
           }
         });
         this.aboutPic = this.imgUrl + next.websiteInfo.aboutUsPage.image;
+        this.joinPagePic = this.imgUrl + next.websiteInfo.joinUsPage.image;
         this.isLoading = false;
       },
       (error) => {
@@ -150,6 +156,8 @@ export class AdminWebsiteInfoComponent implements OnInit {
         this.climatePicData = file;
       } else if (page == 'about') {
         this.aboutPicData = file;
+      } else if (page === 'join') {
+        this.joinPagePicData = file;
       }
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -157,6 +165,8 @@ export class AdminWebsiteInfoComponent implements OnInit {
           this.climatePic = reader.result;
         } else if (page == 'about') {
           this.aboutPic = reader.result;
+        } else if (page === 'join') {
+          this.joinPagePic = reader.result;
         }
       };
       reader.readAsDataURL(file);
@@ -165,6 +175,8 @@ export class AdminWebsiteInfoComponent implements OnInit {
         this.climatePicData = null;
       } else if (page == 'about') {
         this.aboutPicData = null;
+      } else if (page == 'join') {
+        this.joinPagePicData = null;
       }
     }
   }
@@ -335,6 +347,44 @@ export class AdminWebsiteInfoComponent implements OnInit {
           }
           setTimeout(() => {
             this.landingMessageError = null;
+          }, 6000);
+        }
+      );
+  }
+
+  saveJoinUsPage() {
+    if (!this.joinPagePicData) {
+      return;
+    }
+    const newJoinUsForm = new FormData();
+    if (this.joinPagePicData) {
+      newJoinUsForm.append('image', this.joinPagePicData, 'joinUsPage');
+    } else {
+      newJoinUsForm.append('image', null);
+    }
+
+    newJoinUsForm.append('oldImage', this.websiteInfo.joinUsPage.image);
+
+    this.websiteInfoService
+      .updateJoinUsPage(this.websiteInfo._id, newJoinUsForm)
+      .subscribe(
+        (next) => {
+          this.joinPageMessageError = null;
+          this.joinPageMessage = 'Successfully Edited!';
+          setTimeout(() => {
+            this.joinPageMessage = null;
+          }, 6000);
+        },
+        (error) => {
+          if (error.status == 404) {
+            this.joinPageMessage = null;
+            this.joinPageMessageError = 'Failed to update, Not Found!';
+          } else {
+            this.aboutUsMessage = null;
+            this.joinPageMessageError = 'An unknown error occured!';
+          }
+          setTimeout(() => {
+            this.joinPageMessageError = null;
           }, 6000);
         }
       );

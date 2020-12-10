@@ -146,6 +146,7 @@
     </div>
   </div>
 </div>
+
 <div class="row">
   <div class="col-lg-5">
     <div class="card mb-4 p-3 overflow-auto" style="height: 600px">
@@ -279,6 +280,64 @@
           ><small>&nbsp;* No changes made yet!</small></span
         >
       </form>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-7">
+    <div class="card p-3 overflow-auto" style="height: 600px">
+      <h5 class="text-center">Team Members</h5>
+    </div>
+  </div>
+  <div class="col-lg-5">
+    <div class="card mb-4 p-3 overflow-auto" style="height: 600px">
+      <h5 class="text-center">Join Us Page</h5>
+      <ng-container *ngIf="!isLoading">
+        <div class="text-center">
+          <img
+            class="img-thumbnail mb-2"
+            style="width: 50%"
+            src="{{ joinPagePic }}"
+            alt="joinUsSovLanatir"
+          />
+        </div>
+        <div class="custom-file">
+          <input
+            type="file"
+            class="custom-file-input"
+            id="validatedCustomFile"
+            accept=".png, .jpg"
+            (change)="onClimateImagePicked($event, 'join')"
+          />
+          <label class="custom-file-label" for="validatedCustomFile"
+            >Choose an image for Join Us background!</label
+          >
+        </div>
+        <div
+          class="alert alert-danger mt-3"
+          role="alert"
+          *ngIf="joinPageMessageError"
+        >
+          {{ joinPageMessageError }}
+        </div>
+        <div
+          class="alert alert-success mt-3"
+          role="alert"
+          *ngIf="joinPageMessage"
+        >
+          {{ joinPageMessage }}
+        </div>
+        <button
+          class="btn btn-success mt-3 mb-3"
+          (click)="saveJoinUsPage()"
+          [disabled]="!joinPagePicData"
+        >
+          Save Image</button
+        ><span *ngIf="!joinPagePicData"
+          ><small>&nbsp;* No changes detected!</small></span
+        >
+      </ng-container>
     </div>
   </div>
 </div>

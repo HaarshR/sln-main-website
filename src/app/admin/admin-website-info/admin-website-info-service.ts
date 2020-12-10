@@ -34,4 +34,10 @@ export class WebsiteInfoService {
       message: string;
     }>(BACKEND_URL + 'updateAboutUs/' + id, aboutUsPage);
   }
+
+  updateJoinUsPage(id: string, joinUsPage: any) {
+    return this.http.put<{
+      message: string;
+    }>(BACKEND_URL + 'updateJoinUs/' + id, joinUsPage);
+  }
 }
