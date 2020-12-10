@@ -212,6 +212,64 @@ exports.sendEmail = (req, res, next) => {
 //     });
 // };
 
+exports.addRegular = (req, res, next) => {
+  const member = new Member({
+    _id: null,
+    dor: new Date(),
+    firstName: req.body.firstname,
+    lastName: req.body.lastname,
+    dob: new Date(req.body.dob.year, req.body.dob.month, req.body.dob.day),
+    phoneNumber: req.body.phoneNumber,
+    social: req.body.social,
+    email: req.body.email,
+    educInstitution: req.body.educInstitution,
+    fieldOfStudy: req.body.fieldOfStudy,
+    questions: [
+      "How did you get to know about Sov Lanatir?",
+      "Why do you want to join us?",
+      "What is your biggest achievement?",
+      "Have you been in any other organisations? if yes, what was your role?",
+      "What are you already doing as an individual, to save Nature?",
+      "if nature contained all answers of the Universe, what would you ask her?",
+    ],
+    answers: [
+      req.body.question1,
+      req.body.question2,
+      req.body.question3,
+      req.body.question4,
+      req.body.question5,
+      req.body.question6,
+    ],
+    department: req.body.department,
+    membershipType: "regular",
+    cv: null,
+  });
+
+  member
+    .save()
+    .then(() => {
+      res.status(201).json({
+        message: "Successfully Registered!",
+      });
+    })
+    .catch((error) => {
+      if (
+        error.errors.email &&
+        error.errors.email.properties.type &&
+        error.errors.email.properties.type == "unique"
+      ) {
+        res.status(404).json({
+          errorMessage: "Error occured! Email already registered.",
+        });
+      } else {
+        res.status(500).json({
+          error: error,
+          errorMessage: "An unknown error occured!",
+        });
+      }
+    });
+};
+
 exports.deleteOne = (req, res, next) => {
   Member.deleteOne({ _id: req.params.id })
     .then((result) => {

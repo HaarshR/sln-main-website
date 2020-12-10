@@ -14,7 +14,7 @@ const memberSchema = mongoose.Schema({
   fieldOfStudy: { type: String, required: false },
   questions: { type: Array, required: false },
   answers: { type: Array, required: false },
-  department: { type: Array, required: false },
+  department: { type: String, required: false },
   membershipType: { type: String, required: true },
   cv: { type: String, required: false },
 });

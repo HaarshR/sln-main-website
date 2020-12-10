@@ -8,6 +8,7 @@ const router = express.Router();
 
 // POST REQUEST
 router.post("/sendMail/:memberType", MemberController.sendEmail);
+router.post("/addRegular/", MemberController.addRegular);
 
 // GET REQUEST
 router.get("/getAll/:memberType", MemberController.getAll);

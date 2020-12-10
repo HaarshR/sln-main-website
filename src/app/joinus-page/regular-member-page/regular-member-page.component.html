@@ -11,22 +11,53 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputLastName">Last Name</label>
-          <input type="text" class="form-control" id="inputLastName" />
+          <input
+            formControlName="lastname"
+            type="text"
+            class="form-control"
+            id="inputLastName"
+          />
         </div>
         <div class="form-group col-md-6">
           <label for="inputFirstName">First Name</label>
-          <input type="text" class="form-control" id="inputFirstName" />
+          <input
+            formControlName="firstname"
+            type="text"
+            class="form-control"
+            id="inputFirstName"
+          />
         </div>
       </div>
 
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div [formGroup]="regularMemberForm" class="form-group col-md-6">
           <label for="inputDOB">Date of Birth</label>
-          <input type="text" class="form-control" id="inputDOB" />
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dp"
+              ngbDatepicker
+              #d="ngbDatepicker"
+              formControlName="dob"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              ></button>
+            </div>
+          </div>
         </div>
         <div class="form-group col-md-6">
           <label for="inputEmail">Email Address</label>
-          <input type="text" class="form-control" id="inputEmail" />
+          <input
+            formControlName="email"
+            type="text"
+            class="form-control"
+            id="inputEmail"
+          />
         </div>
       </div>
 
@@ -42,14 +73,24 @@
                 <option value="3">Three</option>
               </select>
             </div>
-            <input type="text" class="form-control" id="inputPhone" />
+            <input
+              formControlName="phoneNumber"
+              type="text"
+              class="form-control"
+              id="inputPhone"
+            />
           </div>
         </div>
         <div class="form-group col-md-6">
           <label for="inputSocialAccount"
             >Social Account <b>(Optional)</b></label
           >
-          <input type="text" class="form-control" id="inputSocialAccount" />
+          <input
+            formControlName="social"
+            type="text"
+            class="form-control"
+            id="inputSocialAccount"
+          />
         </div>
       </div>
 
@@ -57,6 +98,7 @@
         <div class="form-group col-md-6">
           <label for="inputEducationInstitution">Education Institution</label>
           <input
+            formControlName="educInstitution"
             type="text"
             class="form-control"
             id="inputEducationInstitution"
@@ -64,7 +106,12 @@
         </div>
         <div class="form-group col-md-6">
           <label for="inputFieldOfStudy">Field of Study</label>
-          <input type="text" class="form-control" id="inputFieldOfStudy" />
+          <input
+            formControlName="fieldOfStudy"
+            type="text"
+            class="form-control"
+            id="inputFieldOfStudy"
+          />
         </div>
       </div>
 
@@ -73,13 +120,19 @@
           <label for="inputAboutSovLanatir"
             >How did you get to know about Sov Lanatir?</label
           >
-          <input type="text" class="form-control" id="inputAboutSovLanatir" />
+          <input
+            formControlName="question1"
+            type="text"
+            class="form-control"
+            id="inputAboutSovLanatir"
+          />
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-12">
           <label for="inputWhyJoinUs">Why do you want to join us?</label>
           <textarea
+            formControlName="question2"
             class="form-control"
             id="inputWhyJoinUs"
             rows="3"
@@ -93,6 +146,7 @@
             >What is your biggest achievement?</label
           >
           <textarea
+            formControlName="question3"
             class="form-control"
             id="inputBiggestAchievement"
             rows="3"
@@ -105,7 +159,12 @@
             >Have you been in any other organisations? If yes, what was your
             role?</label
           >
-          <input type="text" class="form-control" id="inputRole" />
+          <input
+            formControlName="question4"
+            type="text"
+            class="form-control"
+            id="inputRole"
+          />
         </div>
       </div>
 
@@ -115,6 +174,7 @@
             >What are you already doing as an individual, to save Nature?</label
           >
           <textarea
+            formControlName="question5"
             class="form-control"
             id="inputIndividual"
             rows="3"
@@ -128,7 +188,12 @@
             >If nature contained all answers of the universe, what would you ask
             her?</label
           >
-          <textarea class="form-control" id="inputNature" rows="3"></textarea>
+          <textarea
+            formControlName="question6"
+            class="form-control"
+            id="inputNature"
+            rows="3"
+          ></textarea>
         </div>
       </div>
 
@@ -144,6 +209,7 @@
             >Which department(s) are you willing to join in?</label
           >
           <textarea
+            formControlName="department"
             class="form-control"
             id="inputDepartment"
             rows="3"
@@ -151,14 +217,60 @@
         </div>
       </div>
 
+      <div class="alert alert-danger mt-3" role="alert" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="alert alert-success mt-3" role="alert" *ngIf="message">
+        {{ message }}
+      </div>
+
       <div class="form-row py-4">
         <div class="form-group offset-4 col-4">
           <button
             type="submit"
             class="form-control btn btn-primary text-white p-2"
+            (click)="addMember()"
+            [disabled]="
+              regularMemberForm.value.firstname == '' ||
+              regularMemberForm.value.lastname == '' ||
+              regularMemberForm.value.dob == '' ||
+              regularMemberForm.value.email == '' ||
+              regularMemberForm.value.phoneNumber == '' ||
+              regularMemberForm.value.educInstitution == '' ||
+              regularMemberForm.value.fieldOfStudy == '' ||
+              regularMemberForm.value.question1 == '' ||
+              regularMemberForm.value.question2 == '' ||
+              regularMemberForm.value.question3 == '' ||
+              regularMemberForm.value.question4 == '' ||
+              regularMemberForm.value.question5 == '' ||
+              regularMemberForm.value.question6 == '' ||
+              regularMemberForm.value.department == '' ||
+              isAdding
+            "
           >
-            JOIN
-          </button>
+            <ng-container *ngIf="!isAdding">JOIN</ng-container
+            ><ng-container *ngIf="isAdding"
+              >Registering...</ng-container
+            ></button
+          ><span
+            *ngIf="
+              regularMemberForm.value.firstname == '' ||
+              regularMemberForm.value.lastname == '' ||
+              regularMemberForm.value.dob == '' ||
+              regularMemberForm.value.email == '' ||
+              regularMemberForm.value.phoneNumber == '' ||
+              regularMemberForm.value.educInstitution == '' ||
+              regularMemberForm.value.fieldOfStudy == '' ||
+              regularMemberForm.value.question1 == '' ||
+              regularMemberForm.value.question2 == '' ||
+              regularMemberForm.value.question3 == '' ||
+              regularMemberForm.value.question4 == '' ||
+              regularMemberForm.value.question5 == '' ||
+              regularMemberForm.value.question6 == '' ||
+              regularMemberForm.value.department == ''
+            "
+            ><small>&nbsp;* All non-optional field must be filled!</small></span
+          >
         </div>
       </div>
     </form>
