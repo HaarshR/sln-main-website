@@ -103,7 +103,7 @@ export class RegularMemberPageComponent implements OnInit {
     this.message = null;
     this.errorMessage = null;
     this.isAdding = true;
-    this.memberService.add(this.regularMemberForm.value).subscribe(
+    this.memberService.addRegular(this.regularMemberForm.value).subscribe(
       (next) => {
         this.message = next.message;
         this.isAdding = false;

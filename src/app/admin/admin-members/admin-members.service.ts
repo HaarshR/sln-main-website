@@ -25,19 +25,6 @@ export class MemberService {
     });
   }
 
-  // addDepartments(department: any) {
-  //   return this.http.post<{ message: string; id: string; images: string[] }>(
-  //     BACKEND_URL + 'addOne',
-  //     department
-  //   );
-  // }
-
-  // updateDepartment(department: any, id: string) {
-  //   return this.http.put<{
-  //     message: string;
-  //   }>(BACKEND_URL + 'updateOne/' + id, department);
-  // }
-
   deleteMember(id: string, fileName: string) {
     return this.http.delete<{
       message: string;

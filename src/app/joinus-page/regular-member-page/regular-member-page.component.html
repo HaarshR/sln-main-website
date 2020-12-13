@@ -30,7 +30,7 @@
       </div>
 
       <div class="form-row">
-        <div [formGroup]="regularMemberForm" class="form-group col-md-6">
+        <div class="form-group col-md-6">
           <label for="inputDOB">Date of Birth</label>
           <div class="input-group">
             <input
@@ -248,11 +248,10 @@
               isAdding
             "
           >
-            <ng-container *ngIf="!isAdding">JOIN</ng-container
-            ><ng-container *ngIf="isAdding"
-              >Registering...</ng-container
-            ></button
-          ><span
+            <ng-container *ngIf="!isAdding">JOIN</ng-container>
+            <ng-container *ngIf="isAdding">Registering...</ng-container>
+          </button>
+          <span
             *ngIf="
               regularMemberForm.value.firstname == '' ||
               regularMemberForm.value.lastname == '' ||
@@ -269,8 +268,9 @@
               regularMemberForm.value.question6 == '' ||
               regularMemberForm.value.department == ''
             "
-            ><small>&nbsp;* All non-optional field must be filled!</small></span
           >
+            <small> &nbsp;* All non-optional field must be filled! </small>
+          </span>
         </div>
       </div>
     </form>

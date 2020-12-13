@@ -188,6 +188,11 @@
                 member.dor | date: "MMM d, y, h:mm a"
               }}
             </div>
+            <div class="col mb-2">
+              <b>Date of Birth:</b><br />{{
+                member.dob | date: "MMM d, y"
+              }}
+            </div>
             <div class="col mb-2" *ngIf="memberType == 'executive'">
               <b>CV: </b
               ><a href="{{ cvUrl }}{{ member.cv }}" target="_blank"

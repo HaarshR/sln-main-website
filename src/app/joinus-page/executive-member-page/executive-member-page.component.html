@@ -7,7 +7,7 @@
   </div>
 
   <div class="container">
-    <form [formGroup]="executiveMemberForm" (click)="submitApplication()">
+    <form [formGroup]="executiveMemberForm">
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputLastName">Last Name</label>
@@ -15,7 +15,7 @@
             type="text"
             class="form-control"
             id="inputLastName"
-            formControlName="lastName"
+            formControlName="lastname"
           />
         </div>
         <div class="form-group col-md-6">
@@ -24,7 +24,7 @@
             type="text"
             class="form-control"
             id="inputFirstName"
-            formControlName="firstName"
+            formControlName="firstname"
           />
         </div>
       </div>
@@ -32,20 +32,31 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="inputDOB">Date of Birth</label>
-          <input
-            type="text"
-            class="form-control"
-            id="inputDOB"
-            formControlName="dob"
-          />
+          <div class="input-group">
+            <input
+              class="form-control"
+              placeholder="yyyy-mm-dd"
+              name="dp"
+              ngbDatepicker
+              #d="ngbDatepicker"
+              formControlName="dob"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary calendar"
+                (click)="d.toggle()"
+                type="button"
+              ></button>
+            </div>
+          </div>
         </div>
         <div class="form-group col-md-6">
           <label for="inputEmail">Email Address</label>
           <input
+            formControlName="email"
             type="text"
             class="form-control"
             id="inputEmail"
-            formControlName="email"
           />
         </div>
       </div>
@@ -62,7 +73,12 @@
                 <option value="3">Three</option>
               </select>
             </div>
-            <input type="text" class="form-control" id="inputPhone" />
+            <input
+              type="text"
+              class="form-control"
+              id="inputPhone"
+              formControlName="phoneNumber"
+            />
           </div>
         </div>
         <div class="form-group col-md-6">
@@ -85,7 +101,7 @@
             type="text"
             class="form-control"
             id="inputEducationInstitution"
-            formControlName="educationInst"
+            formControlName="educInstitution"
           />
         </div>
         <div class="form-group col-md-6">
@@ -203,12 +219,25 @@
 
       <div class="form-row">
         <div class="form-group col-12">
-          <label>Upload your CV here</label>
+          <label>Upload your CV here (PDF file format)</label>
           <div class="custom-file">
-            <input type="file" class="custom-file-input" id="cvFile" />
-            <label class="custom-file-label" for="cvFile">Choose file</label>
+            <input
+              type="file"
+              class="custom-file-input"
+              id="cvFile"
+              accept=".pdf"
+              (change)="onCvPicked($event)"
+            />
+            <label class="custom-file-label" for="cvFile">Choose CV</label>
           </div>
         </div>
+      </div>
+
+      <div class="alert alert-danger mt-3" role="alert" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="alert alert-success mt-3" role="alert" *ngIf="message">
+        {{ message }}
       </div>
 
       <div class="form-row py-4">
@@ -216,9 +245,50 @@
           <button
             type="submit"
             class="form-control btn btn-primary text-white p-2"
+            (click)="addMember()"
+            [disabled]="
+              executiveMemberForm.value.firstname == '' ||
+              executiveMemberForm.value.lastname == '' ||
+              executiveMemberForm.value.dob == '' ||
+              executiveMemberForm.value.email == '' ||
+              executiveMemberForm.value.phoneNumber == '' ||
+              executiveMemberForm.value.educInstitution == '' ||
+              executiveMemberForm.value.fieldOfStudy == '' ||
+              executiveMemberForm.value.question1 == '' ||
+              executiveMemberForm.value.question2 == '' ||
+              executiveMemberForm.value.question3 == '' ||
+              executiveMemberForm.value.question4 == '' ||
+              executiveMemberForm.value.question5 == '' ||
+              executiveMemberForm.value.question6 == '' ||
+              executiveMemberForm.value.departments == '' ||
+              isAdding ||
+              !cvData
+            "
           >
-            JOIN
+            <ng-container *ngIf="!isAdding">JOIN</ng-container
+            ><ng-container *ngIf="isAdding">Registering...</ng-container>
           </button>
+          <span
+            *ngIf="
+              executiveMemberForm.value.firstname == '' ||
+              executiveMemberForm.value.lastname == '' ||
+              executiveMemberForm.value.dob == '' ||
+              executiveMemberForm.value.email == '' ||
+              executiveMemberForm.value.phoneNumber == '' ||
+              executiveMemberForm.value.educInstitution == '' ||
+              executiveMemberForm.value.fieldOfStudy == '' ||
+              executiveMemberForm.value.question1 == '' ||
+              executiveMemberForm.value.question2 == '' ||
+              executiveMemberForm.value.question3 == '' ||
+              executiveMemberForm.value.question4 == '' ||
+              executiveMemberForm.value.question5 == '' ||
+              executiveMemberForm.value.question6 == '' ||
+              executiveMemberForm.value.departments == '' ||
+              !cvData
+            "
+          >
+            <small> &nbsp;* All non-optional field must be filled! </small>
+          </span>
         </div>
       </div>
     </form>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { NavbarService } from 'src/app/shared/navbar/navbar.service';
 import { PageData } from 'src/models/PageData';
+import { JoinusMemberService } from '../joinus-member-service';
 
 @Component({
   selector: 'app-executive-member-page',
@@ -18,10 +19,10 @@ export class ExecutiveMemberPageComponent implements OnInit {
   };
 
   executiveMemberForm = new FormGroup({
-    lastName: new FormControl('', {
+    lastname: new FormControl('', {
       validators: [Validators.required],
     }),
-    firstName: new FormControl('', {
+    firstname: new FormControl('', {
       validators: [Validators.required],
     }),
     dob: new FormControl('', {
@@ -30,13 +31,13 @@ export class ExecutiveMemberPageComponent implements OnInit {
     email: new FormControl('', {
       validators: [Validators.required],
     }),
-    phoneNum: new FormControl('', {
+    phoneNumber: new FormControl('', {
       validators: [Validators.required],
     }),
     social: new FormControl('', {
       validators: [Validators.required],
     }),
-    educationInst: new FormControl('', {
+    educInstitution: new FormControl('', {
       validators: [Validators.required],
     }),
     fieldOfStudy: new FormControl('', {
@@ -64,12 +65,76 @@ export class ExecutiveMemberPageComponent implements OnInit {
       validators: [Validators.required],
     }),
   });
-  constructor(private navbarService: NavbarService) {}
+
+  message;
+  errorMessage;
+  isAdding = false;
+  cvData;
+  cv;
+
+  constructor(
+    private navbarService: NavbarService,
+    private memberService: JoinusMemberService
+  ) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.navbarService.setPageData(this.pageData);
   }
 
-  submitApplication() {}
+  onCvPicked(event: Event) {
+    if ((event.target as HTMLInputElement).files[0]) {
+      const file = (event.target as HTMLInputElement).files[0];
+      this.cvData = file;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.cv = reader.result;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      this.cvData = null;
+    }
+  }
+
+  addMember() {
+    if (
+      this.executiveMemberForm.value.firstname == '' ||
+      this.executiveMemberForm.value.lastname == '' ||
+      this.executiveMemberForm.value.dob == '' ||
+      this.executiveMemberForm.value.email == '' ||
+      this.executiveMemberForm.value.phoneNumber == '' ||
+      this.executiveMemberForm.value.educInstitution == '' ||
+      this.executiveMemberForm.value.fieldOfStudy == '' ||
+      this.executiveMemberForm.value.question1 == '' ||
+      this.executiveMemberForm.value.question2 == '' ||
+      this.executiveMemberForm.value.question3 == '' ||
+      this.executiveMemberForm.value.question4 == '' ||
+      this.executiveMemberForm.value.question5 == '' ||
+      this.executiveMemberForm.value.question6 == '' ||
+      this.executiveMemberForm.value.departments == '' ||
+      !this.cvData
+    ) {
+      return;
+    }
+
+    console.log(this.executiveMemberForm);
+
+    this.message = null;
+    this.errorMessage = null;
+    this.isAdding = true;
+
+    this.memberService
+      .addExecutive(this.executiveMemberForm, this.cvData)
+      .subscribe(
+        (next) => {
+          this.message = next.message;
+          this.isAdding = false;
+        },
+        (error) => {
+          this.errorMessage = error.error.errorMessage;
+          this.isAdding = false;
+        }
+      );
+  }
 }

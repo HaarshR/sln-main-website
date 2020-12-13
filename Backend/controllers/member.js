@@ -1,7 +1,6 @@
 // IMPORTS THE MODELS
 const Member = require("../models/member");
 
-const compress_images = require("compress-images");
 const fs = require("fs");
 const nodemailer = require("nodemailer");
 
@@ -11,10 +10,19 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.AWS_SECRETKEY,
 });
 
+const Transport = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  auth: {
+    user: process.env.NODEMAILER_USER,
+    pass: process.env.NODEMAILER_PASS,
+  },
+});
+
 const deleteFile = (fileName) => {
   let params = {
     Bucket: process.env.BUCKET_NAME,
-    Key: "members/" + fileName,
+    Key: "CVs/" + fileName,
   };
 
   s3.deleteObject(params, function (err, data) {
@@ -25,32 +33,48 @@ const deleteFile = (fileName) => {
   });
 };
 
-// const uploadFile = (fileName, eventName) => {
-//   // Read content from the file
-//   fs.readFile("public/images/" + fileName, (err, data) => {
-//     if (err) {
-//       console.log(err);
-//     }
-//     let params = {
-//       Bucket: process.env.BUCKET_NAME,
-//       Key: "event/" + eventName.split(" ").join("-") + "/" + fileName, // File name you want to save as in S3
-//       Body: data,
-//     };
-//     s3.upload(params, function (err, data) {
-//       if (err) {
-//         console.log(err);
-//       }
-//       try {
-//         fs.unlinkSync("public/images/" + fileName);
-//         fs.unlinkSync("public/images/" + fileName);
-//         fs.unlinkSync("public/images/" + fileName);
-//         fs.unlinkSync("public/images/" + fileName);
-//         fs.unlinkSync("public/images/" + fileName);
-//       } catch (err) {}
-//       console.log(`Image uploaded successfully. ${data.Location}`);
-//     });
-//   });
-// };
+const uploadFile = (fileName) => {
+  // Read content from the file
+  console.log(fileName);
+  fs.readFile("tempImg/" + fileName, (err, data) => {
+    if (err) {
+      console.log(err);
+    }
+    let params = {
+      Bucket: process.env.BUCKET_NAME,
+      Key: "CVs/" + fileName, // File name you want to save as in S3
+      Body: data,
+    };
+    s3.upload(params, function (err, data) {
+      if (err) {
+        console.log(err);
+      }
+      try {
+        fs.unlinkSync("tempImg/" + fileName);
+        fs.unlinkSync("tempImg/" + fileName);
+        fs.unlinkSync("tempImg/" + fileName);
+        fs.unlinkSync("tempImg/" + fileName);
+        fs.unlinkSync("tempImg/" + fileName);
+      } catch (err) {}
+      console.log(`CV uploaded successfully. ${data.Location}`);
+    });
+  });
+};
+
+const mail = (email, subject, content) => {
+  let mailOptions = {
+    from: '"Sov Lanatir" <noreply@sovlanatir.com>',
+    to: email,
+    subject: subject,
+    text: content,
+    html: "",
+  };
+  Transport.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      error++;
+    }
+  });
+};
 
 exports.getAll = (req, res, next) => {
   Member.find({ membershipType: req.params.memberType })
@@ -98,21 +122,13 @@ exports.sendEmail = (req, res, next) => {
       if (documents.length != 0) {
         let error = 0;
         documents.forEach((receiver) => {
-          let transport = nodemailer.createTransport({
-            host: "smtp.gmail.com",
-            port: 587,
-            auth: {
-              user: process.env.NODEMAILER_USER,
-              pass: process.env.NODEMAILER_PASS,
-            },
-          });
           let mailOptions = {
             from: '"Sov Lanatir" <noreply@sovlanatir.com>',
             to: receiver.email,
             subject: subject,
             html: mail,
           };
-          transport.sendMail(mailOptions, (error, info) => {
+          Transport.sendMail(mailOptions, (error, info) => {
             if (error) {
               error++;
             }
@@ -136,81 +152,51 @@ exports.sendEmail = (req, res, next) => {
     });
 };
 
-// exports.addOne = (req, res, next) => {
-//   const event = new Event({
-//     _id: null,
-//     date: req.body.date,
-//     logo: req.file.filename,
-//     images: [],
-//     name: req.body.name,
-//     description: req.body.description,
-//     departmentName: req.body.departmentName,
-//     location: req.body.location,
-//   });
+exports.addOther = (req, res, next) => {
+  const member = new Member({
+    _id: null,
+    dor: new Date(),
+    firstName: null,
+    lastName: null,
+    dob: null,
+    phoneNumber: null,
+    social: null,
+    email: req.body.email,
+    educInstitution: null,
+    fieldOfStudy: null,
+    questions: [],
+    answers: [],
+    department: null,
+    membershipType: "subscriber",
+    cv: null,
+  });
 
-//   event
-//     .save()
-//     .then(() => {
-//       if (req.file) {
-//         compress_images(
-//           tempImagePath,
-//           outputImagePath,
-//           { compress_force: false, statistic: true, autoupdate: true },
-//           false,
-//           { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
-//           {
-//             png: {
-//               engine: "pngquant",
-//               command: ["--quality=20-50", "-o"],
-//             },
-//           },
-//           { svg: { engine: false, command: false } },
-//           {
-//             gif: {
-//               engine: false,
-//               command: false,
-//             },
-//           },
-//           function (error, completed, statistic) {
-//             try {
-//               fs.unlinkSync("tempImg/" + event.logo);
-//               fs.unlinkSync("tempImg/" + event.logo);
-//               fs.unlinkSync("tempImg/" + event.logo);
-//               fs.unlinkSync("tempImg/" + event.logo);
-//             } catch (err) {}
-//             uploadFile(event.logo, event.name);
-//           }
-//         );
-//       }
-//       res.status(201).json({
-//         message: "Successfully added!",
-//         id: "Refresh the Page",
-//         images: event.logo,
-//       });
-//     })
-//     .catch((error) => {
-//       try {
-//         fs.unlinkSync("tempImg/" + event.logo);
-//         fs.unlinkSync("tempImg/" + event.logo);
-//         fs.unlinkSync("tempImg/" + event.logo);
-//         fs.unlinkSync("tempImg/" + event.logo);
-//       } catch (err) {}
-//       if (
-//         error.errors.title &&
-//         error.errors.title.properties.type &&
-//         error.errors.title.properties.type == "unique"
-//       ) {
-//         res.status(404).json({
-//           error: "Error occured! This event already exist.",
-//         });
-//       } else {
-//         res.status(500).json({
-//           error: error,
-//           errorMessage: "An unknown error occured!",
-//         });
-//       }
-//     });
-// };
+  member
+    .save()
+    .then(() => {
+      mail(req.body.email, "Membership Approved", "You have successfully registered your email, You will now receive emails from us!");
+      res.status(201).json({
+        message: "Successfully Registered!",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+      if (
+        error.errors.email &&
+        error.errors.email.properties.type &&
+        error.errors.email.properties.type == "unique"
+      ) {
+        res.status(404).json({
+          errorMessage: "Error occured! Email already registered.",
+        });
+      } else {
+        res.status(500).json({
+          error: error,
+          errorMessage: "An unknown error occured!",
+        });
+      }
+    });
+};
 
 exports.addRegular = (req, res, next) => {
   const member = new Member({
@@ -218,7 +204,9 @@ exports.addRegular = (req, res, next) => {
     dor: new Date(),
     firstName: req.body.firstname,
     lastName: req.body.lastname,
-    dob: new Date(req.body.dob.year, req.body.dob.month, req.body.dob.day),
+    dob: new Date(
+      req.body.dob.year + "-" + req.body.dob.month + "-" + req.body.dob.day
+    ),
     phoneNumber: req.body.phoneNumber,
     social: req.body.social,
     email: req.body.email,
@@ -248,11 +236,75 @@ exports.addRegular = (req, res, next) => {
   member
     .save()
     .then(() => {
+      mail(req.body.email, "Regular Membership Approved", "You have successfully been registered as our regular member!");
       res.status(201).json({
         message: "Successfully Registered!",
       });
     })
     .catch((error) => {
+      if (
+        error.errors.email &&
+        error.errors.email.properties.type &&
+        error.errors.email.properties.type == "unique"
+      ) {
+        res.status(404).json({
+          errorMessage: "Error occured! Email already registered.",
+        });
+      } else {
+        res.status(500).json({
+          error: error,
+          errorMessage: "An unknown error occured!",
+        });
+      }
+    });
+};
+
+exports.addExecutive = (req, res, next) => {
+  console.log(req.body);
+  console.log(req.body.dob);
+  const member = new Member({
+    _id: null,
+    dor: new Date(),
+    firstName: req.body.firstname,
+    lastName: req.body.lastname,
+    dob: req.body.dob,
+    phoneNumber: req.body.phoneNumber,
+    social: req.body.social,
+    email: req.body.email,
+    educInstitution: req.body.educInstitution,
+    fieldOfStudy: req.body.fieldOfStudy,
+    questions: [
+      "How did you get to know about Sov Lanatir?",
+      "Why do you want to join us?",
+      "What is your biggest achievement?",
+      "Have you been in any other organisations? if yes, what was your role?",
+      "What are you already doing as an individual, to save Nature?",
+      "if nature contained all answers of the Universe, what would you ask her?",
+    ],
+    answers: [
+      req.body.question1,
+      req.body.question2,
+      req.body.question3,
+      req.body.question4,
+      req.body.question5,
+      req.body.question6,
+    ],
+    department: req.body.departments,
+    membershipType: "executive",
+    cv: req.file.filename,
+  });
+
+  member
+    .save()
+    .then(() => {
+      uploadFile(req.file.filename);
+      mail(req.body.email, "Executive Membership Approved", "You have successfully been registered as our executive member!");
+      res.status(201).json({
+        message: "Successfully Registered!",
+      });
+    })
+    .catch((error) => {
+      console.log(error);
       if (
         error.errors.email &&
         error.errors.email.properties.type &&
