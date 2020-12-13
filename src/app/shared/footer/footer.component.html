@@ -16,15 +16,25 @@
                   class="form-control"
                   style="border-radius: 10px 0 0 10px"
                   placeholder="Enter your email here"
+                  formControlName="email"
                 />
               </div>
               <div class="col-4 col-md-2 px-0">
                 <button
                   type="submit"
+                  (click)="register()"
+                  [disabled]="
+                    subscribeForm.value.email == '' ||
+                    !subscribeForm.valid ||
+                    isAddingEmail
+                  "
                   class="btn btn-primary text-white form-control"
                   style="border-radius: 0 10px 10px 0 !important; border: none"
                 >
-                  Subscribe
+                  <ng-container *ngIf="!isAddingEmail">Subscribe</ng-container>
+                  <ng-container *ngIf="isAddingEmail"
+                    >Subscribing...</ng-container
+                  >
                 </button>
               </div>
             </div>
