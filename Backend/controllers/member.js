@@ -166,7 +166,7 @@ exports.addOther = (req, res, next) => {
     fieldOfStudy: null,
     questions: [],
     answers: [],
-    department: null,
+    department: [],
     membershipType: "subscriber",
     cv: null,
   });
@@ -228,7 +228,7 @@ exports.addRegular = (req, res, next) => {
       req.body.question5,
       req.body.question6,
     ],
-    department: req.body.department,
+    department: req.body.department.split(','),
     membershipType: "regular",
     cv: null,
   });
@@ -289,7 +289,7 @@ exports.addExecutive = (req, res, next) => {
       req.body.question5,
       req.body.question6,
     ],
-    department: req.body.departments,
+    department: req.body.departments.join(','),
     membershipType: "executive",
     cv: req.file.filename,
   });

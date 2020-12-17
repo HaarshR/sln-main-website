@@ -7,7 +7,7 @@ import { Department } from '../../../models/Department';
 const BACKEND_URL = environment.apiUrl + 'api/departments/';
 
 @Injectable({ providedIn: 'root' })
-export class DepartmentService {
+export class AdminDepartmentService {
   constructor(private http: HttpClient) {}
 
   getDepartments() {

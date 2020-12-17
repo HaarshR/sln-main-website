@@ -16,7 +16,7 @@ import {
 import { environment } from '../../../environments/environment';
 
 import { Department } from '../../../models/Department';
-import { DepartmentService } from './admin-department.service';
+import { AdminDepartmentService } from './admin-department.service';
 
 const IMAGE_URL = environment.fileUrl;
 
@@ -122,7 +122,7 @@ export class AdminDepartmentComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    private departmentService: DepartmentService
+    private departmentService: AdminDepartmentService
   ) {}
 
   ngOnInit(): void {

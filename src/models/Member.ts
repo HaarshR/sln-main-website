@@ -11,7 +11,7 @@ export interface Member {
   fieldOfStudy: string;
   questions: string[];
   answers: string[];
-  department: string;
+  department: string[];
   membershipType: string;
   cv?: string;
 }

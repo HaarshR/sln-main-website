@@ -7,25 +7,70 @@
   </div>
 
   <div class="container">
-    <form [formGroup]="regularMemberForm">
+    <form [formGroup]="regularMemberForm" (ngSubmit)="addMember()">
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="inputLastName">Last Name</label>
+          <label for="lastname">Last Name</label>
           <input
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('lastname').invalid &&
+                (regularMemberForm.get('lastname').dirty ||
+                  regularMemberForm.get('lastname').touched ||
+                  submitted)
+            }"
             formControlName="lastname"
             type="text"
             class="form-control"
-            id="inputLastName"
+            id="lastname"
           />
+          <div
+            *ngIf="
+              regularMemberForm.get('lastname').invalid &&
+              (regularMemberForm.get('lastname').dirty ||
+                regularMemberForm.get('lastname').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('lastname').errors.required"
+            >
+              Lastname is required
+            </ng-container>
+          </div>
         </div>
+
         <div class="form-group col-md-6">
-          <label for="inputFirstName">First Name</label>
+          <label for="firstname">First Name</label>
           <input
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('firstname').invalid &&
+                (regularMemberForm.get('firstname').dirty ||
+                  regularMemberForm.get('firstname').touched ||
+                  submitted)
+            }"
             formControlName="firstname"
             type="text"
             class="form-control"
-            id="inputFirstName"
+            id="firstname"
           />
+          <div
+            *ngIf="
+              regularMemberForm.get('firstname').invalid &&
+              (regularMemberForm.get('firstname').dirty ||
+                regularMemberForm.get('firstname').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('firstname').errors.required"
+            >
+              Firstname is required
+            </ng-container>
+          </div>
         </div>
       </div>
 
@@ -34,12 +79,20 @@
           <label for="inputDOB">Date of Birth</label>
           <div class="input-group">
             <input
+              [ngClass]="{
+                'is-invalid':
+                  regularMemberForm.get('dob').invalid &&
+                  (regularMemberForm.get('dob').dirty ||
+                    regularMemberForm.get('dob').touched ||
+                    submitted)
+              }"
               class="form-control"
               placeholder="yyyy-mm-dd"
               name="dp"
               ngbDatepicker
               #d="ngbDatepicker"
               formControlName="dob"
+              readonly
             />
             <div class="input-group-append">
               <button
@@ -48,174 +101,452 @@
                 type="button"
               ></button>
             </div>
+            <div
+              *ngIf="
+                regularMemberForm.get('dob').invalid &&
+                (regularMemberForm.get('dob').dirty ||
+                  regularMemberForm.get('dob').touched ||
+                  submitted)
+              "
+              class="invalid-feedback"
+            >
+              <ng-container
+                *ngIf="regularMemberForm.get('dob').errors.required"
+              >
+                Date of birth is required
+              </ng-container>
+            </div>
           </div>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputEmail">Email Address</label>
+          <label for="email">Email Address</label>
           <input
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('email').invalid &&
+                (regularMemberForm.get('email').dirty ||
+                  regularMemberForm.get('email').touched ||
+                  submitted)
+            }"
             formControlName="email"
             type="text"
             class="form-control"
-            id="inputEmail"
+            id="email"
           />
+          <div
+            *ngIf="
+              regularMemberForm.get('email').invalid &&
+              (regularMemberForm.get('email').dirty ||
+                regularMemberForm.get('email').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('email').errors.required"
+            >
+              Email is required
+            </ng-container>
+            <ng-container *ngIf="regularMemberForm.get('email').errors.pattern">
+              Email is inavlid
+            </ng-container>
+          </div>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="inputPhone">Phone number</label>
+          <label for="phoneNumber">Phone number (Mobile or Fixed-line)</label>
           <div class="input-group">
             <div class="input-group-prepend">
               <select class="custom-select" id="inputPhonePrefix">
                 <option value="+230" selected>+230</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
               </select>
             </div>
             <input
+              [ngClass]="{
+                'is-invalid':
+                  regularMemberForm.get('phoneNumber').invalid &&
+                  (regularMemberForm.get('phoneNumber').dirty ||
+                    regularMemberForm.get('phoneNumber').touched ||
+                    submitted)
+              }"
               formControlName="phoneNumber"
               type="text"
               class="form-control"
-              id="inputPhone"
+              id="phoneNumber"
             />
+            <div
+              *ngIf="
+                regularMemberForm.get('phoneNumber').invalid &&
+                (regularMemberForm.get('phoneNumber').dirty ||
+                  regularMemberForm.get('phoneNumber').touched ||
+                  submitted)
+              "
+              class="invalid-feedback"
+            >
+              <ng-container
+                *ngIf="regularMemberForm.get('phoneNumber').errors.required"
+              >
+                Phone number is required
+              </ng-container>
+              <ng-container
+                *ngIf="regularMemberForm.get('phoneNumber').errors.pattern"
+              >
+                Phone number is inavlid
+              </ng-container>
+            </div>
           </div>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputSocialAccount"
-            >Social Account <b>(Optional)</b></label
-          >
+          <label for="social">Social Account <b>(Optional)</b></label>
           <input
             formControlName="social"
             type="text"
             class="form-control"
-            id="inputSocialAccount"
+            id="social"
           />
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="inputEducationInstitution">Education Institution</label>
+          <label for="educInstitution">Education Institution</label>
           <input
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('educInstitution').invalid &&
+                (regularMemberForm.get('educInstitution').dirty ||
+                  regularMemberForm.get('educInstitution').touched ||
+                  submitted)
+            }"
             formControlName="educInstitution"
             type="text"
             class="form-control"
-            id="inputEducationInstitution"
+            id="educInstitution"
           />
+          <div
+            *ngIf="
+              regularMemberForm.get('educInstitution').invalid &&
+              (regularMemberForm.get('educInstitution').dirty ||
+                regularMemberForm.get('educInstitution').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('educInstitution').errors.required"
+            >
+              Education Institution is required
+            </ng-container>
+          </div>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputFieldOfStudy">Field of Study</label>
+          <label for="fieldOfStudy">Field of Study</label>
           <input
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('fieldOfStudy').invalid &&
+                (regularMemberForm.get('fieldOfStudy').dirty ||
+                  regularMemberForm.get('fieldOfStudy').touched ||
+                  submitted)
+            }"
             formControlName="fieldOfStudy"
             type="text"
             class="form-control"
-            id="inputFieldOfStudy"
+            id="fieldOfStudy"
           />
+          <div
+            *ngIf="
+              regularMemberForm.get('fieldOfStudy').invalid &&
+              (regularMemberForm.get('fieldOfStudy').dirty ||
+                regularMemberForm.get('fieldOfStudy').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('fieldOfStudy').errors.required"
+            >
+              Field of study is required
+            </ng-container>
+          </div>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-12">
-          <label for="inputAboutSovLanatir"
+          <label for="question1"
             >How did you get to know about Sov Lanatir?</label
           >
           <input
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('question1').invalid &&
+                (regularMemberForm.get('question1').dirty ||
+                  regularMemberForm.get('question1').touched ||
+                  submitted)
+            }"
             formControlName="question1"
             type="text"
             class="form-control"
-            id="inputAboutSovLanatir"
+            id="question1"
           />
+          <div
+            *ngIf="
+              regularMemberForm.get('question1').invalid &&
+              (regularMemberForm.get('question1').dirty ||
+                regularMemberForm.get('question1').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('question1').errors.required"
+            >
+              Answer is required
+            </ng-container>
+          </div>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-12">
-          <label for="inputWhyJoinUs">Why do you want to join us?</label>
+          <label for="question2">Why do you want to join us?</label>
           <textarea
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('question2').invalid &&
+                (regularMemberForm.get('question2').dirty ||
+                  regularMemberForm.get('question2').touched ||
+                  submitted)
+            }"
             formControlName="question2"
             class="form-control"
-            id="inputWhyJoinUs"
+            id="question2"
             rows="3"
           ></textarea>
+          <div
+            *ngIf="
+              regularMemberForm.get('question2').invalid &&
+              (regularMemberForm.get('question2').dirty ||
+                regularMemberForm.get('question2').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('question2').errors.required"
+            >
+              Answer is required
+            </ng-container>
+          </div>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-12">
-          <label for="inputBiggestAchievement"
-            >What is your biggest achievement?</label
-          >
+          <label for="question3">What is your biggest achievement?</label>
           <textarea
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('question3').invalid &&
+                (regularMemberForm.get('question3').dirty ||
+                  regularMemberForm.get('question3').touched ||
+                  submitted)
+            }"
             formControlName="question3"
             class="form-control"
-            id="inputBiggestAchievement"
+            id="question3"
             rows="3"
           ></textarea>
+          <div
+            *ngIf="
+              regularMemberForm.get('question3').invalid &&
+              (regularMemberForm.get('question3').dirty ||
+                regularMemberForm.get('question3').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('question3').errors.required"
+            >
+              Answer is required
+            </ng-container>
+          </div>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group col-12">
-          <label for="inputRole"
+          <label for="question4"
             >Have you been in any other organisations? If yes, what was your
             role?</label
           >
           <input
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('question4').invalid &&
+                (regularMemberForm.get('question4').dirty ||
+                  regularMemberForm.get('question4').touched ||
+                  submitted)
+            }"
             formControlName="question4"
             type="text"
             class="form-control"
-            id="inputRole"
+            id="question4"
           />
+          <div
+            *ngIf="
+              regularMemberForm.get('question4').invalid &&
+              (regularMemberForm.get('question4').dirty ||
+                regularMemberForm.get('question4').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('question4').errors.required"
+            >
+              Answer is required
+            </ng-container>
+          </div>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-12">
-          <label for="inputIndividual"
+          <label for="question5"
             >What are you already doing as an individual, to save Nature?</label
           >
           <textarea
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('question5').invalid &&
+                (regularMemberForm.get('question5').dirty ||
+                  regularMemberForm.get('question5').touched ||
+                  submitted)
+            }"
             formControlName="question5"
             class="form-control"
-            id="inputIndividual"
+            id="question5"
             rows="3"
           ></textarea>
+          <div
+            *ngIf="
+              regularMemberForm.get('question5').invalid &&
+              (regularMemberForm.get('question5').dirty ||
+                regularMemberForm.get('question5').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('question5').errors.required"
+            >
+              Answer is required
+            </ng-container>
+          </div>
         </div>
       </div>
 
       <div class="form-row">
         <div class="form-group col-12">
-          <label for="inputNature"
+          <label for="question6"
             >If nature contained all answers of the universe, what would you ask
             her?</label
           >
           <textarea
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('question6').invalid &&
+                (regularMemberForm.get('question6').dirty ||
+                  regularMemberForm.get('question6').touched ||
+                  submitted)
+            }"
             formControlName="question6"
             class="form-control"
-            id="inputNature"
+            id="question6"
             rows="3"
           ></textarea>
+          <div
+            *ngIf="
+              regularMemberForm.get('question6').invalid &&
+              (regularMemberForm.get('question6').dirty ||
+                regularMemberForm.get('question6').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('question6').errors.required"
+            >
+              Answer is required
+            </ng-container>
+          </div>
         </div>
       </div>
 
-      <div class="form-row">
-        <!-- <div class="form-group col-12">
-          <label for="inputDepartment"
-            >Which department(s) are you willing to join in?</label
+      <div class="form-row d-flex flex-column">
+        <label for="department">
+          Which department(s) are you willing to join in?
+          <span
+            style="font-size: small; color: red; font-weight: bold"
+            >* At least one department should be selected</span
           >
-          <input type="text" class="form-control" id="inputDepartment" />
-        </div> -->
-        <div class="form-group col-12">
-          <label for="inputDepartment"
-            >Which department(s) are you willing to join in?</label
-          >
-          <textarea
-            formControlName="department"
-            class="form-control"
-            id="inputDepartment"
-            rows="3"
-          ></textarea>
+        </label>
+        <div class="overflow-auto" style="height: 150px">
+          <ng-container *ngFor="let department of departments">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                (change)="toggleDepartments($event, department.title)"
+              />
+              <label class="form-check-label" for="defaultCheck1">
+                {{ department.title }}
+              </label>
+            </div>
+          </ng-container>
         </div>
       </div>
+      <!-- <div class="form-row">
+        <div class="form-group col-12">
+          <select
+            [ngClass]="{
+              'is-invalid':
+                regularMemberForm.get('department').invalid &&
+                (regularMemberForm.get('department').dirty ||
+                  regularMemberForm.get('department').touched ||
+                  submitted)
+            }"
+            class="selectpicker"
+            id="inputPhonePrefix"
+            formControlName="department"
+            multiple
+          >
+            <ng-container *ngFor="let department of departments">
+              <option value="{{ department.title }}">
+                {{ department.title }}
+              </option>
+            </ng-container>
+          </select>
+          <div
+            *ngIf="
+              regularMemberForm.get('department').invalid &&
+              (regularMemberForm.get('department').dirty ||
+                regularMemberForm.get('department').touched ||
+                submitted)
+            "
+            class="invalid-feedback"
+          >
+            <ng-container
+              *ngIf="regularMemberForm.get('department').errors.required"
+            >
+              At least one department need to be choosen
+            </ng-container>
+          </div>
+        </div>
+      </div> -->
 
       <div class="alert alert-danger mt-3" role="alert" *ngIf="errorMessage">
         {{ errorMessage }}
@@ -229,48 +560,11 @@
           <button
             type="submit"
             class="form-control btn btn-primary text-white p-2"
-            (click)="addMember()"
-            [disabled]="
-              regularMemberForm.value.firstname == '' ||
-              regularMemberForm.value.lastname == '' ||
-              regularMemberForm.value.dob == '' ||
-              regularMemberForm.value.email == '' ||
-              regularMemberForm.value.phoneNumber == '' ||
-              regularMemberForm.value.educInstitution == '' ||
-              regularMemberForm.value.fieldOfStudy == '' ||
-              regularMemberForm.value.question1 == '' ||
-              regularMemberForm.value.question2 == '' ||
-              regularMemberForm.value.question3 == '' ||
-              regularMemberForm.value.question4 == '' ||
-              regularMemberForm.value.question5 == '' ||
-              regularMemberForm.value.question6 == '' ||
-              regularMemberForm.value.department == '' ||
-              isAdding
-            "
+            [disabled]="isAdding"
           >
             <ng-container *ngIf="!isAdding">JOIN</ng-container>
             <ng-container *ngIf="isAdding">Registering...</ng-container>
           </button>
-          <span
-            *ngIf="
-              regularMemberForm.value.firstname == '' ||
-              regularMemberForm.value.lastname == '' ||
-              regularMemberForm.value.dob == '' ||
-              regularMemberForm.value.email == '' ||
-              regularMemberForm.value.phoneNumber == '' ||
-              regularMemberForm.value.educInstitution == '' ||
-              regularMemberForm.value.fieldOfStudy == '' ||
-              regularMemberForm.value.question1 == '' ||
-              regularMemberForm.value.question2 == '' ||
-              regularMemberForm.value.question3 == '' ||
-              regularMemberForm.value.question4 == '' ||
-              regularMemberForm.value.question5 == '' ||
-              regularMemberForm.value.question6 == '' ||
-              regularMemberForm.value.department == ''
-            "
-          >
-            <small> &nbsp;* All non-optional field must be filled! </small>
-          </span>
         </div>
       </div>
     </form>

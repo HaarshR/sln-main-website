@@ -189,9 +189,7 @@
               }}
             </div>
             <div class="col mb-2">
-              <b>Date of Birth:</b><br />{{
-                member.dob | date: "MMM d, y"
-              }}
+              <b>Date of Birth:</b><br />{{ member.dob | date: "MMM d, y" }}
             </div>
             <div class="col mb-2" *ngIf="memberType == 'executive'">
               <b>CV: </b
@@ -202,7 +200,12 @@
           </div>
           <div class="row text-center">
             <div class="col mb-2">
-              <b>Department interrested:</b><br />{{ member.department }}
+              <b>Department interrested:</b>
+              <ul>
+                <ng-container *ngFor="let department of member.department">
+                  <li>{{ department }}</li>
+                </ng-container>
+              </ul>
             </div>
           </div>
           <div class="row">
