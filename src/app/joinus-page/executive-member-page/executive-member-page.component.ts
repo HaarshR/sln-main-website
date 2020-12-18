@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { DepartmentService } from 'src/app/department-page/department.service';
 import { NavbarService } from 'src/app/shared/navbar/navbar.service';
+import { Department } from 'src/models/Department';
 import { PageData } from 'src/models/PageData';
 import { JoinusMemberService } from '../joinus-member-service';
 
@@ -19,67 +21,53 @@ export class ExecutiveMemberPageComponent implements OnInit {
   };
 
   executiveMemberForm = new FormGroup({
-    lastname: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    firstname: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    dob: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    email: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    phoneNumber: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    social: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    educInstitution: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    fieldOfStudy: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    question1: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    question2: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    question3: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    question4: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    question5: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    question6: new FormControl('', {
-      validators: [Validators.required],
-    }),
-    departments: new FormControl('', {
-      validators: [Validators.required],
-    }),
+    firstname: new FormControl('', [Validators.required]),
+    lastname: new FormControl('', [Validators.required]),
+    dob: new FormControl('', [Validators.required]),
+    email: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+    ]),
+    phoneNumber: new FormControl('', [
+      Validators.required,
+      Validators.pattern('^(5[0-9]{7})$|^([^5][0-9]{6})$'),
+    ]),
+    social: new FormControl(''),
+    educInstitution: new FormControl('', [Validators.required]),
+    fieldOfStudy: new FormControl('', [Validators.required]),
+    question1: new FormControl('', [Validators.required]),
+    question2: new FormControl('', [Validators.required]),
+    question3: new FormControl('', [Validators.required]),
+    question4: new FormControl('', [Validators.required]),
+    question5: new FormControl('', [Validators.required]),
+    question6: new FormControl('', [Validators.required]),
+    departments: new FormControl(''),
   });
+
+  departments: Department[];
+
+  selectedDepartment = [];
 
   message;
   errorMessage;
   isAdding = false;
   cvData;
   cv;
+  submitted = false;
 
   constructor(
     private navbarService: NavbarService,
-    private memberService: JoinusMemberService
+    private memberService: JoinusMemberService,
+    private departmentService: DepartmentService
   ) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.navbarService.setPageData(this.pageData);
+    this.departmentService.setDepartments();
+    this.departmentService.getWebsiteInfoStatusListener().subscribe((next) => {
+      this.departments = next.departments;
+    });
   }
 
   onCvPicked(event: Event) {
@@ -98,27 +86,14 @@ export class ExecutiveMemberPageComponent implements OnInit {
   }
 
   addMember() {
+    this.submitted = true;
     if (
-      this.executiveMemberForm.value.firstname == '' ||
-      this.executiveMemberForm.value.lastname == '' ||
-      this.executiveMemberForm.value.dob == '' ||
-      this.executiveMemberForm.value.email == '' ||
-      this.executiveMemberForm.value.phoneNumber == '' ||
-      this.executiveMemberForm.value.educInstitution == '' ||
-      this.executiveMemberForm.value.fieldOfStudy == '' ||
-      this.executiveMemberForm.value.question1 == '' ||
-      this.executiveMemberForm.value.question2 == '' ||
-      this.executiveMemberForm.value.question3 == '' ||
-      this.executiveMemberForm.value.question4 == '' ||
-      this.executiveMemberForm.value.question5 == '' ||
-      this.executiveMemberForm.value.question6 == '' ||
-      this.executiveMemberForm.value.departments == '' ||
+      !this.executiveMemberForm.valid ||
+      this.selectedDepartment.length == 0 ||
       !this.cvData
     ) {
       return;
     }
-
-    console.log(this.executiveMemberForm);
 
     this.message = null;
     this.errorMessage = null;
@@ -136,5 +111,23 @@ export class ExecutiveMemberPageComponent implements OnInit {
           this.isAdding = false;
         }
       );
+  }
+
+  toggleDepartments(event, name) {
+    if (event.target.checked) {
+      this.selectedDepartment.push(name);
+      this.executiveMemberForm.value.departments = this.selectedDepartment.join(
+        ','
+      );
+    } else {
+      this.selectedDepartment.splice(this.selectedDepartment.indexOf(name), 1);
+      if (this.selectedDepartment.length == 0) {
+        this.executiveMemberForm.value.departments = '';
+      } else {
+        this.executiveMemberForm.value.departments = this.selectedDepartment.join(
+          ','
+        );
+      }
+    }
   }
 }

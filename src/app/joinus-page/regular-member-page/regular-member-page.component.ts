@@ -70,8 +70,6 @@ export class RegularMemberPageComponent implements OnInit {
 
   addMember() {
     this.submitted = true;
-    console.log(this.selectedDepartment);
-    console.log(this.regularMemberForm.value.department);
     if (!this.regularMemberForm.valid || this.selectedDepartment.length == 0) {
       return;
     }

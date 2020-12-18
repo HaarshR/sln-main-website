@@ -289,7 +289,7 @@ exports.addExecutive = (req, res, next) => {
       req.body.question5,
       req.body.question6,
     ],
-    department: req.body.departments.join(','),
+    department: req.body.departments.split(','),
     membershipType: "executive",
     cv: req.file.filename,
   });
