@@ -87,7 +87,6 @@ export class AdminSendmailComponent implements OnInit {
       )
       .subscribe(
         (next) => {
-          console.log(next.message);
           this.messageError = null;
           this.message = next.message;
           setTimeout(() => {
@@ -95,7 +94,6 @@ export class AdminSendmailComponent implements OnInit {
           }, 3000);
         },
         (error) => {
-          console.log(error.error.errorMessage);
           this.message = null;
           this.messageError = error.error.errorMessage;
           setTimeout(() => {

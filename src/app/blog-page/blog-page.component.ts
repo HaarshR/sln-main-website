@@ -31,7 +31,6 @@ export class BlogPageComponent implements OnInit {
     this.blogService.getBlogs();
     this.blogService.getWebsiteInfoStatusListener().subscribe((next) => {
       this.blogs = next.blogs;
-      console.log(this.blogs);
       this.isLoading = false;
     });
   }

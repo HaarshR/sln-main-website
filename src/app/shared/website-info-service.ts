@@ -26,7 +26,7 @@ export class WebsiteInformationService {
   }
 
   get() {
-     this.http
+    this.http
       .get<{
         websiteInfo: WebsiteInfo;
       }>(BACKEND_URL + 'get')
@@ -39,8 +39,6 @@ export class WebsiteInformationService {
           });
         },
         (error) => {
-          console.log('FETCH ERROR');
-          console.log(error);
           this.websiteInfoStatusListener.next({
             websiteInfo: null,
             message: error.error.errorMessage,

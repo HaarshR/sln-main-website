@@ -254,7 +254,6 @@ export class AdminEventComponent implements OnInit {
       !this.eventForm.value.location ||
       !this.imagePreviewNew
     ) {
-      console.log(this.eventForm.value);
       return;
     }
     this.isLoading2 = true;
@@ -281,7 +280,6 @@ export class AdminEventComponent implements OnInit {
     );
     this.eventService.addEvent(newEventForm).subscribe(
       (next) => {
-        console.log(next);
         if (next.message) {
           this.addEditMessage = 'Event was successfully added!';
         } else {
@@ -303,7 +301,6 @@ export class AdminEventComponent implements OnInit {
         this.isLoading2 = false;
       },
       (error) => {
-        console.log(error);
         if (error.status == 404) {
           this.addEditMessage = 'Error occured! This event already exist.';
         } else {

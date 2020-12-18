@@ -226,7 +226,6 @@ export class AdminDepartmentComponent implements OnInit {
   }
 
   onImagePicked(event: Event) {
-    console.log('sdjncs');
     let imagesPreview = [];
     let imagesData = [];
     Array.prototype.forEach.call(

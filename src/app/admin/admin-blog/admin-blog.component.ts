@@ -280,7 +280,6 @@ export class AdminBlogComponent implements OnInit {
         this.isLoading2 = false;
       },
       (error) => {
-        console.log(error);
         if (error.status == 404) {
           this.addEditMessage = 'Error occured! This blog title already exist.';
         } else {

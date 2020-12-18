@@ -66,7 +66,6 @@ export class AboutPageComponent implements OnInit, OnDestroy {
           if (next.websiteInfo) {
             this.websiteInfo = next.websiteInfo.aboutUsPage;
             this.members = next.websiteInfo.teamMembers;
-            console.log(this.members);
           }
           this.isLoading = false;
         },

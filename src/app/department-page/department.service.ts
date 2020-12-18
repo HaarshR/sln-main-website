@@ -39,7 +39,6 @@ export class DepartmentService {
           });
         },
         (error) => {
-          console.log(error);
           this.departmentsStatusListener.next({
             departments: [],
           });

@@ -51,7 +51,6 @@ export class AdminLoginComponent implements OnInit {
     });
     this.authService.getAuthErrorListener().subscribe((response) => {
       if (response.isError) {
-        console.log(response);
         this.message = response.message;
         this.isError = true;
         this.isLoggingin = false;

@@ -114,7 +114,6 @@ export class AdminWebsiteInfoComponent implements OnInit {
   ngOnInit(): void {
     this.websiteInfoService.getWebsiteInfo().subscribe(
       (next) => {
-        console.log(next.websiteInfo);
         this.websiteInfo = next.websiteInfo;
         this.departmentForm.setValue({
           details: next.websiteInfo.departmentPage.details,
@@ -197,7 +196,6 @@ export class AdminWebsiteInfoComponent implements OnInit {
   }
 
   deletePic(obj: any) {
-    console.log(obj.image.substring(0, 4));
     if (obj.image.substring(0, 4) == 'data') {
       this.joinUsPic.splice(this.joinUsPic.indexOf(obj), 1);
       this.joinUsPicData.splice(this.joinUsPicData.indexOf(obj.data), 1);
@@ -310,9 +308,7 @@ export class AdminWebsiteInfoComponent implements OnInit {
 
       this.joinUsPicData.forEach((data) => {
         let added = false;
-        console.log(indexes);
         while (!added) {
-          console.log(i.toString(), indexes.indexOf(i.toString()));
           if (indexes.indexOf(i.toString()) == -1) {
             newLandingForm.append('images', data, 'landingPage-slider_' + i);
             i++;

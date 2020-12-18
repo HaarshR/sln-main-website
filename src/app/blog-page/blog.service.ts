@@ -40,7 +40,6 @@ export class BlogService {
           });
         },
         (error) => {
-          console.log(error);
           this.blogsStatusListener.next({
             blogs: null,
             message: error.error.errorMessage,
